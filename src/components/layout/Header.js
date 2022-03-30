@@ -14,11 +14,9 @@ export default function Header() {
     <Wrapper>
       <HeaderBody>
         <Logo splitCharacter={10}>République Française</Logo>
-        <HeaderOperator>
-          <Ademe />
-        </HeaderOperator>
+
         <Service
-          title='TCO2'
+          title='Verdir ma flotte'
           description={`L’outil d'aide à la décision pour l'achat de flottes de véhicules de transport de marchandises.`}
         />
       </HeaderBody>
