@@ -1,13 +1,5 @@
 import React from 'react'
-import {
-  Header as Wrapper,
-  HeaderOperator,
-  HeaderBody,
-  Logo,
-  Service,
-} from '@dataesr/react-dsfr'
-
-import Ademe from 'components/base/Ademe'
+import { Header as Wrapper, HeaderBody, Service } from '@dataesr/react-dsfr'
 
 export default function Header() {
   return (
