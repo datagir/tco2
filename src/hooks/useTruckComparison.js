@@ -2,14 +2,14 @@ import { useQuery } from 'react-query'
 import axios from 'axios'
 
 export default function useTruckComparison(search) {
-  const { data: csrfToken } = useCsrfToken()
-  console.log('csrfToken', csrfToken)
+  const { data: token } = useToken()
+  console.log('token', token)
   return useQuery(
     ['truckComparison'],
     () =>
       axios
         .get(
-          `/response_1651673032373.json`
+          `https://staging--tco2.netlify.app/.netlify/functions/getTruckComparison`
           /*  {
           vehicle: { vehicleCategory: 'RIGIDTRUCK-12T' },
           use: {
@@ -33,7 +33,6 @@ export default function useTruckComparison(search) {
         }*/
         )
         .then((res) => res.data),
-
     {
       keepPreviousData: true,
       refetchOnWindowFocus: false,
@@ -41,13 +40,16 @@ export default function useTruckComparison(search) {
   )
 }
 
-export function useCsrfToken() {
-  return useQuery(['csrfToken'], () =>
-    axios
-      .post(`https://mobicloud.ifpen.com/api/authenticate`, {
-        username: 'Florian',
-        password: '',
-      })
-      .then((res) => res.data)
+export function useToken() {
+  return useQuery(
+    ['token'],
+    () =>
+      axios
+        .get(`https://staging--tco2.netlify.app/.netlify/functions/getToken`)
+        .then((res) => res.data),
+    {
+      keepPreviousData: true,
+      refetchOnWindowFocus: false,
+    }
   )
 }
