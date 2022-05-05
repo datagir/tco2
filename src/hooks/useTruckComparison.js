@@ -24,12 +24,6 @@ export default function useTruckComparison(search) {
           },
           tcoParameters: { possessionDuration: 10, fuelConsumption: 0 },
           echartsConfiguration: true,
-        },
-        {
-          auth: {
-            username: 'Florian',
-            password: 'Bidoubidou95!',
-          },
         }*/
         )
         .then((res) => res.data),
