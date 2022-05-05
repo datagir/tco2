@@ -3,7 +3,7 @@ import axios from 'axios'
 
 export default function useTruckComparison(search) {
   const { data: csrfToken } = useCsrfToken()
-  console.log(csrfToken)
+  console.log('csrfToken', csrfToken)
   return useQuery(
     ['truckComparison'],
     () =>
