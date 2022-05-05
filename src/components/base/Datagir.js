@@ -3,10 +3,11 @@ import styled from 'styled-components'
 
 const Wrapper = styled.svg`
   display: block;
+  margin: 0.5em;
 `
 const Color = styled.path`
   fill: ${(props) => (props.hover ? 'white' : '#1FC58E')};
-  transition: fill 30ms ${(props) => (props.hover ? '75ms' : '1ms')};
+  transition: fill 30ms ${(props) => (props.hover ? '75ms' : 0)};
 `
 const Square = styled.path`
   fill: ${(props) => '#1FC58E'};
@@ -15,9 +16,9 @@ const Square = styled.path`
 `
 const White = styled.path`
   fill: ${(props) => (props.hover ? '#1FC58E' : 'white')};
-  transition: fill 30ms ${(props) => (props.hover ? '1ms' : '75ms')};
+  transition: fill 30ms ${(props) => (props.hover ? 0 : '75ms')};
 `
-export default function Datagir(props) {
+export default function Logo(props) {
   const [hover, setHover] = useState(false)
 
   return (

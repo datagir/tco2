@@ -1,15 +1,45 @@
 import React from 'react'
-import { Header as Wrapper, HeaderBody, Service } from '@dataesr/react-dsfr'
+import styled from 'styled-components'
 
-export default function Header() {
+import MagicLink from 'components/base/MagicLink'
+import Marianne from 'components/base/Marianne'
+import Ademe from 'components/base/Ademe'
+import ThemeToggle from './header/ThemeToggle'
+
+const Wrapper = styled.header`
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+
+  ${(props) => props.theme.mq.small} {
+    margin-bottom: 0.5rem;
+    font-size: 0.75rem;
+  }
+`
+const Left = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+`
+const Logos = styled(MagicLink)`
+  display: flex;
+  align-items: center;
+  margin: 0 0 0 -0.75em;
+  background-color: #fff;
+`
+export default function Header(props) {
   return (
-    <Wrapper>
-      <HeaderBody>
-        <Service
-          title='Verdir ma flotte'
-          description={`L’outil d'aide à la décision pour l'achat de flottes de véhicules de transport de marchandises.`}
-        />
-      </HeaderBody>
+    <Wrapper className={props.className}>
+      <Left>
+        <Logos to='/' aria-label={`Revenir à l'accueil`} id='Accueil'>
+          <Marianne />
+          <Ademe />
+        </Logos>
+        {props.children}
+      </Left>
+      <ThemeToggle />
     </Wrapper>
   )
 }
