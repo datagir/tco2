@@ -46,7 +46,7 @@ export function useCsrfToken() {
     axios
       .post(`https://mobicloud.ifpen.com/api/authenticate`, {
         username: 'Florian',
-        password: 'Bidoubidou95!',
+        password: '',
       })
       .then((res) => res.data)
   )
