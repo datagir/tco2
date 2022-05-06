@@ -5,7 +5,7 @@ export default function useTruckComparison(search) {
   const { data: token } = useToken()
   console.log('token', token)
   return useQuery(
-    ['truckComparison'],
+    ['truckComparison', token],
     () =>
       axios
         .post(
@@ -45,7 +45,7 @@ export function useToken() {
     () =>
       axios
         .get(`https://staging--tco2.netlify.app/.netlify/functions/getToken`)
-        .then((res) => res.data),
+        .then((res) => res.data?.id_token),
     {
       keepPreviousData: true,
       refetchOnWindowFocus: false,
