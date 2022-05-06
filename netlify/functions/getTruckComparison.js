@@ -1,20 +1,6 @@
 const axios = require('axios')
 
 exports.handler = function (event) {
-  console.log(event)
-  if (event.httpMethod === 'OPTIONS') {
-    return {
-      statusCode: '204',
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers':
-          'Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Origin',
-        'Access-Control-Allow-Methods': 'POST, OPTIONS',
-        'Access-Control-Max-Age': '8640',
-        Vary: 'Origin',
-      },
-    }
-  }
   return axios
     .post(
       `https://mobicloud.ifpen.com/tco2/service/v1/truckComparison`,
@@ -30,12 +16,18 @@ exports.handler = function (event) {
       statusCode: 200,
       headers: {
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers':
-          'Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Origin',
-        'Access-Control-Allow-Methods': 'POST, OPTIONS',
-        'Access-Control-Max-Age': '8640',
-        Vary: 'Origin',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
       },
       body: JSON.stringify(res.data),
+    }))
+    .catch((error) => ({
+      statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+      },
+      body: JSON.stringify(error),
     }))
 }
