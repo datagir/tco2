@@ -3,7 +3,15 @@ const axios = require('axios')
 exports.handler = function (event) {
   console.log(event)
   return axios
-    .post(`https://mobicloud.ifpen.com/tco2/service/v1/truckComparison`, null)
+    .post(
+      `https://mobicloud.ifpen.com/tco2/service/v1/truckComparison`,
+      event.body,
+      {
+        headers: {
+          Authorization: 'Bearer ' + event.queryStringParameters.token,
+        },
+      }
+    )
     .then((res) => ({
       statusCode: 200,
       headers: {

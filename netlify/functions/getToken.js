@@ -1,6 +1,6 @@
 const axios = require('axios')
 
-exports.handler = function (event) {
+exports.handler = function () {
   return axios
     .post(`https://mobicloud.ifpen.com/api/authenticate`, {
       username: 'Florian',
