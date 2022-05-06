@@ -18,6 +18,7 @@ export const themes = {
         'DIESEL-B7': '#009099',
         'DIESEL-B100': '#E50101',
         'DIESEL-HVO': '#FF8D01',
+        GNL: '#00C0C0',
         GNC: '#FFCA00',
         'BIO-GNC': '#028121',
         HEV: '#004CFF',

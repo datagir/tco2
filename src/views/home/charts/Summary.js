@@ -12,53 +12,76 @@ import {
 } from 'recharts'
 
 import useTruckComparison from 'hooks/useTruckComparison'
+import DurationSelector from './summary/DurationSelector'
 
-const Wrapper = styled.div`
+const Wrapper = styled.div``
+const ChartWrapper = styled.div`
   width: 100%;
   height: 400px;
+  opacity: ${(props) => (props.isFetching ? 0.3 : 1)};
+`
+const Title = styled.h2`
+  text-align: center;
+`
+const Text = styled.p`
+  text-align: center;
 `
 export default function Summary() {
-  const { data } = useTruckComparison()
+  const { data, isFetching } = useTruckComparison()
 
   const theme = useTheme()
 
-  return data?.output?.chart ? (
+  return (
     <Wrapper>
-      <ResponsiveContainer width='100%' height={400}>
-        <ScatterChart
-          width={500}
-          height={400}
-          margin={{
-            top: 20,
-            right: 20,
-            bottom: 20,
-            left: 20,
-          }}
-        >
-          <CartesianGrid />
-          <XAxis type='number' dataKey='x' name='x' unit=' €' />
-          <YAxis type='number' dataKey='y' name='y' unit='&nbsp;tCO2' />
+      <Title>
+        Gains en CO2 et en €<br />
+        par rapport au diesel B7
+      </Title>
+      <Text>
+        Plus un carburant est à droite, plus le gain en € est élevé.
+        <br />
+        Plus un carburant est en haut, plus le gain en CO2 est élevé
+      </Text>
+      <DurationSelector />
+      {data?.output?.chart && (
+        <ChartWrapper isFetching={isFetching}>
+          <ResponsiveContainer width='100%' height={400}>
+            <ScatterChart
+              width={500}
+              height={400}
+              margin={{
+                top: 20,
+                right: 20,
+                bottom: 20,
+                left: 20,
+              }}
+            >
+              <CartesianGrid />
+              <XAxis type='number' dataKey='x' name='x' unit=' €' />
+              <YAxis type='number' dataKey='y' name='y' unit='&nbsp;tCO2' />
 
-          <Tooltip content={<CustomTooltip />} />
-          <Legend />
-          {data.output.chart[7].options.series.map((technology) => (
-            <Scatter
-              key={technology.name}
-              name={technology.name}
-              data={[
-                {
-                  x: technology.data[0][0],
-                  y: technology.data[0][1],
-                  name: technology.name,
-                },
-              ]}
-              fill={theme.colors.technologies[technology.name]}
-            />
-          ))}
-        </ScatterChart>
-      </ResponsiveContainer>
+              <Tooltip content={<CustomTooltip />} />
+              <Legend />
+              {data.output.chart[7].options.series.map((technology) => (
+                <Scatter
+                  key={technology.name}
+                  name={technology.name}
+                  data={[
+                    {
+                      x: technology.data[0][0],
+                      y: technology.data[0][1],
+                      name: technology.name,
+                    },
+                  ]}
+                  fill={theme.colors.technologies[technology.name]}
+                />
+              ))}
+            </ScatterChart>
+          </ResponsiveContainer>
+        </ChartWrapper>
+      )}
     </Wrapper>
-  ) : null
+  )
 }
 
 const CustomTooltip = (test) => {

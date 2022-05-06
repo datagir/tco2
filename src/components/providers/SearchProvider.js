@@ -17,6 +17,10 @@ export default function SearchProvider(props) {
     'totalAnnualDistance',
     withDefault(NumberParam, 1000)
   )
+  const [possessionDuration, setPossessionDuration] = useQueryParam(
+    'possessionDuration',
+    withDefault(NumberParam, 10)
+  )
 
   return (
     <SearchContext.Provider
@@ -25,6 +29,8 @@ export default function SearchProvider(props) {
         setVehicleCategory,
         totalAnnualDistance,
         setTotalAnnualDistance,
+        possessionDuration,
+        setPossessionDuration,
       }}
     >
       {props.children}

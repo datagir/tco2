@@ -64,8 +64,8 @@ export default function Vehicle() {
         onChange={({ value }) => setVehicleCategory(value)}
       >
         <option value='RIGIDTRUCK-12T'>Poids lourd 12t</option>
-        <option value='RIGIDTRUCK-14T'>Poids lourd 14t</option>
-        <option value='RIGIDTRUCK-44T'>Poids lourd 44t</option>
+        <option value='TRACTOR-19T'>Poids lourd 19t</option>
+        <option value='TRACTOR-44T'>Poids lourd 44t</option>
       </StyledSelect>
       {open && (
         <Prices>
