@@ -10,7 +10,7 @@ export default function useTruckComparison(search) {
         ? axios
             .post(
               `https://staging--tco2.netlify.app/.netlify/functions/getTruckComparison?token=${token}`,
-              JSON.stringify({
+              {
                 vehicle: { vehicleCategory: 'RIGIDTRUCK-12T' },
                 use: {
                   operatingRange: 'URBAN',
@@ -24,7 +24,7 @@ export default function useTruckComparison(search) {
                 },
                 tcoParameters: { possessionDuration: 10, fuelConsumption: 0 },
                 echartsConfiguration: true,
-              })
+              }
             )
             .then((res) => res.data)
         : Promise.resolve([]),
