@@ -3,14 +3,13 @@ import axios from 'axios'
 
 export default function useTruckComparison(search) {
   const { data: token } = useToken()
-  console.log('token', token)
   return useQuery(
     ['truckComparison', token],
     () =>
       axios
         .post(
           `https://staging--tco2.netlify.app/.netlify/functions/getTruckComparison?token=${token}`,
-          JSON.stringify({
+          {
             vehicle: { vehicleCategory: 'RIGIDTRUCK-12T' },
             use: {
               operatingRange: 'URBAN',
@@ -24,11 +23,6 @@ export default function useTruckComparison(search) {
             },
             tcoParameters: { possessionDuration: 10, fuelConsumption: 0 },
             echartsConfiguration: true,
-          }),
-          {
-            headers: {
-              'Content-Type': 'application/json',
-            },
           }
         )
         .then((res) => res.data),
