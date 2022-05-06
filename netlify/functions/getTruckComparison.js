@@ -15,7 +15,7 @@ exports.handler = function (event) {
   return axios
     .post(
       `https://mobicloud.ifpen.com/tco2/service/v1/truckComparison`,
-      JSON.stringify(event.body),
+      event.body,
       {
         headers: {
           Authorization: 'Bearer ' + event.queryStringParameters.token,
