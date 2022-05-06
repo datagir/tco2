@@ -1,6 +1,7 @@
 const axios = require('axios')
 
 exports.handler = function (event) {
+  console.log(event.body)
   return axios
     .post(
       `https://mobicloud.ifpen.com/tco2/service/v1/truckComparison`,
