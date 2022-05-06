@@ -1,7 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Wrapper = styled.ul``
+const Wrapper = styled.ul`
+  margin: 0;
+  padding: 0;
+  list-style: none;
+`
 const Item = styled.li`
   color: ${(props) => props.theme.colors.technologies[props.technology]};
 `

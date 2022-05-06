@@ -6,7 +6,7 @@ import Usage from './search/Usage'
 
 const Wrapper = styled.div`
   position: relative;
-  margin-bottom: 0.5rem;
+  margin-bottom: 2rem;
   padding: 1.5rem 2rem;
   background-color: ${(props) => props.theme.colors.secondLight};
   border-radius: 1rem;

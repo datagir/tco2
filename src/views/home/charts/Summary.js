@@ -14,7 +14,9 @@ import {
 import useTruckComparison from 'hooks/useTruckComparison'
 import DurationSelector from './summary/DurationSelector'
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+  margin-bottom: 2rem;
+`
 const ChartWrapper = styled.div`
   width: 100%;
   height: 400px;
