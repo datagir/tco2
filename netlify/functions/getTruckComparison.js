@@ -1,7 +1,7 @@
 const axios = require('axios')
 
 exports.handler = function (event) {
-  console.log(event.body)
+  console.log(event)
   if (event.httpMethod === 'OPTIONS') {
     return {
       statusCode: '204',
