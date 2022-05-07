@@ -15,7 +15,7 @@ import useTruckComparison from 'hooks/useTruckComparison'
 import DurationSelector from './summary/DurationSelector'
 
 const Wrapper = styled.div`
-  margin-bottom: 4rem;
+  margin-bottom: 5rem;
 `
 const ChartWrapper = styled.div`
   width: 100%;
@@ -27,6 +27,7 @@ const ChartWrapper = styled.div`
   }
 `
 const Text = styled.p`
+  margin-bottom: 1.5rem;
   text-align: center;
 `
 const Green = styled.span`
@@ -108,24 +109,18 @@ export default function Summary() {
   )
 }
 
-class CustomizedAxisTick extends React.PureComponent {
-  render() {
-    const { x, y, stroke, payload } = this.props
-
-    return (
-      <g transform={`translate(${x},${y})`}>
-        <text
-          x={0}
-          y={0}
-          dy={16}
-          fontSize={12}
-          textAnchor='end'
-          fill='#666'
-          transform='rotate(-35)'
-        >
-          {payload.value}
-        </text>
-      </g>
-    )
-  }
-}
+const CustomizedAxisTick = ({ x, y, payload }) => (
+  <g transform={`translate(${x},${y})`}>
+    <text
+      x={0}
+      y={0}
+      dy={16}
+      fontSize={12}
+      textAnchor='end'
+      fill='#666'
+      transform='rotate(-35)'
+    >
+      {payload.value}
+    </text>
+  </g>
+)

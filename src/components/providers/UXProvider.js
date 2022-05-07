@@ -11,7 +11,6 @@ export default function UXProvider(props) {
   const [contactOpen, setContactOpen] = useState(false)
 
   const [typeShare, setTypeShare] = useState('simulator')
-  const [url, setUrl] = useState('')
 
   return (
     <UXContext.Provider
@@ -49,7 +48,6 @@ export default function UXProvider(props) {
           setContactOpen(value)
         },
         typeShare,
-        url,
         setTypeShare,
       }}
     >
