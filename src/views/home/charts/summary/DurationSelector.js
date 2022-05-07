@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   gap: 0.5rem;
   max-width: 30rem;
   height: 2.5rem;
-  margin: 0 auto;
+  margin: 0 auto 0.5rem;
 `
 const Button = styled.button`
   padding: 0;

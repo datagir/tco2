@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled, { useTheme } from 'styled-components'
 import {
-  ScatterChart,
-  Scatter,
+  BarChart,
+  Bar,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -15,70 +15,92 @@ import useTruckComparison from 'hooks/useTruckComparison'
 import DurationSelector from './summary/DurationSelector'
 
 const Wrapper = styled.div`
-  margin-bottom: 2rem;
+  margin-bottom: 4rem;
 `
 const ChartWrapper = styled.div`
   width: 100%;
   height: 400px;
   opacity: ${(props) => (props.isFetching ? 0.3 : 1)};
-`
-const Title = styled.h2`
-  text-align: center;
+
+  svg {
+    overflow: visible;
+  }
 `
 const Text = styled.p`
   text-align: center;
 `
+const Green = styled.span`
+  color: ${(props) => props.theme.colors.tco};
+`
+const Blue = styled.span`
+  color: ${(props) => props.theme.colors.co2};
+`
 export default function Summary() {
   const { data, isFetching } = useTruckComparison()
+  const [chart, setChart] = useState(null)
+  useEffect(() => {
+    if (data?.output) {
+      setChart(
+        data.output.ghg.map((emission, index) => ({
+          vehicleTechnology: emission.vehicleTechnology,
+          CO2: Math.round(
+            emission.landUse + emission.tankToWheel + emission.weelToTank
+          ),
+          TCO: Math.round(
+            data.output.tco[index].energyCost +
+              data.output.tco[index].insuranceCost +
+              data.output.tco[index].maintenanceCost +
+              data.output.tco[index].purchaseCost
+          ),
+        }))
+      )
+    }
+  }, [data])
 
   const theme = useTheme()
 
   return (
     <Wrapper>
-      <Title>
-        Gains en CO2 et en €<br />
-        par rapport au diesel B7
-      </Title>
       <Text>
-        Plus un carburant est à droite, plus le gain en € est élevé.
+        Visualisez pour chaque technologie
         <br />
-        Plus un carburant est en haut, plus le gain en CO2 est élevé
+        le <Green>coût total de possession à l'année (en vert)</Green>
+        <br />
+        et <Blue>l'impact climatique (en bleu)</Blue> de chaque technologie
       </Text>
       <DurationSelector />
-      {data?.output?.chart && (
+      {chart && (
         <ChartWrapper isFetching={isFetching}>
           <ResponsiveContainer width='100%' height={400}>
-            <ScatterChart
+            <BarChart
               width={500}
-              height={400}
+              height={300}
+              data={chart}
               margin={{
                 top: 20,
-                right: 20,
-                bottom: 20,
+                right: 30,
                 left: 20,
+                bottom: 5,
               }}
             >
-              <CartesianGrid />
-              <XAxis type='number' dataKey='x' name='x' unit=' €' />
-              <YAxis type='number' dataKey='y' name='y' unit='&nbsp;tCO2' />
-
-              <Tooltip content={<CustomTooltip />} />
-              <Legend />
-              {data.output.chart[7].options.series.map((technology) => (
-                <Scatter
-                  key={technology.name}
-                  name={technology.name}
-                  data={[
-                    {
-                      x: technology.data[0][0],
-                      y: technology.data[0][1],
-                      name: technology.name,
-                    },
-                  ]}
-                  fill={theme.colors.technologies[technology.name]}
-                />
-              ))}
-            </ScatterChart>
+              <CartesianGrid strokeDasharray='3 3' />
+              <XAxis
+                dataKey='vehicleTechnology'
+                interval={0}
+                tick={<CustomizedAxisTick />}
+              />
+              <YAxis dataKey='TCO' yAxisId='left' unit='&nbsp;€' />
+              <YAxis
+                dataKey='CO2'
+                yAxisId='right'
+                unit='&nbsp;gCO2e/km'
+                orientation='right'
+              />
+              <Tooltip />
+              <Legend verticalAlign='top' />
+              <Bar yAxisId='left' dataKey='TCO' fill={theme.colors.tco} />
+              <Bar yAxisId='right' dataKey='CO2' fill={theme.colors.co2} />
+            </BarChart>
           </ResponsiveContainer>
         </ChartWrapper>
       )}
@@ -86,11 +108,24 @@ export default function Summary() {
   )
 }
 
-const CustomTooltip = (test) => {
-  return (
-    <div>
-      Perte de {test.payload.length && test.payload[0].value} € pour un gain de{' '}
-      {test.payload.length && test.payload[1].value} tonnes de CO2
-    </div>
-  )
+class CustomizedAxisTick extends React.PureComponent {
+  render() {
+    const { x, y, stroke, payload } = this.props
+
+    return (
+      <g transform={`translate(${x},${y})`}>
+        <text
+          x={0}
+          y={0}
+          dy={16}
+          fontSize={12}
+          textAnchor='end'
+          fill='#666'
+          transform='rotate(-35)'
+        >
+          {payload.value}
+        </text>
+      </g>
+    )
+  }
 }

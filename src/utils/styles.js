@@ -24,6 +24,8 @@ export const themes = {
         HEV: '#004CFF',
         BEV: '#750288',
       },
+      co2: '#0466c8',
+      tco: '#008760',
     },
     fonts: {
       body: '"Marianne", Arial, sans-serif',
