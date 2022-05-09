@@ -1,8 +1,6 @@
 import React, { useEffect, useCallback } from 'react'
 import styled from 'styled-components'
 
-import Highlighter from 'react-highlight-words'
-
 const Wrapper = styled.div`
   position: relative;
   background-color: ${(props) => props.theme.colors.background};
@@ -71,13 +69,7 @@ export default function Suggestions(props) {
               onClick={() => props.handleSuggestionClick(result)}
               onMouseDown={(e) => e.preventDefault()}
             >
-              <Name>
-                <Highlighter
-                  searchWords={props.search.split(' ')}
-                  autoEscape={true}
-                  textToHighlight={result.description}
-                />
-              </Name>
+              <Name>{result.description}</Name>
             </Suggestion>
           )
       )}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 
-import { useSuggestions } from 'hooks/useAddress'
+import { useAutocomplete } from 'hooks/useAddress'
 import useDebounce from 'hooks/useDebounce'
 import TextInput from './search/TextInput'
 import Suggestions from './search/Suggestions'
@@ -30,7 +30,7 @@ export default function Search(props) {
 
   const debouncedSearch = useDebounce(search)
 
-  const { data, isFetching } = useSuggestions(debouncedSearch)
+  const { data, isFetching } = useAutocomplete(debouncedSearch)
 
   const [focus, setFocus] = useState(false)
   const input = useRef(null)

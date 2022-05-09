@@ -1,13 +1,13 @@
 import { useQuery } from 'react-query'
 import axios from 'axios'
 
-export default function useAutocomplete(query) {
+export function useAutocomplete(query) {
   const { data: token } = useToken()
 
   return useQuery(
     ['autocomplete', query],
     () =>
-      query.length > 2
+      query?.length > 2
         ? axios
             .get(
               `https://staging--tco2.netlify.app/.netlify/functions/getAutocomplete?token=${token}&query=${query}`

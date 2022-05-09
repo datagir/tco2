@@ -2,7 +2,6 @@ import React from 'react'
 import styled, { keyframes } from 'styled-components'
 
 import Submit from './textInput/Submit'
-import Geoloc from './textInput/Geoloc'
 
 const loading = keyframes`
   from {
@@ -67,13 +66,6 @@ export default React.forwardRef(function TextInput(props, ref) {
       <Submit
         visible={props.suggestion && props.suggestionVisible && props.search}
         setFocus={props.setFocus}
-      />
-      <Geoloc
-        visible={
-          props.focus &&
-          !(props.suggestion && props.suggestionVisible && props.search)
-        }
-        navigateToPlace={props.navigateToPlace}
       />
     </Wrapper>
   )
