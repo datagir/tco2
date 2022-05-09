@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import SearchContext from 'utils/SearchContext'
 import TextInput from 'components/base/TextInput'
 import ModeSelector from './usage/ModeSelector'
+import Itinerary from './usage/Itinerary'
 
 const Wrapper = styled.div`
   position: relative;
@@ -69,7 +70,7 @@ export default function Usage() {
       />
       <ModeSelector open={open} setOpen={setOpen} />
       <Details>
-        {open === 'manual' && (
+        {open === 'manual' ? (
           <Types>
             <StyledTextInput
               type='number'
@@ -102,6 +103,8 @@ export default function Usage() {
               max={100}
             />
           </Types>
+        ) : (
+          <Itinerary />
         )}
       </Details>
     </Wrapper>
