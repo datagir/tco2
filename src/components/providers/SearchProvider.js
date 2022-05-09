@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   useQueryParam,
   withDefault,
@@ -8,6 +8,7 @@ import {
 } from 'use-query-params'
 
 import SearchContext from 'utils/SearchContext'
+import { usePosition } from 'hooks/useAddress'
 
 export default function SearchProvider(props) {
   const [vehicleCategory, setVehicleCategory] = useQueryParam(
@@ -27,6 +28,30 @@ export default function SearchProvider(props) {
     'usesRepartition',
     withDefault(DelimitedNumericArrayParam, [40, 40, 30])
   )
+
+  const [start, setStart] = useState(null)
+  const [startPlace, setStartPlace] = useQueryParam('start', StringParam)
+  const { data: startPlaceData } = usePosition(startPlace)
+  useEffect(() => {
+    startPlaceData?.result?.geometry?.location &&
+      setStart({
+        latitude: startPlaceData.result.geometry.location.lat,
+        longitude: startPlaceData.result.geometry.location.lng,
+        address: startPlaceData.result.formatted_address,
+      })
+  }, [startPlaceData, setStart])
+
+  const [end, setEnd] = useState(null)
+  const [endPlace, setEndPlace] = useQueryParam('end', StringParam)
+  const { data: endPlaceData } = usePosition(endPlace)
+  useEffect(() => {
+    endPlaceData?.result?.geometry?.location &&
+      setEnd({
+        latitude: endPlaceData.result.geometry.location.lat,
+        longitude: endPlaceData.result.geometry.location.lng,
+        address: endPlaceData.result.formatted_address,
+      })
+  }, [endPlaceData, setEnd])
 
   return (
     <SearchContext.Provider
@@ -68,6 +93,12 @@ export default function SearchProvider(props) {
           }
           setUsesRepartition(tempRepartition)
         },
+        start,
+        startPlace,
+        setStartPlace,
+        end,
+        endPlace,
+        setEndPlace,
       }}
     >
       {props.children}

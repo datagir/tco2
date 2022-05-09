@@ -64,12 +64,12 @@ export default function Suggestions(props) {
           index < maxSuggestions && (
             <Suggestion
               current={index === props.current}
-              key={result.place_id}
+              key={result.locationId}
               isFetching={props.isFetching}
               onClick={() => props.handleSuggestionClick(result)}
               onMouseDown={(e) => e.preventDefault()}
             >
-              <Name>{result.description}</Name>
+              <Name>{result.label}</Name>
             </Suggestion>
           )
       )}

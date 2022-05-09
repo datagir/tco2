@@ -20,6 +20,24 @@ export function useAutocomplete(query) {
     }
   )
 }
+export function usePosition(locationId) {
+  const { data: token } = useToken()
+
+  return useQuery(
+    ['address', locationId],
+    () =>
+      axios
+        .get(
+          `https://staging--tco2.netlify.app/.netlify/functions/getPosition?token=${token}&locationId=${locationId}`
+        )
+        .then((res) => res.data),
+    {
+      keepPreviousData: true,
+      refetchOnWindowFocus: false,
+      enabled: locationId ? true : false,
+    }
+  )
+}
 
 export function useToken() {
   return useQuery(
