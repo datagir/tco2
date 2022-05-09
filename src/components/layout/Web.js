@@ -5,7 +5,6 @@ import useIframe from 'hooks/useIframe'
 import InstallButton from 'components/base/InstallButton'
 import HeaderWrapper from 'components/wrappers/HeaderWrapper'
 import FooterWrapper from 'components/wrappers/FooterWrapper'
-import ShareWrapper from 'components/wrappers/ShareWrapper'
 import EmbedWrapper from 'components/wrappers/EmbedWrapper'
 import ContactWrapper from 'components/wrappers/ContactWrapper'
 
@@ -48,7 +47,6 @@ export default function Web(props) {
         <FooterWrapper iframe={iframe} />
       </Content>
       <EmbedWrapper />
-      <ShareWrapper />
       <ContactWrapper />
       <InstallButton />
     </Wrapper>

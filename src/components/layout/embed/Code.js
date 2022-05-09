@@ -41,7 +41,7 @@ export default function Code(props) {
 
   useEffect(() => {
     setScript(
-      `<script id="${props.id || 'datagir'}" src="${
+      `<script id="${props.id || 'verdirmaflotte'}" src="${
         window.location.origin
       }/iframe.js" data-search="${props.url || '?'}theme=${theme}"></script>`
     )

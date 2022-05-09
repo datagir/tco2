@@ -3,7 +3,6 @@ import styled from 'styled-components'
 
 import useWindowSize from 'hooks/useWindowSize'
 import EmbedButton from './panel/EmbedButton'
-import ShareButton from './panel/ShareButton'
 import ContactButton from './panel/ContactButton'
 
 const Wrapper = styled.div`
@@ -72,12 +71,6 @@ export default function Panel(props) {
       {!props.small &&
         (props.index === 0 ? (
           <EmbedButton
-            open={props.open}
-            onClick={props.toggleClose}
-            index={props.index}
-          />
-        ) : props.index === 1 ? (
-          <ShareButton
             open={props.open}
             onClick={props.toggleClose}
             index={props.index}

@@ -18,8 +18,6 @@ export default function UXProvider(props) {
         embedOpen,
         setEmbedOpen: (value) => {
           if (value) {
-            window._paq.push(['trackEvent', 'panel', 'embed', 'open'])
-
             setShareOpen(false)
             setContactOpen(false)
             setTypeShare('simulator')
@@ -29,8 +27,6 @@ export default function UXProvider(props) {
         shareOpen,
         setShareOpen: (value) => {
           if (value) {
-            window._paq.push(['trackEvent', 'panel', 'share', 'open'])
-
             setEmbedOpen(false)
             setContactOpen(false)
             setTypeShare('simulator')
@@ -39,7 +35,6 @@ export default function UXProvider(props) {
         },
         contactOpen,
         setContactOpen: (value) => {
-          window._paq.push(['trackEvent', 'panel', 'contact', 'open'])
           if (value) {
             setShareOpen(false)
             setEmbedOpen(false)

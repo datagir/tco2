@@ -43,7 +43,7 @@ export const themes = {
   night: {
     name: 'Sombre',
     colors: {
-      main: '#F6BFC3',
+      main: '#EFF4F9',
       mainLight: '#F6BFC3',
       second: '#E5EDF5',
       secondLight: '#383838',

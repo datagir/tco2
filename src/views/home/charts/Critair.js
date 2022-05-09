@@ -21,6 +21,10 @@ const Title = styled.h2`
 const Columns = styled.div`
   display: flex;
   gap: 1.5rem;
+
+  ${(props) => props.theme.mq.small} {
+    flex-direction: column;
+  }
 `
 const Column = styled.div`
   flex: 1;

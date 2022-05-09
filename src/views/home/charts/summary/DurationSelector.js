@@ -48,8 +48,9 @@ const Thumb = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 8.5rem;
+  width: 8rem;
   height: 2.5rem;
+  font-size: 0.875rem;
   text-align: center;
   color: ${(props) => props.theme.colors.background};
   background-color: ${(props) => props.theme.colors.main};

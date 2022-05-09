@@ -23,10 +23,7 @@ const hover = keyframes`
   }
 `
 const StyledWrapper = styled(Toggle)`
-  transform: translate(
-    ${(props) => (props.open ? '-30rem' : '0')},
-    ${(props) => (props.four ? 'calc(100% + 3rem)' : 'calc(50% + 2rem)')}
-  );
+  transform: translate(${(props) => (props.open ? '-30rem' : '0')}, 1rem);
 
   &:hover,
   &:focus {

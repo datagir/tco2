@@ -21,7 +21,7 @@ const hover = keyframes`
 const StyledWrapper = styled(Toggle)`
   transform: translate(
     ${(props) => (props.open ? '-30rem' : '0')},
-    calc(${(props) => (props.four ? '-200% - 3rem' : '-150% - 2rem')})
+    calc(-100% - 1rem)
   );
 
   &:hover,
