@@ -4,9 +4,13 @@ import axios from 'axios'
 
 import SearchContext from 'utils/SearchContext'
 
-export default function useTruckComparison(search) {
-  const { vehicleCategory, totalAnnualDistance, possessionDuration } =
-    useContext(SearchContext)
+export default function useTruckComparison() {
+  const {
+    vehicleCategory,
+    totalAnnualDistance,
+    possessionDuration,
+    usesRepartition,
+  } = useContext(SearchContext)
 
   const { data: token } = useToken()
 
@@ -17,6 +21,7 @@ export default function useTruckComparison(search) {
       vehicleCategory,
       totalAnnualDistance,
       possessionDuration,
+      usesRepartition,
     ],
     () =>
       token
@@ -27,7 +32,7 @@ export default function useTruckComparison(search) {
                 vehicle: { vehicleCategory },
                 use: {
                   operatingRange: 'URBAN',
-                  usesRepartition: [20, 30, 50],
+                  usesRepartition,
                   OriginDestination: {
                     origin: { latitude: null, longitude: null },
                     destination: { latitude: null, longitude: null },

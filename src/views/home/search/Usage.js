@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import SearchContext from 'utils/SearchContext'
 import TextInput from 'components/base/TextInput'
+import ModeSelector from './usage/ModeSelector'
 
 const Wrapper = styled.div`
   position: relative;
@@ -15,21 +16,19 @@ const Wrapper = styled.div`
     padding: 1rem;
   }
 `
-const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
+const Title = styled.label`
+  display: block;
   margin-bottom: 1.125rem;
 `
-const Title = styled.label``
-const ToggleButton = styled.button`
-  font-size: 0.875rem;
-  color: ${(props) => props.theme.colors.main};
-  background: none;
-  border: none;
-  cursor: pointer;
+const Details = styled.div`
+  position: relative;
+  margin-bottom: 0.5rem;
+  padding: 1.5rem 2rem;
+  background-color: ${(props) => props.theme.colors.secondLight};
+  border-radius: 1rem;
 
-  &:hover {
-    text-decoration: underline;
+  ${(props) => props.theme.mq.small} {
+    padding: 1rem;
   }
 `
 const Types = styled.div`
@@ -50,36 +49,61 @@ const StyledTextInput = styled(TextInput)`
   }
 `
 export default function Usage() {
-  const { totalAnnualDistance, setTotalAnnualDistance } =
-    useContext(SearchContext)
+  const {
+    totalAnnualDistance,
+    setTotalAnnualDistance,
+    usesRepartition,
+    setUsesRepartition,
+  } = useContext(SearchContext)
 
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState('manual')
 
   return (
     <Wrapper>
-      <Header>
-        <Title for='kilometrage'>Kilométrage annuel</Title>
-        <ToggleButton onClick={() => setOpen((prevOpen) => !prevOpen)}>
-          Voir {open ? 'moins' : 'plus'} d'option usage
-        </ToggleButton>
-      </Header>
+      <Title for='kilometrage'>Kilométrage annuel</Title>
       <MainTextInput
         name='kilometrage'
         unit={'km'}
         value={totalAnnualDistance}
         onChange={({ value }) => setTotalAnnualDistance(value)}
       />
-      {open && (
-        <Types>
-          <StyledTextInput name='urbain' label={`Urbain`} unit={'%'} />
-          <StyledTextInput
-            name='extraurbain'
-            label={`Extra urbain`}
-            unit={'%'}
-          />
-          <StyledTextInput name='autoroute' label={`Autoroute`} unit={'%'} />
-        </Types>
-      )}
+      <ModeSelector open={open} setOpen={setOpen} />
+      <Details>
+        {open === 'manual' && (
+          <Types>
+            <StyledTextInput
+              type='number'
+              name='urbain'
+              label={`Urbain`}
+              unit={'%'}
+              value={usesRepartition[0]}
+              onChange={setUsesRepartition}
+              min={0}
+              max={100}
+            />
+            <StyledTextInput
+              type='number'
+              name='extraurbain'
+              label={`Extra urbain`}
+              unit={'%'}
+              value={usesRepartition[1]}
+              onChange={setUsesRepartition}
+              min={0}
+              max={100}
+            />
+            <StyledTextInput
+              type='number'
+              name='autoroute'
+              label={`Autoroute`}
+              unit={'%'}
+              value={usesRepartition[2]}
+              onChange={setUsesRepartition}
+              min={0}
+              max={100}
+            />
+          </Types>
+        )}
+      </Details>
     </Wrapper>
   )
 }

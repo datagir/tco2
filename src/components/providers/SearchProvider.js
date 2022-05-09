@@ -4,6 +4,7 @@ import {
   withDefault,
   StringParam,
   NumberParam,
+  DelimitedNumericArrayParam,
 } from 'use-query-params'
 
 import SearchContext from 'utils/SearchContext'
@@ -22,6 +23,11 @@ export default function SearchProvider(props) {
     withDefault(NumberParam, 10)
   )
 
+  const [usesRepartition, setUsesRepartition] = useQueryParam(
+    'usesRepartition',
+    withDefault(DelimitedNumericArrayParam, [40, 40, 30])
+  )
+
   return (
     <SearchContext.Provider
       value={{
@@ -31,6 +37,37 @@ export default function SearchProvider(props) {
         setTotalAnnualDistance,
         possessionDuration,
         setPossessionDuration,
+        usesRepartition,
+        setUsesRepartition: (e) => {
+          const index = { urbain: 0, extraurbain: 1, autoroute: 2 }[e.name]
+          const tempRepartition = [...usesRepartition]
+          tempRepartition[index] =
+            e.value > 100 ? 100 : e.value < 0 ? 0 : e.value
+
+          let total = tempRepartition.reduce(
+            (acc, cur) => Number(acc) + Number(cur),
+            0
+          )
+          let nextIndex = index > 1 ? 0 : index + 1
+          if (total !== 100) {
+            tempRepartition[nextIndex] =
+              tempRepartition[nextIndex] - (total - 100)
+            tempRepartition[nextIndex] =
+              tempRepartition[nextIndex] < 0 ? 0 : tempRepartition[nextIndex]
+          }
+          total = tempRepartition.reduce(
+            (acc, cur) => Number(acc) + Number(cur),
+            0
+          )
+          nextIndex = nextIndex > 1 ? 0 : nextIndex + 1
+          if (total !== 100) {
+            tempRepartition[nextIndex] =
+              tempRepartition[nextIndex] - (total - 100)
+            tempRepartition[nextIndex] =
+              tempRepartition[nextIndex] < 0 ? 0 : tempRepartition[nextIndex]
+          }
+          setUsesRepartition(tempRepartition)
+        },
       }}
     >
       {props.children}

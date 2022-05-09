@@ -16,7 +16,7 @@ const Input = styled.input`
   width: 100%;
   padding: 0.5rem 1rem;
   color: ${(props) => props.theme.colors.text};
-  background-color: transparent;
+  background-color: ${(props) => props.theme.colors.background};
   border: 2px solid ${(props) => props.theme.colors.textLight};
   border-radius: 0.5rem;
   transition: box-shadow 300ms ease-out;
@@ -47,6 +47,8 @@ export default function TextInput(props) {
           onChange={(e) => {
             props.onChange({ value: e.currentTarget.value, name: props.name })
           }}
+          min={props.min}
+          max={props.max}
         />
         {props.unit && <Unit>{props.unit}</Unit>}
       </InputWrapper>
