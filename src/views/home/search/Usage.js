@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import styled from 'styled-components'
 
 import SearchContext from 'utils/SearchContext'
@@ -55,9 +55,16 @@ export default function Usage() {
     setTotalAnnualDistance,
     usesRepartition,
     setUsesRepartition,
+    setStart,
+    setEnd,
   } = useContext(SearchContext)
 
   const [open, setOpen] = useState('manual')
+
+  useEffect(() => {
+    setStart(null)
+    setEnd(null)
+  }, [open, setStart, setEnd])
 
   return (
     <Wrapper>

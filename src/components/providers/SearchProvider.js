@@ -30,27 +30,25 @@ export default function SearchProvider(props) {
   )
 
   const [start, setStart] = useState(null)
-  const [startPlace, setStartPlace] = useQueryParam('start', StringParam)
-  const { data: startPlaceData } = usePosition(startPlace)
+
+  const { data: startPlaceData } = usePosition(start?.locationId)
   useEffect(() => {
-    startPlaceData?.result?.geometry?.location &&
-      setStart({
-        latitude: startPlaceData.result.geometry.location.lat,
-        longitude: startPlaceData.result.geometry.location.lng,
-        address: startPlaceData.result.formatted_address,
-      })
+    startPlaceData &&
+      setStart((prevStart) => ({
+        ...prevStart,
+        ...startPlaceData,
+      }))
   }, [startPlaceData, setStart])
 
   const [end, setEnd] = useState(null)
-  const [endPlace, setEndPlace] = useQueryParam('end', StringParam)
-  const { data: endPlaceData } = usePosition(endPlace)
+  const { data: endPlaceData } = usePosition(end?.locationId)
   useEffect(() => {
-    endPlaceData?.result?.geometry?.location &&
-      setEnd({
-        latitude: endPlaceData.result.geometry.location.lat,
-        longitude: endPlaceData.result.geometry.location.lng,
-        address: endPlaceData.result.formatted_address,
-      })
+    console.log(endPlaceData)
+    endPlaceData &&
+      setEnd((prevEnd) => ({
+        ...prevEnd,
+        ...endPlaceData,
+      }))
   }, [endPlaceData, setEnd])
 
   return (
@@ -94,11 +92,9 @@ export default function SearchProvider(props) {
           setUsesRepartition(tempRepartition)
         },
         start,
-        startPlace,
-        setStartPlace,
+        setStart,
         end,
-        endPlace,
-        setEndPlace,
+        setEnd,
       }}
     >
       {props.children}

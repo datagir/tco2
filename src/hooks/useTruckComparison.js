@@ -10,10 +10,11 @@ export default function useTruckComparison() {
     totalAnnualDistance,
     possessionDuration,
     usesRepartition,
+    start,
+    end,
   } = useContext(SearchContext)
 
   const { data: token } = useToken()
-
   return useQuery(
     [
       'truckComparison',
@@ -22,6 +23,8 @@ export default function useTruckComparison() {
       totalAnnualDistance,
       possessionDuration,
       usesRepartition,
+      start,
+      end,
     ],
     () =>
       token
@@ -34,8 +37,14 @@ export default function useTruckComparison() {
                   operatingRange: 'URBAN',
                   usesRepartition,
                   OriginDestination: {
-                    origin: { latitude: null, longitude: null },
-                    destination: { latitude: null, longitude: null },
+                    origin: {
+                      latitude: start?.latitude || null,
+                      longitude: start?.longitude || null,
+                    },
+                    destination: {
+                      latitude: end?.latitude || null,
+                      longitude: end?.longitude || null,
+                    },
                   },
                   totalAnnualDistance,
                   payload: 60,

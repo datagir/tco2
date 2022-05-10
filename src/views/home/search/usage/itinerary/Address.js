@@ -16,7 +16,8 @@ export default function Address(props) {
         placeholder={props.placeholder}
         address={props.address}
         setAddress={(address) => {
-          props.setPlace(address?.place_id)
+          console.log(address)
+          props.setPlace(address)
         }}
       />
     </Wrapper>
