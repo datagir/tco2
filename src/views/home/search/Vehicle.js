@@ -64,7 +64,7 @@ export default function Vehicle() {
   return (
     <Wrapper>
       <Header>
-        <Title for='vehicleCategory'>Catégorie véhicule</Title>
+        <Title htmlFor='vehicleCategory'>Catégorie véhicule</Title>
         <ToggleButton
           onClick={() => setOpen((prevOpen) => !prevOpen)}
           open={open}

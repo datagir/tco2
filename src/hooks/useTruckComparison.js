@@ -50,7 +50,7 @@ export default function useTruckComparison() {
                   payload: 60,
                 },
                 tcoParameters: { possessionDuration, fuelConsumption: 0 },
-                echartsConfiguration: true,
+                echartsConfiguration: false,
               }
             )
             .then((res) => res.data)

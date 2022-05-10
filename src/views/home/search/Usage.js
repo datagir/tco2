@@ -68,7 +68,7 @@ export default function Usage() {
 
   return (
     <Wrapper>
-      <Title for='kilometrage'>Kilométrage annuel</Title>
+      <Title htmlFor='kilometrage'>Kilométrage annuel</Title>
       <MainTextInput
         name='kilometrage'
         unit={'km'}
