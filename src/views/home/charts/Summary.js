@@ -65,9 +65,9 @@ export default function Summary() {
       <Text>
         Visualisez pour chaque technologie
         <br />
-        le <Green>coût total de possession à l'année (en vert)</Green>
+        le <Green>coût total de possession à l'année (en bleu)</Green>
         <br />
-        et <Blue>l'impact climatique (en bleu)</Blue> de chaque technologie
+        et <Blue>l'impact climatique (en vert)</Blue> de chaque technologie
       </Text>
       <DurationSelector />
       {chart && (
