@@ -9,7 +9,7 @@ import Itinerary from './usage/Itinerary'
 const Wrapper = styled.div`
   position: relative;
   margin-bottom: 0.5rem;
-  padding: 1.5rem;
+  padding: 1.5rem 1.5rem 1rem;
   background-color: ${(props) => props.theme.colors.footerLight};
   border-radius: 1rem;
 

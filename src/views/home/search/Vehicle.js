@@ -7,7 +7,7 @@ import TextInput from 'components/base/TextInput'
 
 const Wrapper = styled.div`
   position: relative;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
   padding: 1.5rem;
   background-color: ${(props) => props.theme.colors.footerLight};
   border-radius: 1rem;
