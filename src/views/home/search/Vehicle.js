@@ -86,9 +86,24 @@ export default function Vehicle() {
       </StyledSelect>
       {open && (
         <Prices>
-          <StyledTextInput name='achat' label={`Prix d'achat`} unit={'€'} />
-          <StyledTextInput name='aide' label={`Aide à l'achat`} unit={'€'} />
-          <StyledTextInput name='autre' label={`Autre aide`} unit={'€'} />
+          <StyledTextInput
+            name='achat'
+            label={`Prix d'achat`}
+            unit={'€'}
+            disabled
+          />
+          <StyledTextInput
+            name='aide'
+            label={`Aide à l'achat`}
+            unit={'€'}
+            disabled
+          />
+          <StyledTextInput
+            name='autre'
+            label={`Autre aide`}
+            unit={'€'}
+            disabled
+          />
         </Prices>
       )}
     </Wrapper>

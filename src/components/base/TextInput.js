@@ -49,6 +49,7 @@ export default function TextInput(props) {
           }}
           min={props.min}
           max={props.max}
+          disabled={props.disabled}
         />
         {props.unit && <Unit>{props.unit}</Unit>}
       </InputWrapper>
