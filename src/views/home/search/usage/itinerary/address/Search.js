@@ -15,8 +15,8 @@ const Wrapper = styled.form`
   width: 100%;
   max-width: 22rem;
   background-color: ${(props) => props.theme.colors.background};
-  border: 0.125rem solid ${(props) => props.theme.colors.second};
-  border-radius: 1.5rem;
+  border: 0.125rem solid ${(props) => props.theme.colors.textLight};
+  border-radius: 0.5rem;
   transition: box-shadow 200ms ease-out;
   transition: border 200ms ease-out, top 300ms ease-out;
   overflow: hidden;
