@@ -42,18 +42,20 @@ export default function Summary() {
   useEffect(() => {
     if (data?.output) {
       setChart(
-        data.output.ghg.map((emission, index) => ({
-          vehicleTechnology: emission.vehicleTechnology,
-          CO2: -Math.round(
-            emission.landUse + emission.tankToWheel + emission.weelToTank
-          ),
-          TCO: Math.round(
-            data.output.tco[index].energyCost +
-              data.output.tco[index].insuranceCost +
-              data.output.tco[index].maintenanceCost +
-              data.output.tco[index].purchaseCost
-          ),
-        }))
+        data.output.ghg
+          .map((emission, index) => ({
+            vehicleTechnology: emission.vehicleTechnology,
+            CO2: -Math.round(
+              emission.landUse + emission.tankToWheel + emission.weelToTank
+            ),
+            TCO: Math.round(
+              data.output.tco[index].energyCost +
+                data.output.tco[index].insuranceCost +
+                data.output.tco[index].maintenanceCost +
+                data.output.tco[index].purchaseCost
+            ),
+          }))
+          .sort((a, b) => (a.CO2 > b.CO2 ? 1 : -1))
       )
     }
   }, [data])

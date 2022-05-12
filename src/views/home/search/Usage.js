@@ -84,7 +84,7 @@ export default function Usage() {
       <Title htmlFor='urbain'>Typologie de route</Title>
       <Text>
         Vous pouvez renseigner le type de route soit en pourcentage du
-        kilometrage annuel, soit en entrant un trajet type.
+        kilometrage annuel, soit en entrant un itinéraire type.
         <br />
         ⚠️ L'itinéraire type n'influe pas sur le kilométrage annuel
       </Text>
