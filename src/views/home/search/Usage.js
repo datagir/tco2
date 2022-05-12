@@ -19,7 +19,12 @@ const Wrapper = styled.div`
 `
 const Title = styled.label`
   display: block;
-  margin-bottom: 1.125rem;
+  margin-bottom: 0.25rem;
+`
+const Text = styled.p`
+  max-width: 26rem;
+  font-size: 0.875rem;
+  font-weight: 300;
 `
 const Details = styled.div`
   position: relative;
@@ -36,6 +41,7 @@ const Types = styled.div`
   display: flex;
   gap: 2.5rem;
 `
+
 const MainTextInput = styled(TextInput)`
   max-width: 14rem;
   input {
@@ -76,6 +82,12 @@ export default function Usage() {
         onChange={({ value }) => setTotalAnnualDistance(value)}
       />
       <Title htmlFor='urbain'>Typologie de route</Title>
+      <Text>
+        Vous pouvez renseigner le type de route soit en pourcentage du
+        kilometrage annuel, soit en entrant un trajet type.
+        <br />
+        ⚠️ L'itinéraire type n'influe pas sur le kilométrage annuel
+      </Text>
       <ModeSelector open={open} setOpen={setOpen} />
       <Details>
         {open === 'manual' ? (

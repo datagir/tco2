@@ -47,7 +47,7 @@ export default function ModeSelector(props) {
         current={props.open === 'itinerary'}
         onClick={() => props.setOpen('itinerary')}
       >
-        Itinéraire
+        Itinéraire type
       </Tab>
     </Wrapper>
   )

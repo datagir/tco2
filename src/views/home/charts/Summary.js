@@ -89,9 +89,10 @@ export default function Summary() {
               <XAxis
                 dataKey='vehicleTechnology'
                 interval={0}
-                fontSize={12}
+                fontSize={14}
                 tickLine={false}
                 axisLine={false}
+                tickFormatter={(value) => value.replace('DIESEL-', '')}
               />
               <YAxis dataKey='TCO' yAxisId='left' unit='&nbsp;€' interval={0} />
               <Tooltip />
