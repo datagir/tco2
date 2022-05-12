@@ -16,7 +16,6 @@ export default function Address(props) {
         placeholder={props.placeholder}
         address={props.address}
         setAddress={(address) => {
-          console.log(address)
           props.setPlace(address)
         }}
       />

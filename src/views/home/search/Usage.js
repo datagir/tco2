@@ -75,6 +75,7 @@ export default function Usage() {
         value={totalAnnualDistance}
         onChange={({ value }) => setTotalAnnualDistance(value)}
       />
+      <Title htmlFor='urbain'>Typologie de route</Title>
       <ModeSelector open={open} setOpen={setOpen} />
       <Details>
         {open === 'manual' ? (

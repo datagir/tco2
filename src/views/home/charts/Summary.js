@@ -19,7 +19,7 @@ const Wrapper = styled.div`
 `
 const ChartWrapper = styled.div`
   width: 100%;
-  height: 400px;
+  height: 450px;
   opacity: ${(props) => (props.isFetching ? 0.3 : 1)};
 
   svg {
@@ -44,7 +44,7 @@ export default function Summary() {
       setChart(
         data.output.ghg.map((emission, index) => ({
           vehicleTechnology: emission.vehicleTechnology,
-          CO2: Math.round(
+          CO2: -Math.round(
             emission.landUse + emission.tankToWheel + emission.weelToTank
           ),
           TCO: Math.round(
@@ -72,34 +72,56 @@ export default function Summary() {
       <DurationSelector />
       {chart && (
         <ChartWrapper isFetching={isFetching}>
-          <ResponsiveContainer width='100%' height={400}>
+          <ResponsiveContainer width='100%' height={250}>
             <BarChart
               width={500}
               height={300}
               data={chart}
               margin={{
-                top: 20,
-                right: 30,
-                left: 20,
-                bottom: 5,
+                top: 0,
+                right: 0,
+                left: 0,
+                bottom: 0,
               }}
+              barSize={40}
             >
               <CartesianGrid strokeDasharray='3 3' />
               <XAxis
                 dataKey='vehicleTechnology'
                 interval={0}
-                tick={<CustomizedAxisTick />}
+                fontSize={12}
+                tickLine={false}
+                axisLine={false}
               />
-              <YAxis dataKey='TCO' yAxisId='left' unit='&nbsp;€' />
-              <YAxis
-                dataKey='CO2'
-                yAxisId='right'
-                unit='&nbsp;gCO2e/km'
-                orientation='right'
-              />
+              <YAxis dataKey='TCO' yAxisId='left' unit='&nbsp;€' interval={0} />
               <Tooltip />
               <Legend verticalAlign='top' />
               <Bar yAxisId='left' dataKey='TCO' fill={theme.colors.tco} />
+            </BarChart>
+          </ResponsiveContainer>
+          <ResponsiveContainer width='100%' height={200}>
+            <BarChart
+              width={500}
+              height={300}
+              data={chart}
+              margin={{
+                top: 0,
+                right: 0,
+                left: 0,
+                bottom: 0,
+              }}
+              barSize={40}
+            >
+              <CartesianGrid strokeDasharray='3 3' />
+              <YAxis
+                interval={0}
+                dataKey='CO2'
+                yAxisId='right'
+                unit='&nbsp;gCO2e/km'
+                tickFormatter={(value) => -value}
+              />
+              <XAxis dataKey='vehicleTechnology' hide />
+              <Tooltip />
               <Bar yAxisId='right' dataKey='CO2' fill={theme.colors.co2} />
             </BarChart>
           </ResponsiveContainer>
@@ -108,19 +130,3 @@ export default function Summary() {
     </Wrapper>
   )
 }
-
-const CustomizedAxisTick = ({ x, y, payload }) => (
-  <g transform={`translate(${x},${y})`}>
-    <text
-      x={0}
-      y={0}
-      dy={16}
-      fontSize={12}
-      textAnchor='end'
-      fill='#666'
-      transform='rotate(-35)'
-    >
-      {payload.value}
-    </text>
-  </g>
-)
