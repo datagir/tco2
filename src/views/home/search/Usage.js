@@ -9,7 +9,7 @@ import Itinerary from './usage/Itinerary'
 const Wrapper = styled.div`
   position: relative;
   margin-bottom: 0.5rem;
-  padding: 1.5rem 1.5rem 1rem;
+  padding: 1.5rem 1.5rem;
   background-color: ${(props) => props.theme.colors.footerLight};
   border-radius: 1rem;
 
@@ -28,7 +28,7 @@ const Text = styled.p`
 `
 const Details = styled.div`
   position: relative;
-  margin-bottom: 0.5rem;
+  margin-bottom: 2rem;
   padding: 1.5rem 2rem;
   background-color: ${(props) => props.theme.colors.secondLight};
   border-radius: 1rem;
@@ -39,11 +39,21 @@ const Details = styled.div`
 `
 const Types = styled.div`
   display: flex;
-  gap: 2.5rem;
+  justify-content: space-between;
+  max-width: 22rem;
+  margin: 0 auto;
 `
 
 const MainTextInput = styled(TextInput)`
   max-width: 14rem;
+  margin-bottom: 2rem;
+  input {
+    text-align: right;
+  }
+`
+const SecondTextInput = styled(TextInput)`
+  max-width: 7rem;
+  margin: 0;
   input {
     text-align: right;
   }
@@ -63,6 +73,8 @@ export default function Usage() {
     setUsesRepartition,
     setStart,
     setEnd,
+    payload,
+    setPayload,
   } = useContext(SearchContext)
 
   const [open, setOpen] = useState('manual')
@@ -86,7 +98,7 @@ export default function Usage() {
         Vous pouvez renseigner le type de route soit en pourcentage du
         kilometrage annuel, soit en entrant un itinéraire type.
         <br />
-        ⚠️ L'itinéraire type n'influe pas sur le kilométrage annuel
+        ⚠️ L'itinéraire type n'influe pas sur le kilométrage annuel.
       </Text>
       <ModeSelector open={open} setOpen={setOpen} />
       <Details>
@@ -127,6 +139,15 @@ export default function Usage() {
           <Itinerary />
         )}
       </Details>
+      <Title htmlFor='payload'>Taux de chargement massique</Title>
+      <SecondTextInput
+        name='payload'
+        unit={'%'}
+        value={payload}
+        onChange={({ value }) => setPayload(value)}
+        min={0}
+        max={100}
+      />
     </Wrapper>
   )
 }

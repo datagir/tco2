@@ -12,6 +12,7 @@ export default function useTruckComparison() {
     usesRepartition,
     start,
     end,
+    payload,
   } = useContext(SearchContext)
 
   const { data: token } = useToken()
@@ -25,6 +26,7 @@ export default function useTruckComparison() {
       usesRepartition,
       start,
       end,
+      payload,
     ],
     () =>
       token
@@ -47,7 +49,7 @@ export default function useTruckComparison() {
                     },
                   },
                   totalAnnualDistance,
-                  payload: 60,
+                  payload,
                 },
                 tcoParameters: { possessionDuration, fuelConsumption: 0 },
                 echartsConfiguration: false,

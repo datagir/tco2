@@ -19,6 +19,10 @@ export default function SearchProvider(props) {
     'totalAnnualDistance',
     withDefault(NumberParam, 1000)
   )
+  const [payload, setPayload] = useQueryParam(
+    'payload',
+    withDefault(NumberParam, 60)
+  )
   const [possessionDuration, setPossessionDuration] = useQueryParam(
     'possessionDuration',
     withDefault(NumberParam, 10)
@@ -58,6 +62,8 @@ export default function SearchProvider(props) {
         setVehicleCategory,
         totalAnnualDistance,
         setTotalAnnualDistance,
+        payload,
+        setPayload,
         possessionDuration,
         setPossessionDuration,
         usesRepartition,

@@ -7,7 +7,6 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
 } from 'recharts'
 
@@ -55,7 +54,7 @@ export default function Summary() {
                 data.output.tco[index].purchaseCost
             ),
           }))
-          .sort((a, b) => (a.CO2 > b.CO2 ? 1 : -1))
+          .sort((a, b) => (a.CO2 < b.CO2 ? 1 : -1))
       )
     }
   }, [data])
