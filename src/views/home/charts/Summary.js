@@ -98,7 +98,6 @@ export default function Summary() {
               />
               <YAxis dataKey='TCO' yAxisId='left' unit='&nbsp;€' interval={0} />
               <Tooltip />
-              <Legend verticalAlign='top' />
               <Bar yAxisId='left' dataKey='TCO' fill={theme.colors.tco} />
             </BarChart>
           </ResponsiveContainer>
