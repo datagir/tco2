@@ -55,6 +55,8 @@ export default function SearchProvider(props) {
       }))
   }, [endPlaceData, setEnd])
 
+  const [costs, setCosts] = useState([])
+
   return (
     <SearchContext.Provider
       value={{
@@ -101,6 +103,8 @@ export default function SearchProvider(props) {
         setStart,
         end,
         setEnd,
+        costs,
+        setCosts,
       }}
     >
       {props.children}

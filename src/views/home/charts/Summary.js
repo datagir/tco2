@@ -62,7 +62,7 @@ export default function Summary() {
   const theme = useTheme()
 
   return (
-    <Wrapper>
+    <Wrapper isFetching={isFetching}>
       <Text>
         Visualisez pour chaque technologie
         <br />

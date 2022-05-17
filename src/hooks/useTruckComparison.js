@@ -13,6 +13,7 @@ export default function useTruckComparison() {
     start,
     end,
     payload,
+    costs,
   } = useContext(SearchContext)
 
   const { data: token } = useToken()
@@ -27,6 +28,7 @@ export default function useTruckComparison() {
       start,
       end,
       payload,
+      costs,
     ],
     () =>
       token
@@ -51,7 +53,15 @@ export default function useTruckComparison() {
                   totalAnnualDistance,
                   payload,
                 },
-                tcoParameters: { possessionDuration, fuelConsumption: 0 },
+                tcoParameters: {
+                  possessionDuration,
+                  fuelConsumption: 0,
+                  costs: Object.keys(costs).map((vehicleTechnology) => ({
+                    vehicleTechnology,
+                    purchaseCost: costs[vehicleTechnology].purchaseCost,
+                    purchaseGrant: costs[vehicleTechnology].purchaseGrant,
+                  })),
+                },
                 echartsConfiguration: false,
               }
             )

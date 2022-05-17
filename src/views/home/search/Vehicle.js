@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 import SearchContext from 'utils/SearchContext'
 import Select from 'components/base/Select'
-import TextInput from 'components/base/TextInput'
+import Costs from './vehicle/Costs'
 
 const Wrapper = styled.div`
   position: relative;
@@ -47,16 +47,7 @@ const ToggleButton = styled.button`
 const StyledSelect = styled(Select)`
   max-width: 14rem;
 `
-const Prices = styled.div`
-  display: flex;
-  gap: 2.5rem;
-`
-const StyledTextInput = styled(TextInput)`
-  margin: 0;
-  input {
-    text-align: right;
-  }
-`
+
 export default function Vehicle() {
   const { vehicleCategory, setVehicleCategory } = useContext(SearchContext)
   const [open, setOpen] = useState(false)
@@ -69,7 +60,7 @@ export default function Vehicle() {
           onClick={() => setOpen((prevOpen) => !prevOpen)}
           open={open}
         >
-          Voir {open ? 'moins' : 'plus'} d'options véhicule
+          Modifier les coûts des véhicules
           <svg width='10' height='6' viewBox='0 0 10 6' fill='none'>
             <path d='M4.99997 5.85012C4.82075 5.85012 4.64155 5.78169 4.50491 5.64512L0.205141 1.3453C-0.0683804 1.07178 -0.0683804 0.628311 0.205141 0.3549C0.478552 0.0814886 0.921932 0.0814886 1.19548 0.3549L4.99997 4.15961L8.80449 0.355032C9.07801 0.0816214 9.52134 0.0816214 9.79473 0.355032C10.0684 0.628443 10.0684 1.07191 9.79473 1.34543L5.49503 5.64525C5.35832 5.78184 5.17912 5.85012 4.99997 5.85012Z' />
           </svg>
@@ -84,28 +75,7 @@ export default function Vehicle() {
         <option value='TRACTOR-19T'>Poids lourd 19t</option>
         <option value='TRACTOR-44T'>Poids lourd 44t</option>
       </StyledSelect>
-      {open && (
-        <Prices>
-          <StyledTextInput
-            name='achat'
-            label={`Prix d'achat`}
-            unit={'€'}
-            disabled
-          />
-          <StyledTextInput
-            name='aide'
-            label={`Aide à l'achat`}
-            unit={'€'}
-            disabled
-          />
-          <StyledTextInput
-            name='autre'
-            label={`Autre aide`}
-            unit={'€'}
-            disabled
-          />
-        </Prices>
-      )}
+      <Costs open={open} />
     </Wrapper>
   )
 }
