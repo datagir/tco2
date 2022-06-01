@@ -65,6 +65,7 @@ export default function ModeSelector(props) {
         (technology) =>
           !technology.vehicleTechnology.includes('HVO') && (
             <Tab
+              key={technology.vehicleTechnology}
               current={props.open === technology.vehicleTechnology}
               modified={props.costs[technology.vehicleTechnology]}
               onClick={() => props.setOpen(technology.vehicleTechnology)}

@@ -17,7 +17,7 @@ export default function SearchProvider(props) {
   )
   const [totalAnnualDistance, setTotalAnnualDistance] = useQueryParam(
     'totalAnnualDistance',
-    withDefault(NumberParam, 1000)
+    withDefault(NumberParam, 100000)
   )
   const [payload, setPayload] = useQueryParam(
     'payload',
@@ -25,12 +25,12 @@ export default function SearchProvider(props) {
   )
   const [possessionDuration, setPossessionDuration] = useQueryParam(
     'possessionDuration',
-    withDefault(NumberParam, 10)
+    withDefault(NumberParam, 5)
   )
 
   const [usesRepartition, setUsesRepartition] = useQueryParam(
     'usesRepartition',
-    withDefault(DelimitedNumericArrayParam, [40, 40, 30])
+    withDefault(DelimitedNumericArrayParam, [40, 40, 20])
   )
 
   const [start, setStart] = useState(null)
@@ -47,7 +47,6 @@ export default function SearchProvider(props) {
   const [end, setEnd] = useState(null)
   const { data: endPlaceData } = usePosition(end?.locationId)
   useEffect(() => {
-    console.log(endPlaceData)
     endPlaceData &&
       setEnd((prevEnd) => ({
         ...prevEnd,
