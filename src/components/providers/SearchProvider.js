@@ -17,7 +17,7 @@ export default function SearchProvider(props) {
   )
   const [totalAnnualDistance, setTotalAnnualDistance] = useQueryParam(
     'totalAnnualDistance',
-    withDefault(NumberParam, 100000)
+    withDefault(NumberParam, 60000)
   )
   const [payload, setPayload] = useQueryParam(
     'payload',
@@ -30,7 +30,7 @@ export default function SearchProvider(props) {
 
   const [usesRepartition, setUsesRepartition] = useQueryParam(
     'usesRepartition',
-    withDefault(DelimitedNumericArrayParam, [40, 40, 20])
+    withDefault(DelimitedNumericArrayParam, [20, 20, 60])
   )
 
   const [start, setStart] = useState(null)

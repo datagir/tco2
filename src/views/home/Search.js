@@ -17,13 +17,12 @@ const Wrapper = styled.div`
   }
 `
 export default function Search() {
-  const { data } = useTruckDefaultSettings()
+  const { isSuccess } = useTruckDefaultSettings()
 
-  console.log(data)
-  return (
+  return isSuccess ? (
     <Wrapper>
       <Vehicle />
       <Usage />
     </Wrapper>
-  )
+  ) : null
 }

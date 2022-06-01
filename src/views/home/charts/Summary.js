@@ -36,7 +36,7 @@ const Blue = styled.span`
   color: ${(props) => props.theme.colors.co2};
 `
 export default function Summary() {
-  const { data, isFetching } = useTruckComparison()
+  const { data, isFetching, isError } = useTruckComparison()
   const [chart, setChart] = useState(null)
   useEffect(() => {
     if (data?.output) {
@@ -61,7 +61,7 @@ export default function Summary() {
 
   const theme = useTheme()
 
-  return (
+  return !isError ? (
     <Wrapper isFetching={isFetching}>
       <Text>
         Visualisez pour chaque technologie
@@ -129,5 +129,5 @@ export default function Summary() {
         </ChartWrapper>
       )}
     </Wrapper>
-  )
+  ) : null
 }

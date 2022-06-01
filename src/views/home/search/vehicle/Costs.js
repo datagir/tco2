@@ -1,6 +1,7 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
 
+import useTruckDefaultSettings from 'hooks/useTruckDefaultSettings'
 import SearchContext from 'utils/SearchContext'
 import TextInput from 'components/base/TextInput'
 import ModeSelector from './costs/ModeSelector'
@@ -21,11 +22,12 @@ const Details = styled.div`
 const Types = styled.div`
   display: flex;
   justify-content: space-around;
+  gap: 1rem;
   margin: 0 auto;
 `
 const StyledTextInput = styled(TextInput)`
+  flex: 1;
   margin: 0;
-  width: 14rem;
 
   input {
     text-align: right;
@@ -45,21 +47,42 @@ const Button = styled.button`
   cursor: pointer;
 `
 export default function Costs(props) {
-  const { costs, setCosts } = useContext(SearchContext)
+  const { data } = useTruckDefaultSettings()
+
+  const { vehicleCategory, costs, setCosts } = useContext(SearchContext)
 
   const [open, setOpen] = useState(null)
 
-  return props.open ? (
+  const technologies = data.output.vehicleCategoriesDescriptions.find(
+    (vehicleCategoriesDescription) =>
+      vehicleCategoriesDescription.vehicleCategory === vehicleCategory
+  ).vehicleTechnologiesAvailability
+
+  useEffect(() => {
+    setOpen(technologies[0].vehicleTechnology)
+  }, [technologies])
+
+  return props.open && technologies ? (
     <Wrapper>
-      <ModeSelector open={open} setOpen={setOpen} costs={costs} />
+      <ModeSelector
+        open={open}
+        setOpen={setOpen}
+        costs={costs}
+        technologies={technologies}
+      />
       {open && (
         <Details>
           <Types>
             <StyledTextInput
               type='number'
-              name='urbain'
+              name='achat'
               label={`Prix d'achat`}
               unit={'€'}
+              placeholder={
+                technologies.find(
+                  (technologie) => technologie.vehicleTechnology === open
+                ).defaultPurchaseCost
+              }
               value={costs[open]?.purchaseCost || ''}
               onChange={({ value }) =>
                 setCosts((prevCosts) => ({
@@ -67,23 +90,42 @@ export default function Costs(props) {
                   [open]: { ...prevCosts[open], purchaseCost: value },
                 }))
               }
-              min={0}
-              max={100}
             />
             <StyledTextInput
               type='number'
-              name='extraurbain'
-              label={`Aide à l'achat`}
+              name='aide'
+              label={`Maintenance`}
               unit={'€'}
-              value={costs[open]?.purchaseGrant || ''}
+              value={costs[open]?.maintenanceCost || ''}
+              placeholder={
+                technologies.find(
+                  (technologie) => technologie.vehicleTechnology === open
+                ).defaultMaintenanceCost
+              }
               onChange={({ value }) =>
                 setCosts((prevCosts) => ({
                   ...prevCosts,
-                  [open]: { ...prevCosts[open], purchaseGrant: value },
+                  [open]: { ...prevCosts[open], maintenanceCost: value },
                 }))
               }
-              min={0}
-              max={100}
+            />
+            <StyledTextInput
+              type='number'
+              name='aide'
+              label={`Assurance`}
+              unit={'€'}
+              value={costs[open]?.insuranceCost || ''}
+              placeholder={
+                technologies.find(
+                  (technologie) => technologie.vehicleTechnology === open
+                ).defaultInsuranceCost
+              }
+              onChange={({ value }) =>
+                setCosts((prevCosts) => ({
+                  ...prevCosts,
+                  [open]: { ...prevCosts[open], insuranceCost: value },
+                }))
+              }
             />
           </Types>
         </Details>

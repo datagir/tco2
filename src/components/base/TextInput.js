@@ -43,6 +43,7 @@ export default function TextInput(props) {
           id={props.name}
           name={props.name}
           value={props.value}
+          placeholder={props.placeholder}
           error={props.error}
           onChange={(e) => {
             props.onChange({ value: e.currentTarget.value, name: props.name })

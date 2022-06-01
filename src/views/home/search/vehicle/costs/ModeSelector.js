@@ -1,7 +1,5 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-
-import useTruckComparison from 'hooks/useTruckComparison'
 
 const Wrapper = styled.nav`
   display: flex;
@@ -40,7 +38,8 @@ const Tab = styled.button`
         : props.current
         ? props.theme.colors.secondLight
         : props.theme.colors.footer};
-    
+  }
+
   ${(props) => props.theme.mq.small} {
     display: ${(props) => (props.large ? 'none' : 'flex')};
     margin-bottom: -1.25rem;
@@ -49,31 +48,18 @@ const Tab = styled.button`
   }
 `
 export default function ModeSelector(props) {
-  const { data, isFetching } = useTruckComparison()
-
-  const setOpen = props.setOpen
-  const open = props.open
-  useEffect(() => {
-    if (!open) {
-      setOpen(data?.output?.ghg[0]?.vehicleTechnology)
-    }
-  }, [data, open, setOpen])
-
   return (
-    <Wrapper isFetching={isFetching}>
-      {data?.output?.ghg.map(
-        (technology) =>
-          !technology.vehicleTechnology.includes('HVO') && (
-            <Tab
-              key={technology.vehicleTechnology}
-              current={props.open === technology.vehicleTechnology}
-              modified={props.costs[technology.vehicleTechnology]}
-              onClick={() => props.setOpen(technology.vehicleTechnology)}
-            >
-              {technology.vehicleTechnology.replace('DIESEL-', '')}
-            </Tab>
-          )
-      )}
+    <Wrapper>
+      {props.technologies.map((technology) => (
+        <Tab
+          key={technology.vehicleTechnology}
+          current={props.open === technology.vehicleTechnology}
+          modified={props.costs[technology.vehicleTechnology]}
+          onClick={() => props.setOpen(technology.vehicleTechnology)}
+        >
+          {technology.vehicleTechnology.replace('DIESEL-', '')}
+        </Tab>
+      ))}
     </Wrapper>
   )
 }

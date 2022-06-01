@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react'
 import styled from 'styled-components'
 
+import useTruckDefaultSettings from 'hooks/useTruckDefaultSettings'
 import SearchContext from 'utils/SearchContext'
 import Select from 'components/base/Select'
 import Costs from './vehicle/Costs'
@@ -52,6 +53,7 @@ export default function Vehicle() {
   const { vehicleCategory, setVehicleCategory } = useContext(SearchContext)
   const [open, setOpen] = useState(false)
 
+  const { data } = useTruckDefaultSettings()
   return (
     <Wrapper>
       <Header>
@@ -71,9 +73,11 @@ export default function Vehicle() {
         value={vehicleCategory}
         onChange={({ value }) => setVehicleCategory(value)}
       >
-        <option value='RIGIDTRUCK-12T'>Poids lourd 12t</option>
-        <option value='TRACTOR-19T'>Poids lourd 19t</option>
-        <option value='TRACTOR-44T'>Poids lourd 44t</option>
+        {data.output.vehicleCategoriesDescriptions.map((vehicleCategory) => (
+          <option value={vehicleCategory.vehicleCategory}>
+            {vehicleCategory.name}
+          </option>
+        ))}
       </StyledSelect>
       <Costs open={open} />
     </Wrapper>

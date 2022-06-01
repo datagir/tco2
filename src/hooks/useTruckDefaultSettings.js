@@ -12,7 +12,7 @@ export default function useTruckDefaultSettings() {
               `https://staging--tco2.netlify.app/.netlify/functions/getTruckDefaultSettings?token=${token}`
             )
             .then((res) => res.data)
-        : Promise.resolve([]),
+        : Promise.reject('no token yet'),
     {
       keepPreviousData: true,
       refetchOnWindowFocus: false,
