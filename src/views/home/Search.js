@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import useTruckDefaultSettings from 'hooks/useTruckDefaultSettings'
 import Vehicle from './search/Vehicle'
 import Usage from './search/Usage'
 
@@ -16,6 +17,9 @@ const Wrapper = styled.div`
   }
 `
 export default function Search() {
+  const { data } = useTruckDefaultSettings()
+
+  console.log(data)
   return (
     <Wrapper>
       <Vehicle />

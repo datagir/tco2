@@ -3,7 +3,7 @@ const axios = require('axios')
 exports.handler = function (event) {
   return axios
     .get(
-      `https://mobicloud.ifpen.com/tco2/service/v1//service/v1/truckDefaultSettings`,
+      `https://mobicloud.ifpen.com/tco2/service/v1/service/v1/truckDefaultSettings`,
       {
         headers: {
           Authorization: 'Bearer ' + event.queryStringParameters.token,
