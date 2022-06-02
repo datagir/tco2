@@ -96,7 +96,7 @@ export default function Summary() {
                 tickFormatter={(value) => value.replace('DIESEL-', '')}
               />
               <YAxis dataKey='TCO' yAxisId='left' unit='&nbsp;€' interval={0} />
-              <Tooltip />
+              <Tooltip content={<CustomTooltip data={data} />} />
               <Bar yAxisId='left' dataKey='TCO' fill={theme.colors.tco} />
             </BarChart>
           </ResponsiveContainer>
@@ -122,7 +122,7 @@ export default function Summary() {
                 tickFormatter={(value) => -value}
               />
               <XAxis dataKey='vehicleTechnology' hide />
-              <Tooltip />
+              <Tooltip formatter={(value) => -value + ' gCO2e/km'} />
               <Bar yAxisId='right' dataKey='CO2' fill={theme.colors.co2} />
             </BarChart>
           </ResponsiveContainer>
@@ -130,4 +130,51 @@ export default function Summary() {
       )}
     </Wrapper>
   ) : null
+}
+
+const StyledTooltip = styled.div`
+  padding: 0.75rem;
+  background-color: ${(props) => props.theme.colors.background};
+  border: 0.0675rem solid ${(props) => props.theme.colors.secondLight};
+  border-radius: 0.5rem;
+`
+const Title = styled.h4`
+  margin-bottom: 0.75rem;
+  color: ${(props) => props.theme.colors.main};
+`
+const Costs = styled.ul`
+  margin: 0;
+  padding: 0;
+  list-style: none;
+`
+const Cost = styled.li`
+  margin: 0 0 0.5rem;
+  padding: 0;
+`
+const CustomTooltip = (props) => {
+  if (props.active && props.payload && props.payload.length) {
+    const tco = props.data.output.tco.find(
+      (technology) => technology.vehicleTechnology === props.label
+    )
+    return (
+      <StyledTooltip>
+        <Title>{props.label}</Title>
+        <Costs>
+          <Cost>
+            Achat : <b>{tco.purchaseCost} €</b>
+          </Cost>
+          <Cost>
+            Assurance : <b>{tco.insuranceCost} €</b>
+          </Cost>
+          <Cost>
+            Énergie : <b>{tco.energyCost} €</b>
+          </Cost>
+          <Cost>
+            Maintenance : <b>{tco.maintenanceCost} €</b>
+          </Cost>
+        </Costs>
+      </StyledTooltip>
+    )
+  }
+  return null
 }
