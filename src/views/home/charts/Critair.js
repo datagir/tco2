@@ -6,7 +6,7 @@ import List from './critair/List'
 
 const Wrapper = styled.div`
   position: relative;
-  margin-bottom: 0.5rem;
+  margin-bottom: 4rem;
   padding: 1.5rem;
   background-color: ${(props) => props.theme.colors.secondLight};
   border-radius: 1rem;
@@ -34,7 +34,7 @@ const Column = styled.div`
   border-radius: 1rem;
 `
 
-export default function Tco() {
+export default function Critair() {
   const { data } = useTruckComparison()
   return data?.output?.chart ? (
     <Wrapper>
