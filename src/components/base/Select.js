@@ -11,7 +11,7 @@ const Label = styled.label`
 `
 const Input = styled.select`
   width: 100%;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 2.5rem 0.5rem 1rem;
   color: ${(props) => props.theme.colors.text};
   background-color: transparent;
   border: 2px solid ${(props) => props.theme.colors.textLight};

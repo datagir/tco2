@@ -29,6 +29,7 @@ const Tab = styled.button`
   border: none;
   border-radius: 1rem 1rem 0 0;
   cursor: pointer;
+  white-space: nowrap;
   transition: background-color 200ms ease-out;
 
   &:hover {
@@ -38,13 +39,6 @@ const Tab = styled.button`
         : props.current
         ? props.theme.colors.secondLight
         : props.theme.colors.footer};
-  }
-
-  ${(props) => props.theme.mq.small} {
-    display: ${(props) => (props.large ? 'none' : 'flex')};
-    margin-bottom: -1.25rem;
-    padding: 0.25rem 0 1.25rem;
-    font-size: 0.875rem;
   }
 `
 export default function ModeSelector(props) {

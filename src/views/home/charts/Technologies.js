@@ -29,10 +29,10 @@ export default function Technologies() {
     <Wrapper>
       <Title>Définitions</Title>
       {data.output.vehicleTechnologiesDescriptions.map((technologie) => (
-        <>
+        <div key={technologie.name}>
           <Name>{technologie.name}</Name>
           <Text>{technologie.description}</Text>
-        </>
+        </div>
       ))}
     </Wrapper>
   ) : null

@@ -59,8 +59,10 @@ export default function useTruckComparison() {
                   costs: Object.keys(costs).map((vehicleTechnology) => ({
                     vehicleTechnology,
                     purchaseCost: costs[vehicleTechnology].purchaseCost,
+                    purchaseGrant: costs[vehicleTechnology].purchaseGrant,
                     maintenanceCost: costs[vehicleTechnology].maintenanceCost,
                     insuranceCost: costs[vehicleTechnology].insuranceCost,
+                    resaleCost: costs[vehicleTechnology].resaleCost,
                   })),
                 },
                 echartsConfiguration: false,
@@ -71,6 +73,7 @@ export default function useTruckComparison() {
     {
       keepPreviousData: true,
       refetchOnWindowFocus: false,
+      staleTime: Infinity,
     }
   )
 }

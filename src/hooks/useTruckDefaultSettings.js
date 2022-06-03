@@ -30,6 +30,7 @@ export function useToken() {
     {
       keepPreviousData: true,
       refetchOnWindowFocus: false,
+      staleTime: Infinity,
     }
   )
 }

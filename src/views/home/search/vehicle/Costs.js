@@ -6,7 +6,11 @@ import SearchContext from 'utils/SearchContext'
 import TextInput from 'components/base/TextInput'
 import ModeSelector from './costs/ModeSelector'
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+  ${(props) => props.theme.mq.small} {
+    display: none;
+  }
+`
 
 const Details = styled.div`
   position: relative;
@@ -20,15 +24,13 @@ const Details = styled.div`
   }
 `
 const Types = styled.div`
-  display: flex;
-  justify-content: space-around;
-  gap: 1rem;
+  max-width: 14rem;
   margin: 0 auto;
 `
 const StyledTextInput = styled(TextInput)`
-  flex: 1;
-  margin: 0;
-
+  &:last-child {
+    margin: 0;
+  }
   input {
     text-align: right;
   }
@@ -75,13 +77,13 @@ export default function Costs(props) {
           <Types>
             <StyledTextInput
               type='number'
-              name='achat'
+              name='purchaseCost'
               label={`Prix d'achat`}
               unit={'€'}
               placeholder={
                 technologies.find(
                   (technologie) => technologie.vehicleTechnology === open
-                ).defaultPurchaseCost
+                ).defaultPurchaseCost || 0
               }
               value={costs[open]?.purchaseCost || ''}
               onChange={({ value }) =>
@@ -93,14 +95,32 @@ export default function Costs(props) {
             />
             <StyledTextInput
               type='number'
-              name='aide'
+              name='purchaseGrant'
+              label={`Aide à l'achat`}
+              unit={'€'}
+              placeholder={
+                technologies.find(
+                  (technologie) => technologie.vehicleTechnology === open
+                ).defaultPurchaseGrant || 0
+              }
+              value={costs[open]?.purchaseGrant || ''}
+              onChange={({ value }) =>
+                setCosts((prevCosts) => ({
+                  ...prevCosts,
+                  [open]: { ...prevCosts[open], purchaseGrant: value },
+                }))
+              }
+            />
+            <StyledTextInput
+              type='number'
+              name='maintenanceCost'
               label={`Maintenance`}
               unit={'€'}
               value={costs[open]?.maintenanceCost || ''}
               placeholder={
                 technologies.find(
                   (technologie) => technologie.vehicleTechnology === open
-                ).defaultMaintenanceCost
+                ).defaultMaintenanceCost || 0
               }
               onChange={({ value }) =>
                 setCosts((prevCosts) => ({
@@ -111,19 +131,37 @@ export default function Costs(props) {
             />
             <StyledTextInput
               type='number'
-              name='aide'
+              name='insuranceCost'
               label={`Assurance`}
               unit={'€'}
               value={costs[open]?.insuranceCost || ''}
               placeholder={
                 technologies.find(
                   (technologie) => technologie.vehicleTechnology === open
-                ).defaultInsuranceCost
+                ).defaultInsuranceCost || 0
               }
               onChange={({ value }) =>
                 setCosts((prevCosts) => ({
                   ...prevCosts,
                   [open]: { ...prevCosts[open], insuranceCost: value },
+                }))
+              }
+            />
+            <StyledTextInput
+              type='number'
+              name='resaleCost'
+              label={`Valeur de revente`}
+              unit={'€'}
+              value={costs[open]?.resaleCost || ''}
+              placeholder={
+                technologies.find(
+                  (technologie) => technologie.vehicleTechnology === open
+                ).defaultResaleCost || 0
+              }
+              onChange={({ value }) =>
+                setCosts((prevCosts) => ({
+                  ...prevCosts,
+                  [open]: { ...prevCosts[open], resaleCost: value },
                 }))
               }
             />
