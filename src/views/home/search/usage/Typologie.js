@@ -32,6 +32,11 @@ const Types = styled.div`
   justify-content: space-between;
   max-width: 22rem;
   margin: 0 auto;
+
+  ${(props) => props.theme.mq.small} {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
 `
 const StyledTextInput = styled(TextInput)`
   margin: 0;

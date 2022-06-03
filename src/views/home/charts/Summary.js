@@ -84,7 +84,7 @@ export default function Summary() {
                 left: 0,
                 bottom: 0,
               }}
-              barSize={40}
+              maxBarSize={40}
             >
               <CartesianGrid strokeDasharray='3 3' />
               <XAxis
@@ -111,7 +111,7 @@ export default function Summary() {
                 left: 0,
                 bottom: 0,
               }}
-              barSize={40}
+              maxBarSize={40}
             >
               <CartesianGrid strokeDasharray='3 3' />
               <YAxis

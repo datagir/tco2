@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import ThemeToggle from './header/ThemeToggle'
 import fabriquedelalogistique from 'components/misc/fabriquedelalogistique.jpg'
 
 const Wrapper = styled.header`
@@ -33,6 +34,7 @@ export default function Header(props) {
         <Image src={fabriquedelalogistique} alt='Fabrique de la logistique' />
         {props.children}
       </Left>
+      <ThemeToggle />
     </Wrapper>
   )
 }

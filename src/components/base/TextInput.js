@@ -23,7 +23,7 @@ const Input = styled.input`
 
   &:focus {
     outline: none;
-    box-shadow: 0 -0 0px 1px ${(props) => props.theme.colors.second};
+    box-shadow: 0 -0 0px 1px ${(props) => props.theme.colors.textLight};
   }
 `
 const Unit = styled.span`

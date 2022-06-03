@@ -42,7 +42,6 @@ export default function Contact(props) {
   const [user, setUser] = useState({
     nom: '',
     email: '',
-    objet: '',
     message: '',
   })
 
@@ -75,12 +74,7 @@ export default function Contact(props) {
           } else {
             setEmpty(false)
             const formData = new URLSearchParams()
-            formData.append(
-              'form-name',
-              ['integration', 'datagir', 'autre'].includes(user.objet)
-                ? 'contact'
-                : 'bug'
-            )
+            formData.append('form-name', 'contact')
             Object.keys(user).map((key) => formData.append(key, user[key]))
             mutation.mutate(formData)
           }
@@ -108,41 +102,7 @@ export default function Contact(props) {
           }
           autocomplete='email'
         />
-        <Select
-          name={'objet'}
-          value={user.objet}
-          label={'Votre sujet'}
-          onChange={({ name, value }) =>
-            setUser((prevUser) => ({ ...prevUser, [name]: value }))
-          }
-        >
-          <option value={null} disabled></option>
-          <option value='integration'>
-            Je souhaite obtenir de l'aide pour intégrer le simulateur
-          </option>
-          <option value='datagir'>
-            Je souhaite en savoir plus sur Datagir
-          </option>
-          {props.options.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-          <option value='bug'>J'ai trouvé un bug</option>
-          <option value='amelioration'>
-            Je souhaite proposer une amélioration
-          </option>
-          <option value='autre'>Autre</option>
-        </Select>
-        {props.options.find((option) => option.value === user.objet) && (
-          <Warning
-            dangerouslySetInnerHTML={{
-              __html: props.options.find(
-                (option) => option.value === user.objet
-              ).disclaimer,
-            }}
-          />
-        )}
+
         <TextArea
           name={'message'}
           value={user.message}

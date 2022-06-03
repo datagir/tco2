@@ -9,8 +9,8 @@ import StyleProvider from 'components/providers/StyleProvider'
 import ModalProvider from 'components/providers/ModalProvider'
 import UXProvider from 'components/providers/UXProvider'
 import SearchProvider from 'components/providers/SearchProvider'
-
 import Web from 'components/layout/Web'
+import DefinitionsModal from 'components/modals/DefinitionsModal'
 import Home from 'views/Home'
 
 const queryClient = new QueryClient()
@@ -32,6 +32,7 @@ function App() {
                       </Route>
                     </Switch>
                   </Web>
+                  <DefinitionsModal />
                 </ModalProvider>
               </UXProvider>
             </SearchProvider>
