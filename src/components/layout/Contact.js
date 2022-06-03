@@ -8,7 +8,6 @@ import Panel from 'components/base/Panel'
 import Button from 'components/base/Button'
 import TextInput from 'components/base/TextInput'
 import TextArea from 'components/base/TextArea'
-import Select from 'components/base/Select'
 import ContactPrompt from 'components/base/ContactPrompt'
 
 const Form = styled.form`
@@ -30,7 +29,6 @@ const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
 `
-const Warning = styled.p``
 const Alert = styled.p`
   margin-top: 1rem;
   text-align: center;
