@@ -38,17 +38,18 @@ const Section = styled.div`
 const LogosWrapper = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
+  width: ${(props) => (props.iframe ? 'auto' : '100%')};
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: ${(props) => (props.iframe ? 1 : 0)}rem;
 `
 const Logos = styled(MagicLink)`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: ${(props) => (props.iframe ? 'auto' : '100%')};
-  margin: 0 auto;
   padding: 0 0.75rem;
   text-decoration: none;
-  background-color: #fff;
-  border-radius: ${(props) => (props.iframe ? 1 : 0)}rem;
 
   ${(props) => props.theme.mq.small} {
     padding: 0 0.25rem;
@@ -99,7 +100,7 @@ export default function Footer(props) {
           <ContactPrompt />
         </Section>
       </Content>
-      <LogosWrapper>
+      <LogosWrapper iframe={iframe}>
         <Logos
           to='https://datagir.ademe.fr/'
           aria-label='datagir.ademe.fr'
@@ -108,6 +109,12 @@ export default function Footer(props) {
           <Marianne />
           <Ademe />
           <Datagir />
+        </Logos>
+        <Logos
+          to='https://www.lafabriquedelalogistique.fr/'
+          aria-label='lafabriquedelalogistique.fr'
+          noIcon
+        >
           <Image src={fabriquedelalogistique} alt='Fabrique de la logistique' />
         </Logos>
       </LogosWrapper>
