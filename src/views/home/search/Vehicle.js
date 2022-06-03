@@ -75,7 +75,10 @@ export default function Vehicle() {
           onChange={({ value }) => setVehicleCategory(value)}
         >
           {data.output.vehicleCategoriesDescriptions.map((vehicleCategory) => (
-            <option value={vehicleCategory.vehicleCategory}>
+            <option
+              key={vehicleCategory.vehicleCategory}
+              value={vehicleCategory.vehicleCategory}
+            >
               {vehicleCategory.name}
             </option>
           ))}

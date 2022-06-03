@@ -19,7 +19,7 @@ const Wrapper = styled.div`
 `
 const ChartWrapper = styled.div`
   width: 100%;
-  height: 250px;
+  height: 300px;
   margin-top: 1rem;
   opacity: ${(props) => (props.isFetching ? 0.3 : 1)};
 
@@ -61,7 +61,7 @@ export default function Tco() {
       </Button.Wrapper>
       {chart && open && (
         <ChartWrapper isFetching={isFetching}>
-          <ResponsiveContainer width='100%' height={250}>
+          <ResponsiveContainer width='100%' height={300}>
             <BarChart
               width={500}
               height={300}
