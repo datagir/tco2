@@ -55,7 +55,7 @@ export default function Tco() {
   return !isError ? (
     <Wrapper isFetching={isFetching}>
       <Button.Wrapper>
-        <Button onClick={() => setOpen((prevOpen) => !prevOpen)} hollow>
+        <Button onClick={() => setOpen((prevOpen) => !prevOpen)} small hollow>
           {open ? 'Cacher' : 'Voir'} le détail du TCO
         </Button>
       </Button.Wrapper>

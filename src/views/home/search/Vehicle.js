@@ -67,7 +67,6 @@ export default function Vehicle() {
   return (
     <Wrapper>
       <Title htmlFor='vehicleCategory'>Catégorie véhicule</Title>
-
       <Flex>
         <StyledSelect
           name={'vehicleCategory'}

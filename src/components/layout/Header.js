@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import ThemeToggle from './header/ThemeToggle'
+import fabriquedelalogistique from 'components/misc/fabriquedelalogistique.jpg'
 
 const Wrapper = styled.header`
   position: relative;
@@ -20,11 +20,19 @@ const Left = styled.div`
   justify-content: flex-start;
   align-items: center;
 `
+const Image = styled.img`
+  display: block;
+  width: 8rem;
+  height: auto;
+  margin-right: 0.75rem;
+`
 export default function Header(props) {
   return (
     <Wrapper className={props.className}>
-      <Left>{props.children}</Left>
-      <ThemeToggle />
+      <Left>
+        <Image src={fabriquedelalogistique} alt='Fabrique de la logistique' />
+        {props.children}
+      </Left>
     </Wrapper>
   )
 }

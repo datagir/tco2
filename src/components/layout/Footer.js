@@ -8,6 +8,7 @@ import Marianne from 'components/base/Marianne'
 import Ademe from 'components/base/Ademe'
 import Datagir from 'components/base/Datagir'
 import MobileButtons from './footer/MobileButtons'
+import fabriquedelalogistique from 'components/misc/fabriquedelalogistique.jpg'
 
 const Wrapper = styled.footer`
   position: relative;
@@ -53,6 +54,11 @@ const Logos = styled(MagicLink)`
     padding: 0 0.25rem;
     font-size: ${(props) => (props.iframe ? 0.75 : 1)}rem;
   }
+`
+const Image = styled.img`
+  display: block;
+  width: 7rem;
+  height: auto;
 `
 const Accessibility = styled.p`
   margin: 0;
@@ -102,6 +108,7 @@ export default function Footer(props) {
           <Marianne />
           <Ademe />
           <Datagir />
+          <Image src={fabriquedelalogistique} alt='Fabrique de la logistique' />
         </Logos>
       </LogosWrapper>
       <Accessibility>accessibilité : non conforme</Accessibility>
