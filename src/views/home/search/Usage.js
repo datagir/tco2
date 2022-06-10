@@ -48,7 +48,9 @@ export default function Usage() {
         onChange={({ value }) => setTotalAnnualDistance(value)}
       />
       <Typologie />
-      <Title htmlFor='payload'>Taux de chargement massique</Title>
+      <Title htmlFor='payload'>
+        Chargement du véhicule en pourcentage de charge utile
+      </Title>
       <SecondTextInput
         name='payload'
         unit={'%'}

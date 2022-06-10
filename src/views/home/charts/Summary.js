@@ -29,10 +29,10 @@ const Text = styled.p`
   margin-bottom: 1.5rem;
   text-align: center;
 `
-const Green = styled.span`
+const Blue = styled.span`
   color: ${(props) => props.theme.colors.tco};
 `
-const Blue = styled.span`
+const Green = styled.span`
   color: ${(props) => props.theme.colors.co2};
 `
 export default function Summary() {
@@ -66,9 +66,10 @@ export default function Summary() {
       <Text>
         Visualisez pour chaque technologie
         <br />
-        le <Green>coût total de possession à l'année (en bleu)</Green>
+        le <Blue>coût total de possession à l'année (en bleu)</Blue>
         <br />
-        et <Blue>l'impact climatique (en vert)</Blue> de chaque technologie
+        et les <Green>émissions de gaz à effets de serre (en vert)</Green> de
+        chaque technologie
       </Text>
       <DurationSelector />
       {chart && (

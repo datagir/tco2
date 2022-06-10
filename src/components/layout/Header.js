@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 import ThemeToggle from './header/ThemeToggle'
-import fabriquedelalogistique from 'components/misc/fabriquedelalogistique.png'
+import fabriquedelalogistique from 'components/misc/fabriquedelalogistique.jpg'
 
 const Wrapper = styled.header`
   position: relative;

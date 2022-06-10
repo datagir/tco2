@@ -24,7 +24,7 @@ const Details = styled.div`
   }
 `
 const Types = styled.div`
-  max-width: 14rem;
+  max-width: 17rem;
   margin: 0 auto;
 `
 const StyledTextInput = styled(TextInput)`
@@ -78,7 +78,7 @@ export default function Costs(props) {
             <StyledTextInput
               type='number'
               name='purchaseCost'
-              label={`Prix d'achat`}
+              label={`Prix d’achat du véhicule`}
               unit={'€'}
               placeholder={
                 technologies.find(
@@ -96,7 +96,7 @@ export default function Costs(props) {
             <StyledTextInput
               type='number'
               name='purchaseGrant'
-              label={`Aide à l'achat`}
+              label={`Aide à l’achat du véhicule`}
               unit={'€'}
               placeholder={
                 technologies.find(
@@ -114,7 +114,7 @@ export default function Costs(props) {
             <StyledTextInput
               type='number'
               name='maintenanceCost'
-              label={`Maintenance`}
+              label={`Coût de maintenance annuel`}
               unit={'€'}
               value={costs[open]?.maintenanceCost || ''}
               placeholder={
@@ -132,7 +132,7 @@ export default function Costs(props) {
             <StyledTextInput
               type='number'
               name='insuranceCost'
-              label={`Assurance`}
+              label={`Coût d’assurance annuel`}
               unit={'€'}
               value={costs[open]?.insuranceCost || ''}
               placeholder={
@@ -150,7 +150,7 @@ export default function Costs(props) {
             <StyledTextInput
               type='number'
               name='resaleCost'
-              label={`Valeur de revente`}
+              label={`Valeur de revente du véhicule`}
               unit={'€'}
               value={costs[open]?.resaleCost || ''}
               placeholder={

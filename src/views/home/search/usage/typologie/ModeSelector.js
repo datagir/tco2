@@ -41,7 +41,7 @@ export default function ModeSelector(props) {
         current={props.open === 'manual'}
         onClick={() => props.setOpen('manual')}
       >
-        Manuel
+        Répartition des usages
       </Tab>
       <Tab
         current={props.open === 'itinerary'}

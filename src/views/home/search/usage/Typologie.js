@@ -12,7 +12,6 @@ const Title = styled.label`
   margin-bottom: 0.25rem;
 `
 const Text = styled.p`
-  max-width: 26rem;
   font-size: 0.875rem;
   font-weight: 300;
 `
@@ -58,12 +57,12 @@ export default function Typologie() {
 
   return (
     <Wrapper>
-      <Title htmlFor='urbain'>Typologie de route</Title>
+      <Title htmlFor='urbain'>Mission du véhicule</Title>
       <Text>
-        Vous pouvez renseigner le type de route soit en pourcentage du
-        kilometrage annuel, soit en entrant un itinéraire type.
+        La mission du véhicule peut être renseignée soit en proportions d’usages
+        urbain, extra-urbain ou autoroutier ou soit selon un itinéraire connu.
         <br />
-        ⚠️ L'itinéraire type n'influe pas sur le kilométrage annuel.
+        ⚠️ L'itinéraire n'influe pas sur le kilométrage annuel.
       </Text>
       <ModeSelector open={open} setOpen={setOpen} />
       <Details>

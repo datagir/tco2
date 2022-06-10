@@ -8,7 +8,7 @@ import Marianne from 'components/base/Marianne'
 import Ademe from 'components/base/Ademe'
 import Datagir from 'components/base/Datagir'
 import MobileButtons from './footer/MobileButtons'
-import fabriquedelalogistique from 'components/misc/fabriquedelalogistique.png'
+import fabriquedelalogistique from 'components/misc/fabriquedelalogistique.jpg'
 
 const Wrapper = styled.footer`
   position: relative;
