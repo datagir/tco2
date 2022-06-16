@@ -21,7 +21,7 @@ export default function SearchProvider(props) {
   )
   const [payload, setPayload] = useQueryParam(
     'payload',
-    withDefault(NumberParam, 60)
+    withDefault(NumberParam, 10)
   )
   const [possessionDuration, setPossessionDuration] = useQueryParam(
     'possessionDuration',

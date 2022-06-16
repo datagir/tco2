@@ -51,7 +51,7 @@ export default function ModeSelector(props) {
           modified={props.costs[technology.vehicleTechnology]}
           onClick={() => props.setOpen(technology.vehicleTechnology)}
         >
-          {technology.vehicleTechnology.replace('DIESEL-', '')}
+          {technology.shortName}
         </Tab>
       ))}
     </Wrapper>

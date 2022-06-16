@@ -7,18 +7,22 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
+  Legend,
   ResponsiveContainer,
 } from 'recharts'
 
+import useTruckDefaultSettings from 'hooks/useTruckDefaultSettings'
 import useTruckComparison from 'hooks/useTruckComparison'
+import Button from 'components/base/Button'
 import DurationSelector from './summary/DurationSelector'
 
 const Wrapper = styled.div`
-  margin-bottom: 5rem;
+  margin-bottom: 3rem;
 `
 const ChartWrapper = styled.div`
   width: 100%;
   height: 450px;
+  margin-bottom: 1.5rem;
   opacity: ${(props) => (props.isFetching ? 0.3 : 1)};
 
   svg {
@@ -36,17 +40,27 @@ const Green = styled.span`
   color: ${(props) => props.theme.colors.co2};
 `
 export default function Summary() {
+  const { data: descriptions } = useTruckDefaultSettings()
+
   const { data, isFetching, isError } = useTruckComparison()
   const [chart, setChart] = useState(null)
   useEffect(() => {
-    if (data?.output) {
+    if (data?.output && descriptions?.output) {
       setChart(
         data.output.ghg
           .map((emission, index) => ({
-            vehicleTechnology: emission.vehicleTechnology,
+            vehicleTechnology:
+              descriptions.output.vehicleTechnologiesDescriptions.find(
+                (description) =>
+                  description.vehicleTechnology === emission.vehicleTechnology
+              ).shortName,
             CO2: -Math.round(
               emission.landUse + emission.tankToWheel + emission.weelToTank
             ),
+            Énergie: data.output.tco[index].energyCost,
+            Assurance: data.output.tco[index].insuranceCost,
+            Maintenance: data.output.tco[index].maintenanceCost,
+            Achat: data.output.tco[index].purchaseCost,
             TCO: Math.round(
               data.output.tco[index].energyCost +
                 data.output.tco[index].insuranceCost +
@@ -57,11 +71,13 @@ export default function Summary() {
           .sort((a, b) => (a.CO2 < b.CO2 ? 1 : -1))
       )
     }
-  }, [data])
+  }, [data, descriptions])
 
   const theme = useTheme()
 
-  return !isError ? (
+  const [detail, setDetail] = useState(false)
+
+  return !isError && chart ? (
     <Wrapper isFetching={isFetching}>
       <Text>
         Visualisez pour chaque technologie
@@ -72,110 +88,99 @@ export default function Summary() {
         chaque technologie
       </Text>
       <DurationSelector />
-      {chart && (
-        <ChartWrapper isFetching={isFetching}>
-          <ResponsiveContainer width='100%' height={250}>
-            <BarChart
-              width={500}
-              height={300}
-              data={chart}
-              margin={{
-                top: 0,
-                right: 0,
-                left: 0,
-                bottom: 0,
-              }}
-              maxBarSize={40}
-            >
-              <CartesianGrid strokeDasharray='3 3' />
-              <XAxis
-                dataKey='vehicleTechnology'
-                interval={0}
-                fontSize={14}
-                tickLine={false}
-                axisLine={false}
-                tickFormatter={(value) => value.replace('DIESEL-', '')}
-              />
-              <YAxis dataKey='TCO' yAxisId='left' unit='&nbsp;€' interval={0} />
-              <Tooltip content={<CustomTooltip data={data} />} />
+      <ChartWrapper isFetching={isFetching}>
+        <ResponsiveContainer width='100%' height={250}>
+          <BarChart
+            width={500}
+            height={300}
+            data={chart}
+            margin={{
+              top: detail ? 0 : 22,
+              right: 0,
+              left: 0,
+              bottom: 0,
+            }}
+            maxBarSize={40}
+          >
+            <CartesianGrid strokeDasharray='3 3' />
+            <XAxis
+              dataKey='vehicleTechnology'
+              interval={0}
+              fontSize={14}
+              tickLine={false}
+              axisLine={false}
+            />
+            <YAxis dataKey='TCO' yAxisId='left' unit='&nbsp;€' interval={0} />
+            <Tooltip />
+            {detail ? (
+              <>
+                <Legend verticalAlign='top' />
+                <Bar
+                  stackId='a'
+                  yAxisId='left'
+                  dataKey='Achat'
+                  fill={theme.colors.purchaseCost}
+                />
+                <Bar
+                  stackId='a'
+                  yAxisId='left'
+                  dataKey='Assurance'
+                  fill={theme.colors.insuranceCost}
+                />
+                <Bar
+                  stackId='a'
+                  yAxisId='left'
+                  dataKey='Maintenance'
+                  fill={theme.colors.maintenanceCost}
+                />
+                <Bar
+                  stackId='a'
+                  yAxisId='left'
+                  dataKey='Énergie'
+                  fill={theme.colors.energyCost}
+                />
+              </>
+            ) : (
               <Bar yAxisId='left' dataKey='TCO' fill={theme.colors.tco} />
-            </BarChart>
-          </ResponsiveContainer>
-          <ResponsiveContainer width='100%' height={200}>
-            <BarChart
-              width={500}
-              height={300}
-              data={chart}
-              margin={{
-                top: 0,
-                right: 0,
-                left: 0,
-                bottom: 0,
-              }}
-              maxBarSize={40}
-            >
-              <CartesianGrid strokeDasharray='3 3' />
-              <YAxis
-                interval={0}
-                dataKey='CO2'
-                yAxisId='right'
-                unit='&nbsp;gCO2e/km'
-                tickFormatter={(value) => -value}
-              />
-              <XAxis dataKey='vehicleTechnology' hide />
-              <Tooltip formatter={(value) => -value + ' gCO2e/km'} />
-              <Bar yAxisId='right' dataKey='CO2' fill={theme.colors.co2} />
-            </BarChart>
-          </ResponsiveContainer>
-        </ChartWrapper>
-      )}
+            )}
+          </BarChart>
+        </ResponsiveContainer>
+        <ResponsiveContainer width='100%' height={200}>
+          <BarChart
+            width={500}
+            height={300}
+            data={chart}
+            margin={{
+              top: 0,
+              right: 0,
+              left: 0,
+              bottom: 0,
+            }}
+            maxBarSize={40}
+          >
+            <CartesianGrid strokeDasharray='3 3' />
+            <YAxis
+              interval={0}
+              dataKey='CO2'
+              yAxisId='right'
+              unit='&nbsp;gCO2e/km'
+              tickFormatter={(value) => -value}
+            />
+            <XAxis dataKey='vehicleTechnology' hide />
+            <Tooltip formatter={(value) => -value + ' gCO2e/km'} />
+            <Bar yAxisId='right' dataKey='CO2' fill={theme.colors.co2} />
+          </BarChart>
+        </ResponsiveContainer>
+      </ChartWrapper>
+      <Button.Wrapper>
+        <Button
+          onClick={() => setDetail((prevDetail) => !prevDetail)}
+          small
+          hollow
+        >
+          {detail ? 'Cacher' : 'Voir'} le détail du TCO
+        </Button>
+      </Button.Wrapper>
     </Wrapper>
   ) : null
-}
-
-const StyledTooltip = styled.div`
-  padding: 0.75rem;
-  background-color: ${(props) => props.theme.colors.background};
-  border: 0.0675rem solid ${(props) => props.theme.colors.secondLight};
-  border-radius: 0.5rem;
-`
-const Title = styled.h4`
-  margin-bottom: 0.75rem;
-  color: ${(props) => props.theme.colors.main};
-`
-const Costs = styled.ul`
-  margin: 0;
-  padding: 0;
-  list-style: none;
-`
-const Cost = styled.li`
-  margin: 0 0 0.5rem;
-  padding: 0;
-`
-const CustomTooltip = (props) => {
-  if (props.active && props.payload && props.payload.length) {
-    const tco = props.data.output.tco.find(
-      (technology) => technology.vehicleTechnology === props.label
-    )
-    return (
-      <StyledTooltip>
-        <Title>{props.label}</Title>
-        <Costs>
-          <Cost>
-            Achat : <b>{tco.purchaseCost} €</b>
-          </Cost>
-          <Cost>
-            Assurance : <b>{tco.insuranceCost} €</b>
-          </Cost>
-          <Cost>
-            Énergie : <b>{tco.energyCost} €</b>
-          </Cost>
-          <Cost>
-            Maintenance : <b>{tco.maintenanceCost} €</b>
-          </Cost>
-        </Costs>
-      </StyledTooltip>
-    )
-  }
-  return null
 }

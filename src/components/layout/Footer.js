@@ -9,6 +9,7 @@ import Ademe from 'components/base/Ademe'
 import Datagir from 'components/base/Datagir'
 import MobileButtons from './footer/MobileButtons'
 import fabriquedelalogistique from 'components/misc/fabriquedelalogistique.jpg'
+import ifpen from 'components/misc/ifpen.jpg'
 
 const Wrapper = styled.footer`
   position: relative;
@@ -116,6 +117,13 @@ export default function Footer(props) {
           noIcon
         >
           <Image src={fabriquedelalogistique} alt='Fabrique de la logistique' />
+        </Logos>
+        <Logos
+          to='https://www.ifpenergiesnouvelles.fr/'
+          aria-label='https://www.ifpenergiesnouvelles.fr'
+          noIcon
+        >
+          <Image src={ifpen} alt='IFPEN' />
         </Logos>
       </LogosWrapper>
       <Accessibility>accessibilité : non conforme</Accessibility>

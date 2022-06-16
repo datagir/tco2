@@ -55,10 +55,18 @@ export default function Costs(props) {
 
   const [open, setOpen] = useState(null)
 
-  const technologies = data.output.vehicleCategoriesDescriptions.find(
-    (vehicleCategoriesDescription) =>
-      vehicleCategoriesDescription.vehicleCategory === vehicleCategory
-  ).vehicleTechnologiesAvailability
+  const technologies = data.output.vehicleCategoriesDescriptions
+    .find(
+      (vehicleCategoriesDescription) =>
+        vehicleCategoriesDescription.vehicleCategory === vehicleCategory
+    )
+    .vehicleTechnologiesAvailability.map((technologie) => ({
+      ...technologie,
+      ...data.output.vehicleTechnologiesDescriptions.find(
+        (description) =>
+          description.vehicleTechnology === technologie.vehicleTechnology
+      ),
+    }))
 
   useEffect(() => {
     setOpen(technologies[0].vehicleTechnology)
