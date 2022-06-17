@@ -68,10 +68,6 @@ export default function Costs(props) {
       ),
     }))
 
-  useEffect(() => {
-    setOpen(technologies[0].vehicleTechnology)
-  }, [technologies])
-
   return props.open && technologies ? (
     <Wrapper>
       <ModeSelector
