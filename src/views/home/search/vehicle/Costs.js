@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
 
 import useTruckDefaultSettings from 'hooks/useTruckDefaultSettings'
@@ -68,7 +68,22 @@ export default function Costs(props) {
       ),
     }))
 
-  return props.open && technologies ? (
+  useEffect(() => {
+    if (
+      !open ||
+      !technologies.find(
+        (technologie) => technologie.vehicleTechnology === open
+      )
+    ) {
+      setOpen(technologies[0].vehicleTechnology)
+    }
+  }, [technologies, open])
+
+  return props.open &&
+    technologies &&
+    technologies.find(
+      (technologie) => technologie.vehicleTechnology === open
+    ) ? (
     <Wrapper>
       <ModeSelector
         open={open}
