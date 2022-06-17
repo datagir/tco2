@@ -10,14 +10,13 @@ const Item = styled.li``
 export default function List(props) {
   return (
     <Wrapper>
-      {props.data.output.chart[5].options.series[0].data.map(
-        (level, index) =>
-          level === props.level && (
-            <Item key={props.data.output.chart[5].options.xAxis.data[index]}>
-              {props.data.output.chart[5].options.xAxis.data[index]}
-            </Item>
-          )
-      )}
+      {props.vehicleTechnologiesAvailability
+        .filter((technologie) => technologie.critAir === props.level)
+        .map((technologie) => (
+          <Item key={technologie.vehicleTechnology}>
+            {technologie.shortName}
+          </Item>
+        ))}
     </Wrapper>
   )
 }

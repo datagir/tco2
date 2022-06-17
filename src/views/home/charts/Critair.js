@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 
-import useTruckComparison from 'hooks/useTruckComparison'
+import useTruckDefaultSettings from 'hooks/useTruckDefaultSettings'
+import SearchContext from 'utils/SearchContext'
 import List from './critair/List'
 
 const Wrapper = styled.div`
@@ -35,8 +36,26 @@ const Column = styled.div`
 `
 
 export default function Critair() {
-  const { data } = useTruckComparison()
-  return data?.output?.chart ? (
+  const { data } = useTruckDefaultSettings()
+
+  const { vehicleCategory } = useContext(SearchContext)
+
+  if (!data || !vehicleCategory) {
+    return null
+  }
+
+  const vehicleTechnologiesAvailability =
+    data.output.vehicleCategoriesDescriptions
+      .find((category) => category.vehicleCategory === vehicleCategory)
+      ?.vehicleTechnologiesAvailability.map((technologie) => ({
+        ...technologie,
+        ...data.output.vehicleTechnologiesDescriptions.find(
+          (description) =>
+            description.vehicleTechnology === technologie.vehicleTechnology
+        ),
+      }))
+
+  return vehicleTechnologiesAvailability ? (
     <Wrapper>
       <Title>Vignettes Crit’Air</Title>
       <Columns>
@@ -69,7 +88,10 @@ export default function Critair() {
               fill='#009650'
             />
           </svg>
-          <List level={0} data={data} />
+          <List
+            level='0'
+            vehicleTechnologiesAvailability={vehicleTechnologiesAvailability}
+          />
         </Column>
         <Column>
           <svg
@@ -101,7 +123,10 @@ export default function Critair() {
             />
           </svg>
 
-          <List level={1} data={data} />
+          <List
+            level='1'
+            vehicleTechnologiesAvailability={vehicleTechnologiesAvailability}
+          />
         </Column>
         <Column>
           <svg
@@ -133,7 +158,10 @@ export default function Critair() {
             />
           </svg>
 
-          <List level={2} data={data} />
+          <List
+            level='2'
+            vehicleTechnologiesAvailability={vehicleTechnologiesAvailability}
+          />
         </Column>
       </Columns>
     </Wrapper>
