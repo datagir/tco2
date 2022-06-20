@@ -3,7 +3,9 @@ const axios = require('axios')
 exports.handler = function (event) {
   return axios
     .get(
-      `https://mobicloud.ifpen.com/api/geocoding/autocomplete?query=${event.queryStringParameters.query}`,
+      `https://mobicloud.ifpen.com/api/geocoding/autocomplete?query=${encodeURI(
+        event.queryStringParameters.query
+      )}`,
       {
         headers: {
           Authorization: 'Bearer ' + event.queryStringParameters.token,
