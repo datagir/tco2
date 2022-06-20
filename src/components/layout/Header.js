@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import ThemeToggle from './header/ThemeToggle'
 import fabriquedelalogistique from 'components/misc/fabriquedelalogistique.jpg'
+import MagicLink from 'components/base/MagicLink'
 
 const Wrapper = styled.header`
   position: relative;
@@ -31,7 +32,9 @@ export default function Header(props) {
   return (
     <Wrapper className={props.className}>
       <Left>
-        <Image src={fabriquedelalogistique} alt='Fabrique de la logistique' />
+        <MagicLink to='/'>
+          <Image src={fabriquedelalogistique} alt='Fabrique de la logistique' />
+        </MagicLink>
         {props.children}
       </Left>
       <ThemeToggle />

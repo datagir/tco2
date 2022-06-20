@@ -10,7 +10,9 @@ export function useAutocomplete(query) {
       query?.length > 2
         ? axios
             .get(
-              `https://staging--tco2.netlify.app/.netlify/functions/getAutocomplete?token=${token}&query=${query}`
+              `https://staging--tco2.netlify.app/.netlify/functions/getAutocomplete?token=${token}&query=${encodeURI(
+                query
+              )}`
             )
             .then((res) => res.data)
         : Promise.resolve([]),
