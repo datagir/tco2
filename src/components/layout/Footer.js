@@ -75,16 +75,31 @@ export default function Footer(props) {
   return iframe ? (
     <>
       <MobileButtons iframe={iframe} />
-      <Logos
-        to='https://datagir.ademe.fr/'
-        aria-label='datagir.ademe.fr'
-        iframe
-        noIcon
-      >
-        <Marianne />
-        <Ademe />
-        <Datagir />
-      </Logos>
+      <LogosWrapper iframe={iframe}>
+        <Logos
+          to='https://datagir.ademe.fr/'
+          aria-label='datagir.ademe.fr'
+          noIcon
+        >
+          <Marianne />
+          <Ademe />
+          <Datagir />
+        </Logos>
+        <Logos
+          to='https://www.lafabriquedelalogistique.fr/'
+          aria-label='lafabriquedelalogistique.fr'
+          noIcon
+        >
+          <Image src={fabriquedelalogistique} alt='Fabrique de la logistique' />
+        </Logos>
+        <Logos
+          to='https://www.ifpenergiesnouvelles.fr/'
+          aria-label='https://www.ifpenergiesnouvelles.fr'
+          noIcon
+        >
+          <Image src={ifpen} alt='IFPEN' />
+        </Logos>
+      </LogosWrapper>
     </>
   ) : (
     <Wrapper
