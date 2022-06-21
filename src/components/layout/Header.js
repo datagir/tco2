@@ -1,15 +1,43 @@
 import React from 'react'
-import { Header as Wrapper, HeaderBody, Service } from '@dataesr/react-dsfr'
+import styled from 'styled-components'
 
-export default function Header() {
+import ThemeToggle from './header/ThemeToggle'
+import fabriquedelalogistique from 'components/misc/fabriquedelalogistique.jpg'
+import MagicLink from 'components/base/MagicLink'
+
+const Wrapper = styled.header`
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  margin: 1.5rem 0;
+
+  ${(props) => props.theme.mq.small} {
+    margin-bottom: 0.5rem;
+    font-size: 0.75rem;
+  }
+`
+const Left = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+`
+const Image = styled.img`
+  display: block;
+  width: 8rem;
+  height: auto;
+  margin-right: 0.75rem;
+`
+export default function Header(props) {
   return (
-    <Wrapper>
-      <HeaderBody>
-        <Service
-          title='Verdir ma flotte'
-          description={`L’outil d'aide à la décision pour l'achat de flottes de véhicules de transport de marchandises.`}
-        />
-      </HeaderBody>
+    <Wrapper className={props.className}>
+      <Left>
+        <MagicLink to='/'>
+          <Image src={fabriquedelalogistique} alt='Fabrique de la logistique' />
+        </MagicLink>
+        {props.children}
+      </Left>
+      <ThemeToggle />
     </Wrapper>
   )
 }
