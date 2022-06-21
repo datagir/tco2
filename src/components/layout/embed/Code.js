@@ -41,7 +41,7 @@ export default function Code(props) {
 
   useEffect(() => {
     setScript(
-      `<script id="${props.id || 'verdirmaflotte'}" src="${
+      `<script id="${props.id || 'verdir-ma-flotte'}" src="${
         window.location.origin
       }/iframe.js" data-search="${props.url || '?'}theme=${theme}"></script>`
     )
