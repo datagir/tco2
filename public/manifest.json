@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Verdir ma flotte",
+  "name": "L’outil d'aide à la décision pour renouveler son véhicule de transport de marchandises.",
   "icons": [
     {
       "src": "favicon.ico",
