@@ -11,11 +11,17 @@ const Wrapper = styled.div`
   align-items: flex-start;
   width: 100%;
 `
-
+const Text = styled.p`
+  width: 100%;
+  font-size: 0.875rem;
+  font-weight: 300;
+  text-align: center;
+`
 export default function Itinerary() {
   const { start, setStart, end, setEnd } = useContext(SearchContext)
   return (
     <Wrapper>
+      <Text>⚠️ L'itinéraire n'influe pas sur le kilométrage annuel.</Text>
       <Address
         placeholder='Départ'
         address={start?.label}

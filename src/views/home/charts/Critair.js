@@ -8,7 +8,7 @@ import List from './critair/List'
 const Wrapper = styled.div`
   position: relative;
   margin-bottom: 4rem;
-  padding: 1.5rem;
+  padding: 1.5rem 1.5rem 0.5rem;
   background-color: ${(props) => props.theme.colors.secondLight};
   border-radius: 1rem;
 
@@ -21,6 +21,7 @@ const Title = styled.h2`
 `
 const Columns = styled.div`
   display: flex;
+  margin-bottom: 1rem;
   gap: 1.5rem;
 
   ${(props) => props.theme.mq.small} {
@@ -34,7 +35,10 @@ const Column = styled.div`
   background-color: ${(props) => props.theme.colors.footerLight};
   border-radius: 1rem;
 `
-
+const Text = styled.p`
+  font-size: 0.875rem;
+  font-weight: 300;
+`
 export default function Critair() {
   const { data } = useTruckDefaultSettings()
 
@@ -164,6 +168,10 @@ export default function Critair() {
           />
         </Column>
       </Columns>
+      <Text>
+        * Seuls les véhicules fonctionnant exclusivement au B100 sont éligibles
+        à la vignette Crit’Air 1.
+      </Text>
     </Wrapper>
   ) : null
 }

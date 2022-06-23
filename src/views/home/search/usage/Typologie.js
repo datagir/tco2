@@ -61,8 +61,6 @@ export default function Typologie() {
       <Text>
         La mission du véhicule peut être renseignée soit en proportions d’usages
         urbain, extra-urbain ou autoroutier ou soit selon un itinéraire connu.
-        <br />
-        ⚠️ L'itinéraire n'influe pas sur le kilométrage annuel.
       </Text>
       <ModeSelector open={open} setOpen={setOpen} />
       <Details>
