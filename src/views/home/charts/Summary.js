@@ -82,7 +82,10 @@ export default function Summary() {
       <Text>
         Visualisez pour chaque technologie
         <br />
-        le <Blue>coût total de possession à l'année (en bleu)</Blue>
+        le{' '}
+        <Blue>
+          coût total de possession à l'année (<strong>TCO</strong>, en bleu)
+        </Blue>
         <br />
         et les <Green>émissions de gaz à effets de serre (en vert)</Green> de
         chaque technologie
@@ -110,8 +113,16 @@ export default function Summary() {
               tickLine={false}
               axisLine={false}
             />
-            <YAxis dataKey='TCO' yAxisId='left' unit='&nbsp;€' interval={0} />
-            <Tooltip />
+            <YAxis
+              dataKey='TCO'
+              yAxisId='left'
+              unit='&nbsp;€'
+              interval={0}
+              tickFormatter={(value) => value.toLocaleString('fr-fr')}
+            />
+            <Tooltip
+              formatter={(value) => value.toLocaleString('fr-fr') + ' €'}
+            />
             {detail ? (
               <>
                 <Legend verticalAlign='top' />
@@ -164,10 +175,14 @@ export default function Summary() {
               dataKey='CO2'
               yAxisId='right'
               unit='&nbsp;gCO2e/km'
-              tickFormatter={(value) => -value}
+              tickFormatter={(value) => -value.toLocaleString('fr-fr')}
             />
             <XAxis dataKey='vehicleTechnology' hide />
-            <Tooltip formatter={(value) => -value + ' gCO2e/km'} />
+            <Tooltip
+              formatter={(value) =>
+                -value.toLocaleString('fr-fr') + ' gCO2e/km'
+              }
+            />
             <Bar yAxisId='right' dataKey='CO2' fill={theme.colors.co2} />
           </BarChart>
         </ResponsiveContainer>

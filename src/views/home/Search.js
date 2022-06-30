@@ -18,7 +18,12 @@ const Wrapper = styled.div`
 `
 const Introduction = styled.p`
   max-width: 29rem;
+  margin: 0 auto 0.5rem;
+  text-align: center;
+`
+const Small = styled.p`
   margin: 0 auto 1rem;
+  font-size: 0.75rem;
   text-align: center;
 `
 export default function Search() {
@@ -35,6 +40,10 @@ export default function Search() {
         Comparez le coût et les émissions des énergies alternatives en fonction
         de vos besoins et de vos usages.
       </Introduction>
+      <Small>
+        Les différentes énergies comparées par l'outil sont des technologies
+        disponibles sur le marché.
+      </Small>
       <Vehicle />
       <Usage />
     </Wrapper>

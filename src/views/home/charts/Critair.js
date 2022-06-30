@@ -172,6 +172,13 @@ export default function Critair() {
         * Seuls les véhicules fonctionnant exclusivement au B100 sont éligibles
         à la vignette Crit’Air 1.
       </Text>
+      <Text>
+        Les véhicules utilisés pour réaliser les simulations sont paramétrés
+        pour représenter des véhicules neufs dont les émissions respectent la
+        norme Euro VI et dont les caractéristiques principales correspondent à
+        la moyenne de caractéristiques des véhicules neufs disponibles sur le
+        marché.
+      </Text>
     </Wrapper>
   ) : null
 }
