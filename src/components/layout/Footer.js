@@ -113,6 +113,29 @@ export default function Footer(props) {
 
         <Section>{props.children}</Section>
         <Section>
+          <h2>D'où viennent ces données ?</h2>
+          <p>
+            Les facteurs d’émissions proviennent de la{' '}
+            <MagicLink to='https://bilans-ges.ademe.fr/fr/accueil/contenu/index/page/presentation/siGras/0'>
+              Base Carbone de l’ADEME
+            </MagicLink>
+            et les consommations s’appuient sur des simulations réalisées par l’
+            <MagicLink to='https://www.ifpenergiesnouvelles.fr/'>
+              IFPEN
+            </MagicLink>
+            . L’ensemble des données de ce simulateur (facteurs d’émissions,
+            consommations et coûts) ont été comparées et validées par plusieurs
+            transporteurs via{' '}
+            <MagicLink to='https://www.lafabriquedelalogistique.fr/'>
+              la Fabrique de la Logistique
+            </MagicLink>
+            . Dans une approche de commun, tout acteur peut y contribuer pour
+            les faire évoluer et garantir un outil toujours au bon niveau. Le
+            détail des méthodes et données utilisées seront disponibles très
+            prochainement.
+          </p>
+        </Section>
+        <Section>
           <ContactPrompt />
         </Section>
       </Content>

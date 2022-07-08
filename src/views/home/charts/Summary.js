@@ -39,6 +39,10 @@ const Blue = styled.span`
 const Green = styled.span`
   color: ${(props) => props.theme.colors.co2};
 `
+const Disclaimer = styled.p`
+  margin-top: 1.5rem; //erk
+  text-align: center;
+`
 export default function Summary() {
   const { data: descriptions } = useTruckDefaultSettings()
 
@@ -196,6 +200,16 @@ export default function Summary() {
           {detail ? 'Cacher' : 'Voir'} le détail du TCO
         </Button>
       </Button.Wrapper>
+      <Disclaimer>
+        <strong>
+          CO<sub>2</sub>e (CO2 équivalent)
+        </strong>
+        . Sont incluses les émissions directes, et la production et distribution
+        de carburant et d'électricité.{' '}
+        <strong>La construction des véhicules</strong> (camions, batteries…){' '}
+        <strong>et des infrastructures</strong> (routes, entrepôts, stations
+        d’avitaillement...) <strong>n'est pas incluse</strong>.
+      </Disclaimer>
     </Wrapper>
   ) : null
 }
