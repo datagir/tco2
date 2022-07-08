@@ -66,7 +66,7 @@ export default function Contact(props) {
         name='contact'
         onSubmit={(e) => {
           e.preventDefault()
-          if (!user.nom || !user.email || !user.objet || !user.message) {
+          if (!user.nom || !user.email || !user.message) {
             mutation.reset()
             setEmpty(true)
           } else {
