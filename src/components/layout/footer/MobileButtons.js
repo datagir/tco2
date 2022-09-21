@@ -107,7 +107,7 @@ export default function MobileButtons(props) {
           <Label iframe={props.iframe}>Contact</Label>
         </Button>
         {props.iframe && (
-          <StyledLink to={'https://monimpacttransport.fr'}>
+          <StyledLink to={'https://verdirmaflotte.fr'}>
             <Icon iframe={props.iframe}>
               <Eye
                 iframe={props.iframe}
