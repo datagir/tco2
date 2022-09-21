@@ -10,6 +10,7 @@ import Datagir from 'components/base/Datagir'
 import MobileButtons from './footer/MobileButtons'
 import fabriquedelalogistique from 'components/misc/fabriquedelalogistique.jpg'
 import ifpen from 'components/misc/ifpen.jpg'
+import tlf from 'components/misc/tlf.png'
 
 const Wrapper = styled.footer`
   position: relative;
@@ -99,6 +100,9 @@ export default function Footer(props) {
         >
           <Image src={ifpen} alt='IFPEN' />
         </Logos>
+        <Logos to='https://e-tlf.com' aria-label='https://e-tlf.com' noIcon>
+          <Image src={tlf} alt='TLF' />
+        </Logos>
       </LogosWrapper>
     </>
   ) : (
@@ -162,6 +166,9 @@ export default function Footer(props) {
           noIcon
         >
           <Image src={ifpen} alt='IFPEN' />
+        </Logos>
+        <Logos to='https://e-tlf.com' aria-label='https://e-tlf.com' noIcon>
+          <Image src={tlf} alt='TLF' />
         </Logos>
       </LogosWrapper>
       <Accessibility>accessibilité : non conforme</Accessibility>
