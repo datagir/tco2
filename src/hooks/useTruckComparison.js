@@ -65,7 +65,7 @@ export default function useTruckComparison() {
                     resaleCost: costs[vehicleTechnology].resaleCost,
                   })),
                 },
-                echartsConfiguration: false,
+                chartsConfiguration: false,
               }
             )
             .then((res) => res.data)
