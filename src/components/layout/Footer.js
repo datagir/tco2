@@ -135,8 +135,11 @@ export default function Footer(props) {
             </MagicLink>
             . Dans une approche de commun, tout acteur peut y contribuer pour
             les faire évoluer et garantir un outil toujours au bon niveau. Le
-            détail des méthodes et données utilisées seront disponibles très
-            prochainement.
+            détail des méthodes et données utilisées sont disponibles sur le{' '}
+            <MagicLink to='https://wiki.lafabriquedelalogistique.fr/Verdir_ma_Flotte/'>
+              wiki
+            </MagicLink>
+             de la Fabrique de la Logistique.
           </p>
         </Section>
         <Section>
