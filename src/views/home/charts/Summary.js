@@ -15,6 +15,7 @@ import useTruckDefaultSettings from 'hooks/useTruckDefaultSettings'
 import useTruckComparison from 'hooks/useTruckComparison'
 import Button from 'components/base/Button'
 import DurationSelector from './summary/DurationSelector'
+import { parseLocalNumber } from '../../../utils/numbers'
 
 const Wrapper = styled.div`
   margin-bottom: 3rem;
@@ -103,8 +104,8 @@ export default function Summary() {
             data={chart}
             margin={{
               top: detail ? 0 : 22,
-              right: 0,
-              left: 0,
+              right: 10,
+              left: 60,
               bottom: 0,
             }}
             maxBarSize={40}
@@ -122,10 +123,11 @@ export default function Summary() {
               yAxisId='left'
               unit='&nbsp;€'
               interval={0}
-              tickFormatter={(value) => value.toLocaleString('fr-fr')}
+              fontSize={14}
+              tickFormatter={parseLocalNumber}
             />
             <Tooltip
-              formatter={(value) => value.toLocaleString('fr-fr') + ' €'}
+              formatter={(value) => parseLocalNumber(value) + ' €'}
             />
             {detail ? (
               <>
@@ -166,11 +168,11 @@ export default function Summary() {
             height={300}
             data={chart}
             margin={{
-              top: 0,
-              right: 0,
-              left: 0,
-              bottom: 0,
-            }}
+                top: 0,
+                right: 10,
+                left: 60,
+                bottom: 0,
+            } }
             maxBarSize={40}
           >
             <CartesianGrid strokeDasharray='3 3' />
@@ -178,14 +180,13 @@ export default function Summary() {
               interval={0}
               dataKey='CO2'
               yAxisId='right'
+              fontSize={14}
               unit='&nbsp;gCO2e/km'
-              tickFormatter={(value) => -value.toLocaleString('fr-fr')}
+              tickFormatter={(value) => parseLocalNumber(-value)}
             />
             <XAxis dataKey='vehicleTechnology' hide />
             <Tooltip
-              formatter={(value) =>
-                -value.toLocaleString('fr-fr') + ' gCO2e/km'
-              }
+              formatter={(value) => parseLocalNumber(-value) + ' gCO2e/km'}
             />
             <Bar yAxisId='right' dataKey='CO2' fill={theme.colors.co2} />
           </BarChart>

@@ -20,7 +20,7 @@ export default function DefinitionsModal() {
     <Modal open={definitions} setOpen={setDefinitions}>
       <Title>Définitions</Title>
       {data.output.vehicleTechnologiesDescriptions.map((technologie) => (
-        <div key={technologie.name}>
+        <div key={`${technologie.name}-${technologie.vehicleTechnology}`}>
           <Name>
             {technologie.shortName !== technologie.name ? (
               <>
