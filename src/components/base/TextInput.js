@@ -26,8 +26,10 @@ const Input = styled.input`
     box-shadow: 0 -0 0px 1px ${(props) => props.theme.colors.textLight};
   }
 `
-const Unit = styled.span`
+const Unit = styled.div`
   padding: 0.5rem;
+  text-align: start;
+  min-width: 55px;
 `
 export default function TextInput(props) {
   return (

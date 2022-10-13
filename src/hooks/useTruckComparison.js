@@ -63,6 +63,7 @@ export default function useTruckComparison() {
                     maintenanceCost: costs[vehicleTechnology].maintenanceCost,
                     insuranceCost: costs[vehicleTechnology].insuranceCost,
                     resaleCost: costs[vehicleTechnology].resaleCost,
+                    energyCost: costs[vehicleTechnology].energyCost,
                   })),
                 },
                 chartsConfiguration: false,

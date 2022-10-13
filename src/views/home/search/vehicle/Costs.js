@@ -5,6 +5,7 @@ import useTruckDefaultSettings from 'hooks/useTruckDefaultSettings'
 import SearchContext from 'utils/SearchContext'
 import TextInput from 'components/base/TextInput'
 import ModeSelector from './costs/ModeSelector'
+import { resolveEnergyCostUnit } from '../../../../utils/global';
 
 const Wrapper = styled.div`
   ${(props) => props.theme.mq.small} {
@@ -48,6 +49,25 @@ const Button = styled.button`
   opacity: ${(props) => (props.disabled ? 0.5 : 1)};
   cursor: pointer;
 `
+
+const updateEnergyCosts = (prevCosts, value, technology) => {
+  // First update open technology with new value
+  const openTechnology = technology.vehicleTechnology
+  const updatedCosts = {
+    [openTechnology]: { ...prevCosts[openTechnology], energyCost: value }
+  };
+  // Energy cost changes must be applied to all related technologies
+  (technology.otherVehicleTechnologyWithSameEnergy ?? [])
+    .forEach(tech => {
+      updatedCosts[tech] = { ...prevCosts[tech], energyCost: value }
+    })
+
+  return {
+    ...prevCosts,
+    ...updatedCosts
+  }
+}
+
 export default function Costs(props) {
   const { data } = useTruckDefaultSettings()
 
@@ -55,7 +75,7 @@ export default function Costs(props) {
 
   const [open, setOpen] = useState(null)
 
-  const technologies = data.output.vehicleCategoriesDescriptions
+  const technologies = data.output?.vehicleCategoriesDescriptions
     .find(
       (vehicleCategoriesDescription) =>
         vehicleCategoriesDescription.vehicleCategory === vehicleCategory
@@ -79,11 +99,9 @@ export default function Costs(props) {
     }
   }, [technologies, open])
 
-  return props.open &&
-    technologies &&
-    technologies.find(
-      (technologie) => technologie.vehicleTechnology === open
-    ) ? (
+  const openTechnology = (technologies ?? []).find(t => t.vehicleTechnology === open)
+
+  return (props.open && openTechnology) ? (
     <Wrapper>
       <ModeSelector
         open={open}
@@ -99,11 +117,7 @@ export default function Costs(props) {
               name='purchaseCost'
               label={`Prix d’achat du véhicule`}
               unit={'€'}
-              placeholder={
-                technologies.find(
-                  (technologie) => technologie.vehicleTechnology === open
-                ).defaultPurchaseCost || 0
-              }
+              placeholder={openTechnology.defaultPurchaseCost || 0}
               value={costs[open]?.purchaseCost || ''}
               onChange={({ value }) =>
                 setCosts((prevCosts) => ({
@@ -117,11 +131,7 @@ export default function Costs(props) {
               name='purchaseGrant'
               label={`Aide à l’achat du véhicule`}
               unit={'€'}
-              placeholder={
-                technologies.find(
-                  (technologie) => technologie.vehicleTechnology === open
-                ).defaultPurchaseGrant || 0
-              }
+              placeholder={openTechnology.defaultPurchaseGrant || 0}
               value={costs[open]?.purchaseGrant || ''}
               onChange={({ value }) =>
                 setCosts((prevCosts) => ({
@@ -136,16 +146,12 @@ export default function Costs(props) {
               label={`Coût de maintenance annuel`}
               unit={'€'}
               value={costs[open]?.maintenanceCost || ''}
-              placeholder={
-                technologies.find(
-                  (technologie) => technologie.vehicleTechnology === open
-                ).defaultMaintenanceCost || 0
-              }
-              onChange={({ value }) =>
-                setCosts((prevCosts) => ({
-                  ...prevCosts,
-                  [open]: { ...prevCosts[open], maintenanceCost: value },
-                }))
+              placeholder={openTechnology.defaultMaintenanceCost || 0}
+              onChange={ ({ value }) =>
+                  setCosts((prevCosts) => ({
+                    ...prevCosts,
+                    [open]: { ...prevCosts[open], maintenanceCost: value },
+                  }))
               }
             />
             <StyledTextInput
@@ -154,11 +160,7 @@ export default function Costs(props) {
               label={`Coût d’assurance annuel`}
               unit={'€'}
               value={costs[open]?.insuranceCost || ''}
-              placeholder={
-                technologies.find(
-                  (technologie) => technologie.vehicleTechnology === open
-                ).defaultInsuranceCost || 0
-              }
+              placeholder={openTechnology.defaultInsuranceCost || 0}
               onChange={({ value }) =>
                 setCosts((prevCosts) => ({
                   ...prevCosts,
@@ -172,16 +174,23 @@ export default function Costs(props) {
               label={`Valeur de revente du véhicule`}
               unit={'€'}
               value={costs[open]?.resaleCost || ''}
-              placeholder={
-                technologies.find(
-                  (technologie) => technologie.vehicleTechnology === open
-                ).defaultResaleCost || 0
-              }
+              placeholder={openTechnology.defaultResaleCost || 0}
               onChange={({ value }) =>
                 setCosts((prevCosts) => ({
                   ...prevCosts,
                   [open]: { ...prevCosts[open], resaleCost: value },
                 }))
+              }
+            />
+            <StyledTextInput
+              type='number'
+              name='energyCost'
+              label={`Prix du carburant`}
+              unit={resolveEnergyCostUnit(open)}
+              value={costs[open]?.energyCost || ''}
+              placeholder={openTechnology.defaultEnergyCost || 0}
+              onChange={ ({ value }) => setCosts(
+                  (prevCosts) => updateEnergyCosts(prevCosts, value, openTechnology))
               }
             />
           </Types>
