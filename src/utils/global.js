@@ -1,3 +1,5 @@
+import { capitalizeFirstLetter } from './strings';
+
 /* Costs */
 /**
  * Technology identifiers and their related energy cost unit
@@ -24,3 +26,15 @@ const EnergyCostUnitMap = new Map([
  * @returns {`€/${string}`|"€/N/C"} the formatted string for the associated energy cost unit
  */
 export const resolveEnergyCostUnit = (vehicleTechnology) => `€/${EnergyCostUnitMap.get(vehicleTechnology) || 'N/C'}`
+/**
+ * Build the default property name based on the original property name
+ *
+ * energyCost -> defaultEnergyCost
+ *
+ * @param propertyName the name for the actual property
+ * @returns {string|string} returns the default property name
+ */
+export const resolveDefaultPropertyName = (propertyName) => propertyName ? `default${capitalizeFirstLetter(propertyName)}` : ''
+
+/* General */
+export const isNil = value => value === undefined || value === null
