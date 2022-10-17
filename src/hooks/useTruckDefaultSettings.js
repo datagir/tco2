@@ -5,17 +5,16 @@ export default function useTruckDefaultSettings() {
   const { data: token } = useToken()
   return useQuery(
     ['TruckDefaultSettings', token],
-    () =>
-      token
-        ? axios
+    () => axios
             .get(
               `https://staging--tco2.netlify.app/.netlify/functions/getTruckDefaultSettings?token=${token}`
             )
-            .then((res) => res.data)
-        : Promise.reject('no token yet'),
+            .then((res) => res.data),
     {
+      enabled: !!token,
       keepPreviousData: true,
       refetchOnWindowFocus: false,
+      staleTime: Infinity
     }
   )
 }
