@@ -1,5 +1,6 @@
 import { useQuery } from 'react-query'
 import axios from 'axios'
+import { removeTrailingDot } from '../utils/strings';
 
 export default function useTruckDefaultSettings() {
   const { data: token } = useToken()
@@ -32,4 +33,14 @@ export function useToken() {
       staleTime: Infinity,
     }
   )
+}
+
+export function selectCategory(category, data) {
+  return (data?.output?.vehicleCategoriesDescriptions ?? []).find(c => c.vehicleCategory === category)
+}
+export function selectTruckDefaultDescription(category, data) {
+  const categoryDefault = selectCategory(category, data)
+  return {
+    truckDescription: removeTrailingDot(categoryDefault?.description)
+  }
 }

@@ -1,5 +1,6 @@
 import { Bar, BarChart, Label, LabelList, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 import styled from 'styled-components';
+import React from 'react';
 
 const defaultConfig = {
     fontColor: '#FFFFFF',
@@ -11,38 +12,44 @@ const defaultConfig = {
             color: '',
         }
     ],
-    margins: { left: 20, right: 20, top: 10, bottom: 10 }
+    margins: { left: 30, right: 30, top: 30, bottom: 10 }
 }
 
 const ChartWrapper = styled.div`
   width: 100%;
-  margin-bottom: 1.5rem;
 `
 
 const renderCustomLabel = (props) => {
     const { content, customLabel, ...rest } = props;
     const position = props.value > 10 ? 'center' : 'top'
 
-    return <Label {...rest}
+    return (props.value && <Label {...rest}
                   value={customLabel}
                   position={position}
                   fontSize={props.fontSize || 12}
                   fill={props.fontColor || '#FFFFFF'}
-                  fontWeight="Bold" />;
-};
+                  fontWeight="Bold" />)
+}
 
 export default function HorizontalStackedBarChart(props) {
     const { height, width, margin, data, config } = props
 
-    if (!data || !config || !config.sections) {
+    if (!data || !data.length || !config || !config.sections) {
         return null;
     }
+    const { ticks, tickLabels } = data[0]
+    const formatTick = (value, index) => value ? tickLabels[index] : null
 
     return (
         <ChartWrapper>
-            <ResponsiveContainer width={width ?? '100%'} height={height ?? 100}>
+            <ResponsiveContainer width={width ?? '100%'} height={height ?? 120}>
                 <BarChart data={data} layout="vertical" stackOffset="expand" margin={margin ?? defaultConfig.margins}>
-                    <XAxis hide type="number" />
+                    <XAxis type="number"
+                           ticks={ticks}
+                           unit={'%'}
+                           axisLine={false}
+                           tickFormatter={formatTick}
+                           tick={{ fill: props.fontColor }}/>
                     <YAxis
                         type="category"
                         hide
