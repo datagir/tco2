@@ -117,8 +117,8 @@ export default function Costs(props) {
               name='purchaseCost'
               label={`Prix d’achat du véhicule`}
               unit={'€'}
-              placeholder={openTechnology.defaultPurchaseCost || 0}
-              value={costs[open]?.purchaseCost || ''}
+              value={costs[open]?.purchaseCost}
+              defaultValue={openTechnology.defaultPurchaseCost || 0}
               onChange={({ value }) =>
                 setCosts((prevCosts) => ({
                   ...prevCosts,
@@ -131,8 +131,8 @@ export default function Costs(props) {
               name='purchaseGrant'
               label={`Aide à l’achat du véhicule`}
               unit={'€'}
-              placeholder={openTechnology.defaultPurchaseGrant || 0}
-              value={costs[open]?.purchaseGrant || ''}
+              value={costs[open]?.purchaseGrant}
+              defaultValue={openTechnology.defaultPurchaseCost || 0}
               onChange={({ value }) =>
                 setCosts((prevCosts) => ({
                   ...prevCosts,
@@ -145,8 +145,8 @@ export default function Costs(props) {
               name='maintenanceCost'
               label={`Coût de maintenance annuel`}
               unit={'€'}
-              value={costs[open]?.maintenanceCost || ''}
-              placeholder={openTechnology.defaultMaintenanceCost || 0}
+              value={costs[open]?.maintenanceCost}
+              defaultValue={openTechnology.defaultMaintenanceCost || 0}
               onChange={ ({ value }) =>
                   setCosts((prevCosts) => ({
                     ...prevCosts,
@@ -159,8 +159,8 @@ export default function Costs(props) {
               name='insuranceCost'
               label={`Coût d’assurance annuel`}
               unit={'€'}
-              value={costs[open]?.insuranceCost || ''}
-              placeholder={openTechnology.defaultInsuranceCost || 0}
+              value={costs[open]?.insuranceCost}
+              defaultValue={openTechnology.defaultInsuranceCost || 0}
               onChange={({ value }) =>
                 setCosts((prevCosts) => ({
                   ...prevCosts,
@@ -173,8 +173,8 @@ export default function Costs(props) {
               name='resaleCost'
               label={`Valeur de revente du véhicule`}
               unit={'€'}
-              value={costs[open]?.resaleCost || ''}
-              placeholder={openTechnology.defaultResaleCost || 0}
+              value={costs[open]?.resaleCost}
+              defaultValue={openTechnology.defaultResaleCost || 0}
               onChange={({ value }) =>
                 setCosts((prevCosts) => ({
                   ...prevCosts,
@@ -187,8 +187,8 @@ export default function Costs(props) {
               name='energyCost'
               label={`Prix du carburant`}
               unit={resolveEnergyCostUnit(open)}
-              value={costs[open]?.energyCost || ''}
-              placeholder={openTechnology.defaultEnergyCost || 0}
+              value={costs[open]?.energyCost}
+              defaultValue={openTechnology.defaultEnergyCost || 0}
               onChange={ ({ value }) => setCosts(
                   (prevCosts) => updateEnergyCosts(prevCosts, value, openTechnology))
               }

@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { isNil } from '../../utils/global';
 
 const Wrapper = styled.div`
   margin-bottom: 1.5rem;
@@ -31,6 +32,17 @@ const Unit = styled.div`
   text-align: start;
   min-width: 55px;
 `
+
+const resolveValue = (value, defaultValue, type) => {
+  if (!isNil(value)) {
+    return value;
+  }
+  return defaultValue ?? (
+    typeof type === 'number' ? 0 : (
+      typeof type === 'boolean' ? false : '')
+  )
+};
+
 export default function TextInput(props) {
   return (
     <Wrapper className={props.className}>
@@ -44,7 +56,7 @@ export default function TextInput(props) {
           type={props.type || 'text'}
           id={props.name}
           name={props.name}
-          value={props.value}
+          value={resolveValue(props.value, props.defaultValue, props.type)}
           placeholder={props.placeholder}
           error={props.error}
           onChange={(e) => {

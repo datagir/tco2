@@ -69,6 +69,10 @@ export default function SearchProvider(props) {
         setPossessionDuration,
         usesRepartition,
         setUsesRepartition: (e) => {
+          if (Array.isArray(e) && e.length === 3 && e.every(v => typeof v === 'number')) {
+            setUsesRepartition(e)
+            return
+          }
           const index = { urbain: 0, extraurbain: 1, autoroute: 2 }[e.name]
           const tempRepartition = [...usesRepartition]
           tempRepartition[index] =

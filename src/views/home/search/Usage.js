@@ -4,6 +4,9 @@ import styled from 'styled-components'
 import SearchContext from 'utils/SearchContext'
 import TextInput from 'components/base/TextInput'
 import Typologie from './usage/Typologie'
+import useTruckDefaultSettings, {
+  selectTruckDefaultParameters,
+} from '../../../hooks/useTruckDefaultSettings';
 
 const Wrapper = styled.div`
   position: relative;
@@ -35,15 +38,19 @@ const SecondTextInput = styled(TextInput)`
   }
 `
 export default function Usage() {
-  const { totalAnnualDistance, setTotalAnnualDistance, payload, setPayload } =
+  const { vehicleCategory, totalAnnualDistance, setTotalAnnualDistance, payload, setPayload } =
     useContext(SearchContext)
+  const { data: defaultSettings } = useTruckDefaultSettings()
+  const { totalAnnualDistance: defaultTotalAnnualDistance, payload: defaultPayload } = selectTruckDefaultParameters(vehicleCategory, defaultSettings)
 
   return (
     <Wrapper>
       <Title htmlFor='kilometrage'>Kilométrage annuel</Title>
       <MainTextInput
+        type={'number'}
         name='kilometrage'
         unit={'km'}
+        defaultValue={defaultTotalAnnualDistance}
         value={totalAnnualDistance}
         onChange={({ value }) => setTotalAnnualDistance(value)}
       />
@@ -52,8 +59,10 @@ export default function Usage() {
         Chargement du véhicule en pourcentage de charge utile
       </Title>
       <SecondTextInput
+        type={'number'}
         name='payload'
         unit={'%'}
+        defaultValue={defaultPayload}
         value={payload}
         onChange={({ value }) => setPayload(value)}
         min={0}

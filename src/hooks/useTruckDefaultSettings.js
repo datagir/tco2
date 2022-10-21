@@ -44,3 +44,11 @@ export function selectTruckDefaultDescription(category, data) {
     truckDescription: removeTrailingDot(categoryDefault?.description)
   }
 }
+export function selectTruckDefaultParameters(category, data) {
+  const categoryDefault = selectCategory(category, data)
+  const defaultParams = categoryDefault?.DefaultParameters
+  return {
+    ...defaultParams,
+    usesRepartition: (defaultParams?.usesRepartition ?? []).map(rep => rep.percentage)
+  }
+}

@@ -1,7 +1,9 @@
 import React, { useState, useContext } from 'react'
 import styled from 'styled-components'
 
-import useTruckDefaultSettings from 'hooks/useTruckDefaultSettings'
+import useTruckDefaultSettings, {
+  selectTruckDefaultParameters,
+} from 'hooks/useTruckDefaultSettings'
 import SearchContext from 'utils/SearchContext'
 import Select from 'components/base/Select'
 import Costs from './vehicle/Costs'
@@ -56,14 +58,26 @@ const ToggleButton = styled.button`
   }
 `
 const StyledSelect = styled(Select)`
-  max-width: 14rem;
+  min-width: 18rem;
+  max-width: 30rem;
 `
 
 export default function Vehicle() {
-  const { vehicleCategory, setVehicleCategory } = useContext(SearchContext)
+  const { vehicleCategory, setVehicleCategory, setUsesRepartition, setCosts,setTotalAnnualDistance, setPayload } = useContext(SearchContext)
+  const { data: truckDefaults } = useTruckDefaultSettings()
+
   const [open, setOpen] = useState(false)
 
-  const { data } = useTruckDefaultSettings()
+  const updateVehicleCategory = (newCategory) => {
+    const { usesRepartition, payload, totalAnnualDistance } = selectTruckDefaultParameters(newCategory, truckDefaults)
+    setVehicleCategory(newCategory)
+    setUsesRepartition(usesRepartition)
+
+    setTotalAnnualDistance(totalAnnualDistance)
+    setPayload(payload)
+    setCosts([])
+  }
+
   return (
     <Wrapper>
       <Title htmlFor='vehicleCategory'>Silhouette du véhicule</Title>
@@ -71,9 +85,9 @@ export default function Vehicle() {
         <StyledSelect
           name={'vehicleCategory'}
           value={vehicleCategory}
-          onChange={({ value }) => setVehicleCategory(value)}
+          onChange={({ value }) => updateVehicleCategory(value)}
         >
-          {data.output.vehicleCategoriesDescriptions.map((vehicleCategory) => (
+          {truckDefaults.output.vehicleCategoriesDescriptions.map((vehicleCategory) => (
             <option
               key={vehicleCategory.vehicleCategory}
               value={vehicleCategory.vehicleCategory}
