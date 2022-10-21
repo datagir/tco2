@@ -3,6 +3,15 @@ import { useQuery } from 'react-query'
 import axios from 'axios'
 
 import SearchContext from 'utils/SearchContext'
+import useDebounce from './useDebounce';
+import { isNil } from '../utils/global';
+
+const areLocationsReady = (start, end) => {
+  const locations = [start?.longitude, start?.latitude, end?.longitude, end?.latitude];
+  return (isNil(start) && isNil(end)) || ((!isNil(start) && !isNil(end)) &&
+    (locations.every(v => isNil(v)) || (locations.every(v => !isNil(v))))
+  )
+}
 
 export default function useTruckComparison() {
   const {
@@ -16,6 +25,12 @@ export default function useTruckComparison() {
     costs,
   } = useContext(SearchContext)
 
+  // Disable query while locations are partially filled
+  const enabled = areLocationsReady(start, end)
+
+  const debouncedCosts = useDebounce(costs)
+  const debouncedPossessionDuration = useDebounce(possessionDuration, 100)
+
   const { data: token } = useToken()
   return useQuery(
     [
@@ -23,12 +38,12 @@ export default function useTruckComparison() {
       token,
       vehicleCategory,
       totalAnnualDistance,
-      possessionDuration,
+      debouncedPossessionDuration,
       usesRepartition,
       start,
       end,
       payload,
-      costs,
+      debouncedCosts,
     ],
     () =>
       token
@@ -54,16 +69,16 @@ export default function useTruckComparison() {
                   payload,
                 },
                 tcoParameters: {
-                  possessionDuration,
+                  possessionDuration: debouncedPossessionDuration,
                   fuelConsumption: 0,
-                  costs: Object.keys(costs).map((vehicleTechnology) => ({
+                  costs: Object.keys(debouncedCosts).map((vehicleTechnology) => ({
                     vehicleTechnology,
-                    purchaseCost: costs[vehicleTechnology].purchaseCost,
-                    purchaseGrant: costs[vehicleTechnology].purchaseGrant,
-                    maintenanceCost: costs[vehicleTechnology].maintenanceCost,
-                    insuranceCost: costs[vehicleTechnology].insuranceCost,
-                    resaleCost: costs[vehicleTechnology].resaleCost,
-                    energyCost: costs[vehicleTechnology].energyCost,
+                    purchaseCost: debouncedCosts[vehicleTechnology].purchaseCost,
+                    purchaseGrant: debouncedCosts[vehicleTechnology].purchaseGrant,
+                    maintenanceCost: debouncedCosts[vehicleTechnology].maintenanceCost,
+                    insuranceCost: debouncedCosts[vehicleTechnology].insuranceCost,
+                    resaleCost: debouncedCosts[vehicleTechnology].resaleCost,
+                    energyCost: debouncedCosts[vehicleTechnology].energyCost,
                   })),
                 },
                 chartsConfiguration: false,
@@ -75,6 +90,7 @@ export default function useTruckComparison() {
       keepPreviousData: true,
       refetchOnWindowFocus: false,
       staleTime: Infinity,
+      enabled
     }
   )
 }

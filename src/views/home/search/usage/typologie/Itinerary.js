@@ -24,10 +24,10 @@ export default function Itinerary() {
       <Text>⚠️ L'itinéraire n'influe pas sur le kilométrage annuel.</Text>
       <Address
         placeholder='Départ'
-        address={start?.label}
+        address={start?.label ?? ''}
         setPlace={setStart}
       />
-      <Address placeholder='Arrivée' address={end?.label} setPlace={setEnd} />
+      <Address placeholder='Arrivée' address={end?.label ?? ''} setPlace={setEnd} />
     </Wrapper>
   )
 }
