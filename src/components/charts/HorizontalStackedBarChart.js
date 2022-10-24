@@ -6,7 +6,7 @@ import { isNil } from '../../utils/global';
 const defaultConfig = {
     fontColor: '#FFFFFF',
     dataKey: '',
-    fontSize: 12,
+    fontSize: 13,
     sections: [
         {
             dataKey: 'a',
