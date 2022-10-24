@@ -1,6 +1,7 @@
-import { Bar, BarChart, Label, LabelList, ResponsiveContainer, XAxis, YAxis } from 'recharts';
+import { Bar, BarChart, Label, LabelList, Rectangle, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 import styled from 'styled-components';
-import React from 'react';
+import React, { useState } from 'react';
+import { isNil } from '../../utils/global';
 
 const defaultConfig = {
     fontColor: '#FFFFFF',
@@ -28,11 +29,13 @@ const renderCustomLabel = (props) => {
                   position={position}
                   fontSize={props.fontSize || 12}
                   fill={props.fontColor || '#FFFFFF'}
+                  pointerEvents={'none'}
                   fontWeight="Bold" />)
 }
 
 export default function HorizontalStackedBarChart(props) {
     const { height, width, margin, data, config } = props
+    const [hoveredBar, setHoveredBar] = useState(null)
 
     if (!data || !data.length || !config || !config.sections) {
         return null;
@@ -43,7 +46,7 @@ export default function HorizontalStackedBarChart(props) {
     return (
         <ChartWrapper>
             <ResponsiveContainer width={width ?? '100%'} height={height ?? 120}>
-                <BarChart data={data} layout="vertical" stackOffset="expand" margin={margin ?? defaultConfig.margins}>
+                <BarChart data={data} layout="vertical" stackOffset="expand" margin={margin ?? defaultConfig.margins} isAnimationActive={true}>
                     <XAxis type="number"
                            ticks={ticks}
                            unit={'%'}
@@ -57,7 +60,22 @@ export default function HorizontalStackedBarChart(props) {
                         fontSize={config.fontSize ?? defaultConfig.fontSize}
                     />
                     {config.sections.map(s =>
-                        (<Bar key={s.dataKey} dataKey={s.dataKey} fill={s.color} stackId={s.stackId}>
+                        (<Bar key={s.dataKey}
+                              dataKey={s.dataKey}
+                              fill={s.color}
+                              stackId={s.stackId}
+                              shape={props => {
+                                  // Stacked bars are identified by their first interval value
+                                  const active = !isNil(hoveredBar) && (props.value[0] === hoveredBar)
+                                  // Make hovered bar thicker
+                                  if (active) {
+                                      props.height += 5;
+                                      props.y -= 2.5;
+                                  }
+                                  return <Rectangle {...props} />
+                              }}
+                              onMouseEnter={(prop) => setHoveredBar(prop.value[0])}
+                              onMouseLeave={() => setHoveredBar(null)}>
                             <LabelList
                                 dataKey={s.dataKey}
                                 fontSize={config.fontSize ?? defaultConfig.fontSize}
