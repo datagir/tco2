@@ -7,6 +7,7 @@ import Typologie from './usage/Typologie'
 import useTruckDefaultSettings, {
   selectTruckDefaultParameters,
 } from '../../../hooks/useTruckDefaultSettings';
+import { parseLocalNumber, parseString } from '../../../utils/numbers';
 
 const Wrapper = styled.div`
   position: relative;
@@ -31,7 +32,7 @@ const MainTextInput = styled(TextInput)`
   }
 `
 const SecondTextInput = styled(TextInput)`
-  max-width: 7rem;
+  max-width: 8rem;
   margin: 0;
   input {
     text-align: right;
@@ -47,24 +48,22 @@ export default function Usage() {
     <Wrapper>
       <Title htmlFor='kilometrage'>Kilométrage annuel</Title>
       <MainTextInput
-        type={'number'}
         name='kilometrage'
         unit={'km'}
-        defaultValue={defaultTotalAnnualDistance}
-        value={totalAnnualDistance}
-        onChange={({ value }) => setTotalAnnualDistance(value)}
+        defaultValue={parseLocalNumber(defaultTotalAnnualDistance)}
+        value={parseLocalNumber(totalAnnualDistance)}
+        onChange={({ value }) => setTotalAnnualDistance(parseString(value))}
       />
       <Typologie />
       <Title htmlFor='payload'>
         Chargement du véhicule en pourcentage de charge utile
       </Title>
       <SecondTextInput
-        type={'number'}
         name='payload'
         unit={'%'}
-        defaultValue={defaultPayload}
-        value={payload}
-        onChange={({ value }) => setPayload(value)}
+        defaultValue={parseLocalNumber(defaultPayload)}
+        value={parseLocalNumber(payload)}
+        onChange={({ value }) => setPayload(parseString(value))}
         min={0}
         max={100}
       />

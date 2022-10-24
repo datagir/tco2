@@ -19,7 +19,7 @@ const Svg = styled.svg`
 `
 export default function Logo() {
   return (
-    <Wrapper to='/'>
+    <Wrapper to='/' resetQueryParams={true}>
       <Svg
         width='151'
         height='53'

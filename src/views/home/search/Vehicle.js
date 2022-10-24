@@ -63,19 +63,35 @@ const StyledSelect = styled(Select)`
 `
 
 export default function Vehicle() {
-  const { vehicleCategory, setVehicleCategory, setUsesRepartition, setCosts,setTotalAnnualDistance, setPayload } = useContext(SearchContext)
+  const {
+    vehicleCategory,
+    setVehicleCategory,
+    setUsesRepartition,
+    setCosts,
+    setTotalAnnualDistance,
+    setPayload,
+    setPossessionDuration
+  } = useContext(SearchContext)
   const { data: truckDefaults } = useTruckDefaultSettings()
 
   const [open, setOpen] = useState(false)
 
   const updateVehicleCategory = (newCategory) => {
-    const { usesRepartition, payload, totalAnnualDistance } = selectTruckDefaultParameters(newCategory, truckDefaults)
+    const {
+      usesRepartition,
+      payload,
+      totalAnnualDistance,
+      defaultPossessionDuration,
+      setFuelConsumption
+    } = selectTruckDefaultParameters(newCategory, truckDefaults)
     setVehicleCategory(newCategory)
     setUsesRepartition(usesRepartition)
 
     setTotalAnnualDistance(totalAnnualDistance)
     setPayload(payload)
     setCosts([])
+    setFuelConsumption(0)
+    setPossessionDuration(defaultPossessionDuration ?? 5)
   }
 
   return (

@@ -17,7 +17,7 @@ export default function SearchProvider(props) {
   )
   const [totalAnnualDistance, setTotalAnnualDistance] = useQueryParam(
     'totalAnnualDistance',
-    withDefault(NumberParam, 60000)
+    withDefault(NumberParam, 100000)
   )
   const [payload, setPayload] = useQueryParam(
     'payload',
@@ -55,6 +55,7 @@ export default function SearchProvider(props) {
   }, [endPlaceData, setEnd])
 
   const [costs, setCosts] = useState([])
+  const [fuelConsumption, setFuelConsumption] = useState(0)
 
   return (
     <SearchContext.Provider
@@ -108,6 +109,8 @@ export default function SearchProvider(props) {
         setEnd,
         costs,
         setCosts,
+        fuelConsumption,
+        setFuelConsumption
       }}
     >
       {props.children}

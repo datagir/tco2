@@ -43,6 +43,8 @@ const resolveValue = (value, defaultValue, type) => {
   )
 };
 
+const handleFocus = event => event.currentTarget.select()
+
 export default function TextInput(props) {
   return (
     <Wrapper className={props.className}>
@@ -65,6 +67,7 @@ export default function TextInput(props) {
           min={props.min}
           max={props.max}
           disabled={props.disabled}
+          onFocus={handleFocus}
         />
         {props.unit && <Unit>{props.unit}</Unit>}
       </InputWrapper>

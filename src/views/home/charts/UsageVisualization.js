@@ -5,6 +5,7 @@ import SearchContext from '../../../utils/SearchContext';
 import useTruckDefaultSettings, { selectTruckDefaultDescription } from '../../../hooks/useTruckDefaultSettings';
 import { parseLocalNumber } from '../../../utils/numbers';
 import useTruckComparison from '../../../hooks/useTruckComparison';
+import { FuelConsumption } from './usage-visualization/FuelConsumption';
 
 const Wrapper = styled.div`
   margin-bottom: 1rem;
@@ -14,7 +15,7 @@ const Wrapper = styled.div`
 `
 const ChartWrapper = styled.div`
   margin-bottom: 1rem;
-  padding: 1rem .75rem .75rem .75rem;
+  padding: 1.25rem;
   background-color: ${(props) => props.theme.colors.footerLight};
   border-radius: 1rem;
 
@@ -102,6 +103,7 @@ export default function UsageVisualization() {
                                          fontColor={ themeContext.colors.text ?? '#FFFFFF' }
                                          config={ chartConfig(themeContext) }/>
             </ChartWrapper>
+            <FuelConsumption/>
           </Wrapper>
   )
 }

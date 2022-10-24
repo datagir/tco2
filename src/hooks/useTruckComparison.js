@@ -23,6 +23,7 @@ export default function useTruckComparison() {
     end,
     payload,
     costs,
+    fuelConsumption
   } = useContext(SearchContext)
 
   // Disable query while locations are partially filled
@@ -30,6 +31,7 @@ export default function useTruckComparison() {
 
   const debouncedCosts = useDebounce(costs)
   const debouncedPossessionDuration = useDebounce(possessionDuration, 100)
+  const debouncedFuelConsumption = useDebounce(fuelConsumption)
 
   const { data: token } = useToken()
   return useQuery(
@@ -44,6 +46,7 @@ export default function useTruckComparison() {
       end,
       payload,
       debouncedCosts,
+      debouncedFuelConsumption,
     ],
     () =>
       token
@@ -70,7 +73,7 @@ export default function useTruckComparison() {
                 },
                 tcoParameters: {
                   possessionDuration: debouncedPossessionDuration,
-                  fuelConsumption: 0,
+                  fuelConsumption: debouncedFuelConsumption,
                   costs: Object.keys(debouncedCosts).map((vehicleTechnology) => ({
                     vehicleTechnology,
                     purchaseCost: debouncedCosts[vehicleTechnology].purchaseCost,

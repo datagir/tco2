@@ -25,7 +25,7 @@ const EnergyCostUnitMap = new Map([
  * @param vehicleTechnology the identifier for the vehicle technology
  * @returns {`€/${string}`|"€/N/C"} the formatted string for the associated energy cost unit
  */
-export const resolveEnergyCostUnit = (vehicleTechnology) => `€/${EnergyCostUnitMap.get(vehicleTechnology) || 'N/C'}`
+export const resolveEnergyCostUnit = (vehicleTechnology) => `€/${EnergyCostUnitMap.get(vehicleTechnology) || ''}`
 /**
  * Build the default property name based on the original property name
  *
