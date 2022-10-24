@@ -19,7 +19,7 @@ export const parseString = (v, min, max) => {
   if (!isNil(min) && min !== '' && numberValue < min) {
     numberValue = min
   }
-  if (!isNil(max) && min !== '' && numberValue > max) {
+  if (!isNil(max) && max !== '' && numberValue > max) {
     numberValue = max
   }
   return numberValue

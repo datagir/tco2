@@ -8,6 +8,10 @@ const Wrapper = styled(MagicLink)`
   align-items: center;
   text-decoration: none;
   margin: 0 0.75em;
+  &:hover {
+    transform: scale(1.1);
+    transition: transform 0.2s ease-in-out;
+  }
 `
 const Svg = styled.svg`
   width: 8rem;

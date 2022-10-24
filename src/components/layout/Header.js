@@ -27,13 +27,16 @@ const Image = styled.img`
   width: 8rem;
   height: auto;
   margin-right: 0.75rem;
+  &:hover {
+    transform: scale(1.1);
+    transition: transform 0.2s ease-in-out;
+  }
 `
 const SeparatorLabel = styled.div`
   max-width: 8rem;
   margin: 0 1rem 0 .25rem;
   padding: .75rem;
   font-size: 12px;
-  background-color: ${(props) => props.theme.colors.secondLight};
   border-radius: .75rem;
 `;
 
@@ -43,7 +46,7 @@ export default function Header(props) {
       <Left>
         {props.children}
         <SeparatorLabel>Un commun de</SeparatorLabel>
-        <MagicLink to='https://www.lafabriquedelalogistique.fr/'>
+        <MagicLink to='https://www.lafabriquedelalogistique.fr/' noIcon={true}>
           <Image src={fabriquedelalogistique} alt='Fabrique de la logistique' />
         </MagicLink>
       </Left>

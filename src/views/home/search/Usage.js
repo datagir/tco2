@@ -63,7 +63,7 @@ export default function Usage() {
         unit={'%'}
         defaultValue={parseLocalNumber(defaultPayload)}
         value={parseLocalNumber(payload)}
-        onChange={({ value }) => setPayload(parseString(value))}
+        onChange={({ value }) => setPayload(parseString(value, 0, 100))}
         min={0}
         max={100}
       />

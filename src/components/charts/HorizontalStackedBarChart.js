@@ -18,6 +18,9 @@ const defaultConfig = {
 
 const ChartWrapper = styled.div`
   width: 100%;
+  path {
+    transition: d 0.1s ease-in-out;
+  }
 `
 
 const renderCustomLabel = (props) => {
