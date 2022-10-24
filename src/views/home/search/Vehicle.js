@@ -70,7 +70,8 @@ export default function Vehicle() {
     setCosts,
     setTotalAnnualDistance,
     setPayload,
-    setPossessionDuration
+    setPossessionDuration,
+    setFuelConsumption
   } = useContext(SearchContext)
   const { data: truckDefaults } = useTruckDefaultSettings()
 
@@ -81,8 +82,7 @@ export default function Vehicle() {
       usesRepartition,
       payload,
       totalAnnualDistance,
-      defaultPossessionDuration,
-      setFuelConsumption
+      defaultPossessionDuration
     } = selectTruckDefaultParameters(newCategory, truckDefaults)
     setVehicleCategory(newCategory)
     setUsesRepartition(usesRepartition)
