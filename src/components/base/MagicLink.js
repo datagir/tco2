@@ -62,7 +62,7 @@ export default function MagicLink(props) {
       id={props.id}
       className={props.className}
       title={props.title}
-      to={props.to + (!props.to.includes('?') && search)}
+      to={props.to + (props.resetQueryParams ? '' : (!props.to.includes('?') && search))}
       onClick={props.onClick || null}
       aria-label={props['aria-label']}
     >

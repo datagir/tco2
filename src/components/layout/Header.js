@@ -28,14 +28,24 @@ const Image = styled.img`
   height: auto;
   margin-right: 0.75rem;
 `
+const SeparatorLabel = styled.div`
+  max-width: 8rem;
+  margin: 0 1rem 0 .25rem;
+  padding: .75rem;
+  font-size: 12px;
+  background-color: ${(props) => props.theme.colors.secondLight};
+  border-radius: .75rem;
+`;
+
 export default function Header(props) {
   return (
     <Wrapper className={props.className}>
       <Left>
-        <MagicLink to='/'>
+        {props.children}
+        <SeparatorLabel>Un commun de</SeparatorLabel>
+        <MagicLink to='https://www.lafabriquedelalogistique.fr/'>
           <Image src={fabriquedelalogistique} alt='Fabrique de la logistique' />
         </MagicLink>
-        {props.children}
       </Left>
       <ThemeToggle />
     </Wrapper>
