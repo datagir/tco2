@@ -29,21 +29,29 @@ const UsageDescription = styled.div`
   text-align: center;
 `
 
+const SECTION_INFOS = {
+  URBAN: { color: '#00B0F0', label: 'Urbain'},
+  INTERURBAN: { color: '#53D2FF', label: 'Extra urbain'},
+  LONGHAUL: { color: '#97E4FF', label: 'Autoroute'},
+}
+
 const chartConfig = (theme) => ({
   dataKey: 'name',
   fontColor: theme.colors.text ?? '#333',
   sections: [
-    { dataKey: 'URBAN', color: '#00B0F0', stackId: 'a', sectionLabel: 'Urbain' },
-    { dataKey: 'INTERURBAN', color: '#53D2FF', stackId: 'a', sectionLabel: 'Extra urbain' },
-    { dataKey: 'LONGHAUL', color: '#97E4FF', stackId: 'a', sectionLabel: 'Autoroute' },
+    { dataKey: 'URBAN', color: SECTION_INFOS['URBAN'].color, stackId: 'a', sectionLabel: SECTION_INFOS['URBAN'].label },
+    { dataKey: 'INTERURBAN', color: SECTION_INFOS['INTERURBAN'].color, stackId: 'a', sectionLabel: SECTION_INFOS['INTERURBAN'].label },
+    { dataKey: 'LONGHAUL', color: SECTION_INFOS['LONGHAUL'].color, stackId: 'a', sectionLabel: SECTION_INFOS['LONGHAUL'].label },
   ]
 })
+
+const getSectionIndex = (({ customLabel }) => Object.values(SECTION_INFOS).map(s => s.label).indexOf(customLabel))
 
 const buildChartData = (usesRepartition) => {
   // Percentage cumulation, for calculating the current tick position on the x-axis
   let cumulatedXPosition = 0
 
-  return usesRepartition ? [usesRepartition.reduce((memo, { use, percentage }) => {
+  return usesRepartition ? [usesRepartition.reduce((memo, { use, percentage }, index) => {
     if (percentage === 0) {
       return memo
     }
@@ -55,8 +63,12 @@ const buildChartData = (usesRepartition) => {
     memo.tickLabels.push(percentage)
     // Update right position bar value for next tick
     cumulatedXPosition += percentage / 100
+    // Detect a possible label positioning conflict
+    if (index === 1) {
+      memo.closePosition = cumulatedXPosition < .18 || cumulatedXPosition > .82
+    }
     return memo
-  }, { name: 'Repartition', ticks: [], tickLabels: [] })] : null
+  }, { name: 'Repartition', ticks: [], tickLabels: [], closePosition: false })] : null
 }
 
 const buildVehicleDescription = (vehicleCategory, defaultSettings, payload, totalAnnualDistance) => {
@@ -101,6 +113,7 @@ export default function UsageVisualization() {
                                          data={ chartData }
                                          dataKey={ 'name' }
                                          fontColor={ themeContext.colors.text ?? '#FFFFFF' }
+                                         getSectionIndex={getSectionIndex}
                                          config={ chartConfig(themeContext) }/>
             </ChartWrapper>
             <FuelConsumption/>

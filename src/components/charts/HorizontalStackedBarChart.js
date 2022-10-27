@@ -13,7 +13,7 @@ const defaultConfig = {
             color: '',
         }
     ],
-    margins: { left: 30, right: 30, top: 30, bottom: 10 }
+    margins: { left: 30, right: 30, top: 35, bottom: 10 }
 }
 
 const ChartWrapper = styled.div`
@@ -24,12 +24,16 @@ const ChartWrapper = styled.div`
 `
 
 const renderCustomLabel = (props) => {
-    const { content, customLabel, ...rest } = props;
+    const { content, customLabel, closePosition, index, offset, getSectionIndex, ...rest } = props;
     const position = props.value > 10 ? 'center' : 'top'
+
+    // In case of close positions, increase vertical position of all odd index value labels so they don't overlap
+    const adjustedOffset = (closePosition && getSectionIndex(props) % 2 === 1) ? (offset + 12) : (offset - 2)
 
     return (props.value && <Label {...rest}
                   value={customLabel}
                   position={position}
+                  offset={adjustedOffset}
                   fontSize={props.fontSize || 12}
                   fill={props.fontColor || '#FFFFFF'}
                   pointerEvents={'none'}
@@ -37,7 +41,7 @@ const renderCustomLabel = (props) => {
 }
 
 export default function HorizontalStackedBarChart(props) {
-    const { height, width, margin, data, config } = props
+    const { height, width, margin, data, config, getSectionIndex } = props
     const [hoveredBar, setHoveredBar] = useState(null)
 
     if (!data || !data.length || !config || !config.sections) {
@@ -48,7 +52,7 @@ export default function HorizontalStackedBarChart(props) {
 
     return (
         <ChartWrapper>
-            <ResponsiveContainer width={width ?? '100%'} height={height ?? 120}>
+            <ResponsiveContainer width={width ?? '100%'} height={height ?? 130}>
                 <BarChart data={data} layout="vertical" stackOffset="expand" margin={margin ?? defaultConfig.margins} isAnimationActive={true}>
                     <XAxis type="number"
                            ticks={ticks}
@@ -85,6 +89,8 @@ export default function HorizontalStackedBarChart(props) {
                                 fontColor={config.fontColor ?? defaultConfig.fontColor}
                                 position={s.position ?? 'center'}
                                 customLabel={s.sectionLabel}
+                                closePosition={data[0].closePosition}
+                                getSectionIndex={getSectionIndex}
                                 content={ renderCustomLabel }
                             />
                         </Bar>)) }
