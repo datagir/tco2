@@ -38,6 +38,9 @@ export function useToken() {
 export function selectCategory(category, data) {
   return (data?.output?.vehicleCategoriesDescriptions ?? []).find(c => c.vehicleCategory === category)
 }
+export function selectTruckDescriptions(category, data) {
+  return data?.output?.vehicleCategoriesDescriptions ?? []
+}
 export function selectTruckDefaultDescription(category, data) {
   const categoryDefault = selectCategory(category, data)
   return {

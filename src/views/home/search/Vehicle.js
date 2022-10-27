@@ -1,12 +1,11 @@
-import React, { useState, useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import styled from 'styled-components'
 
-import useTruckDefaultSettings, {
-  selectTruckDefaultParameters,
-} from 'hooks/useTruckDefaultSettings'
+import useTruckDefaultSettings, { selectTruckDescriptions } from 'hooks/useTruckDefaultSettings'
 import SearchContext from 'utils/SearchContext'
 import Select from 'components/base/Select'
 import Costs from './vehicle/Costs'
+import { useHistory } from 'react-router-dom';
 
 const Wrapper = styled.div`
   position: relative;
@@ -61,38 +60,12 @@ const StyledSelect = styled(Select)`
   min-width: 18rem;
   max-width: 30rem;
 `
-
 export default function Vehicle() {
-  const {
-    vehicleCategory,
-    setVehicleCategory,
-    setUsesRepartition,
-    setCosts,
-    setTotalAnnualDistance,
-    setPayload,
-    setPossessionDuration,
-    setFuelConsumption
-  } = useContext(SearchContext)
+  const history = useHistory();
+  const { vehicleCategory } = useContext(SearchContext)
   const { data: truckDefaults } = useTruckDefaultSettings()
 
   const [open, setOpen] = useState(false)
-
-  const updateVehicleCategory = (newCategory) => {
-    const {
-      usesRepartition,
-      payload,
-      totalAnnualDistance,
-      possessionDuration,
-      fuelConsumption
-    } = selectTruckDefaultParameters(newCategory, truckDefaults)
-    setVehicleCategory(newCategory)
-    setCosts([])
-    setUsesRepartition(usesRepartition)
-    setTotalAnnualDistance(totalAnnualDistance)
-    setPayload(payload)
-    setFuelConsumption(fuelConsumption || 0)
-    setPossessionDuration(possessionDuration ?? 5)
-  }
 
   return (
     <Wrapper>
@@ -101,9 +74,9 @@ export default function Vehicle() {
         <StyledSelect
           name={'vehicleCategory'}
           value={vehicleCategory}
-          onChange={({ value }) => updateVehicleCategory(value)}
+          onChange={({ value }) => history.push({ pathname: '/', search: `vehicleCategory=${value}` })}
         >
-          {truckDefaults.output.vehicleCategoriesDescriptions.map((vehicleCategory) => (
+          {selectTruckDescriptions(vehicleCategory, truckDefaults).map((vehicleCategory) => (
             <option
               key={vehicleCategory.vehicleCategory}
               value={vehicleCategory.vehicleCategory}
