@@ -1,36 +1,36 @@
-import React, { useState, useEffect } from 'react'
-import {
-  useQueryParam,
-  withDefault,
-  StringParam,
-  NumberParam,
-  DelimitedNumericArrayParam,
-} from 'use-query-params'
+import React, { useEffect, useState } from 'react'
+import { DelimitedNumericArrayParam, NumberParam, StringParam, useQueryParam, withDefault, } from 'use-query-params'
 
 import SearchContext from 'utils/SearchContext'
 import { usePosition } from 'hooks/useAddress'
+import useTruckDefaultSettings, { selectTruckDefaultParameters } from '../../hooks/useTruckDefaultSettings';
 
 export default function SearchProvider(props) {
+  const { data: truckDefaults } = useTruckDefaultSettings()
   const [vehicleCategory, setVehicleCategory] = useQueryParam(
     'vehicleCategory',
     withDefault(StringParam, 'RIGIDTRUCK-12T')
   )
+  const defaultSettings = selectTruckDefaultParameters(vehicleCategory, truckDefaults)
   const [totalAnnualDistance, setTotalAnnualDistance] = useQueryParam(
     'totalAnnualDistance',
-    withDefault(NumberParam, 100000)
+    withDefault(NumberParam, defaultSettings?.totalAnnualDistance ?? 100000)
   )
   const [payload, setPayload] = useQueryParam(
     'payload',
-    withDefault(NumberParam, 10)
+    withDefault(NumberParam, defaultSettings?.payload ?? 10)
   )
   const [possessionDuration, setPossessionDuration] = useQueryParam(
     'possessionDuration',
-    withDefault(NumberParam, 5)
+    withDefault(NumberParam, defaultSettings?.possessionDuration ?? 5)
   )
-
   const [usesRepartition, setUsesRepartition] = useQueryParam(
     'usesRepartition',
-    withDefault(DelimitedNumericArrayParam, [20, 20, 60])
+    withDefault(DelimitedNumericArrayParam, defaultSettings?.usesRepartition ?? [20, 20, 60])
+  )
+  const [fuelConsumption, setFuelConsumption] = useQueryParam(
+    'fuelConsumption',
+    withDefault(NumberParam, defaultSettings?.fuelConsumption ?? 0)
   )
 
   const [start, setStart] = useState(null)
@@ -55,7 +55,6 @@ export default function SearchProvider(props) {
   }, [endPlaceData, setEnd])
 
   const [costs, setCosts] = useState([])
-  const [fuelConsumption, setFuelConsumption] = useState(0)
 
   return (
     <SearchContext.Provider
