@@ -1,8 +1,21 @@
 import { useQuery } from 'react-query'
 import axios from 'axios'
 import { removeTrailingDot } from '../utils/strings';
+import { useContext } from 'react';
+import SearchContext from '../utils/SearchContext';
+import { isEmpty } from '../utils/global';
 
 export default function useTruckDefaultSettings() {
+  const {
+    vehicleCategory,
+    setTotalAnnualDistance,
+    setUsesRepartition,
+    setPayload,
+    setFuelConsumption,
+    setPossessionDuration,
+    costs,
+  } = useContext(SearchContext)
+
   const { data: token } = useToken()
   return useQuery(
     ['TruckDefaultSettings', token],
@@ -15,7 +28,24 @@ export default function useTruckDefaultSettings() {
       enabled: !!token,
       keepPreviousData: true,
       refetchOnWindowFocus: false,
-      staleTime: Infinity
+      staleTime: Infinity,
+      onSuccess: (data) => {
+        if (isEmpty(costs)) {
+          // First initialisation
+          const {
+            payload,
+            totalAnnualDistance,
+            usesRepartition,
+            fuelConsumption,
+            possessionDuration
+          } = selectTruckDefaultParameters(vehicleCategory, data)
+          setPayload(payload)
+          setTotalAnnualDistance(totalAnnualDistance)
+          setUsesRepartition(usesRepartition)
+          setFuelConsumption(fuelConsumption)
+          setPossessionDuration(possessionDuration)
+        }
+      }
     }
   )
 }

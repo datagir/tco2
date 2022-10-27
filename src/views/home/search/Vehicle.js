@@ -82,16 +82,16 @@ export default function Vehicle() {
       usesRepartition,
       payload,
       totalAnnualDistance,
-      defaultPossessionDuration
+      possessionDuration,
+      fuelConsumption
     } = selectTruckDefaultParameters(newCategory, truckDefaults)
     setVehicleCategory(newCategory)
+    setCosts([])
     setUsesRepartition(usesRepartition)
-
     setTotalAnnualDistance(totalAnnualDistance)
     setPayload(payload)
-    setCosts([])
-    setFuelConsumption(0)
-    setPossessionDuration(defaultPossessionDuration ?? 5)
+    setFuelConsumption(fuelConsumption || 0)
+    setPossessionDuration(possessionDuration ?? 5)
   }
 
   return (

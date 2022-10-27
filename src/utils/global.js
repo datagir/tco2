@@ -38,3 +38,4 @@ export const resolveDefaultPropertyName = (propertyName) => propertyName ? `defa
 
 /* General */
 export const isNil = value => value === undefined || value === null
+export const isEmpty = value => isNil(value) || Object.values(value).length === 0 || value.length === 0
