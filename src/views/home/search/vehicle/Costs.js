@@ -132,7 +132,7 @@ export default function Costs(props) {
               label={`Aide à l’achat du véhicule`}
               unit={'€'}
               value={costs[open]?.purchaseGrant}
-              defaultValue={openTechnology.defaultPurchaseCost || 0}
+              defaultValue={openTechnology.defaultPurchaseGrant || 0}
               onChange={({ value }) =>
                 setCosts((prevCosts) => ({
                   ...prevCosts,
