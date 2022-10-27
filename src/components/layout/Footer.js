@@ -137,7 +137,7 @@ export default function Footer(props) {
             les faire évoluer et garantir un outil toujours au bon niveau. Le
             détail des méthodes et des données utilisées sont disponibles sur
             la page{' '}
-            <MagicLink to='https://wiki.lafabriquedelalogistique.fr/Verdirmaflotte'>
+            <MagicLink to='https://wiki.lafabriquedelalogistique.fr/Documentation_verdir_ma_flotte'>
               wiki
             </MagicLink>{' '}
             dédiée.
