@@ -4,7 +4,8 @@ import axios from 'axios'
 
 import SearchContext from 'utils/SearchContext'
 import useDebounce from './useDebounce';
-import { isNil } from '../utils/global';
+import { isEmpty, isNil } from '../utils/global';
+import useTruckDefaultSettings from './useTruckDefaultSettings';
 
 const areLocationsReady = (start, end) => {
   const locations = [start?.longitude, start?.latitude, end?.longitude, end?.latitude];
@@ -26,25 +27,30 @@ export default function useTruckComparison() {
     fuelConsumption
   } = useContext(SearchContext)
 
-  // Disable query while locations are partially filled
-  const enabled = areLocationsReady(start, end)
-
   const debouncedCosts = useDebounce(costs)
-  const debouncedPossessionDuration = useDebounce(possessionDuration, 100)
+  const debouncedPossessionDuration = useDebounce(possessionDuration)
   const debouncedFuelConsumption = useDebounce(fuelConsumption)
+  const debouncedPayload = useDebounce(payload)
+  const debouncedUsesRepartition = useDebounce(usesRepartition)
+  const debouncedTotalAnnualDistance = useDebounce(totalAnnualDistance)
+
+
 
   const { data: token } = useToken()
+  const { data: defaultSettings } = useTruckDefaultSettings()
+  // Disable query while locations are partially filled or default settings are not ready yet
+  const enabled = areLocationsReady(start, end) && !isEmpty(debouncedUsesRepartition) && !!defaultSettings
   return useQuery(
     [
       'truckComparison',
       token,
       vehicleCategory,
-      totalAnnualDistance,
+      debouncedTotalAnnualDistance,
       debouncedPossessionDuration,
-      usesRepartition,
+      debouncedUsesRepartition,
       start,
       end,
-      payload,
+      debouncedPayload,
       debouncedCosts,
       debouncedFuelConsumption,
     ],
@@ -57,7 +63,7 @@ export default function useTruckComparison() {
                 vehicle: { vehicleCategory },
                 use: {
                   operatingRange: 'URBAN',
-                  usesRepartition,
+                  usesRepartition: debouncedUsesRepartition,
                   OriginDestination: {
                     origin: {
                       latitude: start?.latitude || null,
@@ -68,8 +74,8 @@ export default function useTruckComparison() {
                       longitude: end?.longitude || null,
                     },
                   },
-                  totalAnnualDistance,
-                  payload,
+                  totalAnnualDistance: debouncedTotalAnnualDistance,
+                  payload: debouncedPayload,
                 },
                 tcoParameters: {
                   possessionDuration: debouncedPossessionDuration,
