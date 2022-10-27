@@ -6,6 +6,7 @@ import SearchContext from 'utils/SearchContext'
 import Select from 'components/base/Select'
 import Costs from './vehicle/Costs'
 import { useHistory } from 'react-router-dom';
+import StyleContext from '../../../utils/StyleContext';
 
 const Wrapper = styled.div`
   position: relative;
@@ -62,6 +63,7 @@ const StyledSelect = styled(Select)`
 `
 export default function Vehicle() {
   const history = useHistory();
+  const { theme } = useContext(StyleContext)
   const { vehicleCategory } = useContext(SearchContext)
   const { data: truckDefaults } = useTruckDefaultSettings()
 
@@ -74,7 +76,7 @@ export default function Vehicle() {
         <StyledSelect
           name={'vehicleCategory'}
           value={vehicleCategory}
-          onChange={({ value }) => history.push({ pathname: '/', search: `vehicleCategory=${value}` })}
+          onChange={({ value }) => history.push({ pathname: '/', search: `?vehicleCategory=${value}${theme ? '&theme=' + theme : ''}` })}
         >
           {selectTruckDescriptions(vehicleCategory, truckDefaults).map((vehicleCategory) => (
             <option

@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { Link, useLocation } from 'react-router-dom'
+import StyleContext from '../../utils/StyleContext';
 
 const Svg = styled.svg`
   display: inline-block;
@@ -14,6 +15,7 @@ const Svg = styled.svg`
 `
 export default function MagicLink(props) {
   const { search } = useLocation()
+  const { theme } = useContext(StyleContext)
   return !props.to ? (
     <button
       id={props.id}
@@ -62,7 +64,9 @@ export default function MagicLink(props) {
       id={props.id}
       className={props.className}
       title={props.title}
-      to={props.to + (props.resetQueryParams ? '' : (!props.to.includes('?') && search))}
+      to={props.to + (props.resetQueryParams ?
+        ((props.to.startsWith('/') && theme) ? `?theme=${theme}` : '')
+        : (!props.to.includes('?') && search))}
       onClick={props.onClick || null}
       aria-label={props['aria-label']}
     >
