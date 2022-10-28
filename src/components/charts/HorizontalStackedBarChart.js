@@ -57,9 +57,11 @@ export default function HorizontalStackedBarChart(props) {
                     <XAxis type="number"
                            ticks={ticks}
                            unit={'%'}
+                           minTickGap={0}
                            axisLine={false}
+                           interval={0}
                            tickFormatter={formatTick}
-                           tick={{ fill: props.fontColor }}/>
+                           tick={{ fill: props.fontColor, fontSize: 13 }}/>
                     <YAxis
                         type="category"
                         hide
