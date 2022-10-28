@@ -7,7 +7,7 @@ const UsageDescription = styled.div`
   margin: 2rem 0 0 1.5rem;
 `
 const MainTextInput = styled(TextInput)`
-  max-width: 10rem;
+  max-width: 8rem;
   margin: 1rem 0;
   input {
     text-align: right;
