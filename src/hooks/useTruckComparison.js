@@ -5,7 +5,7 @@ import axios from 'axios'
 import SearchContext from 'utils/SearchContext'
 import useDebounce from './useDebounce';
 import { isEmpty, isNil } from '../utils/global';
-import useTruckDefaultSettings from './useTruckDefaultSettings';
+import useTruckDefaultSettings, { selectTruckUseRepartition } from './useTruckDefaultSettings';
 
 const areLocationsReady = (start, end) => {
   const locations = [start?.longitude, start?.latitude, end?.longitude, end?.latitude];
@@ -34,10 +34,9 @@ export default function useTruckComparison() {
   const debouncedUsesRepartition = useDebounce(usesRepartition)
   const debouncedTotalAnnualDistance = useDebounce(totalAnnualDistance)
 
-
-
   const { data: token } = useToken()
   const { data: defaultSettings } = useTruckDefaultSettings()
+  const defaultUseRepartition = selectTruckUseRepartition(vehicleCategory, defaultSettings)
   // Disable query while locations are partially filled or default settings are not ready yet
   const enabled = areLocationsReady(start, end) && !isEmpty(debouncedUsesRepartition) && !!defaultSettings
   return useQuery(
@@ -63,7 +62,7 @@ export default function useTruckComparison() {
                 vehicle: { vehicleCategory },
                 use: {
                   operatingRange: 'URBAN',
-                  usesRepartition: debouncedUsesRepartition,
+                  usesRepartitionNew: mapUserComparison(defaultUseRepartition, debouncedUsesRepartition),
                   OriginDestination: {
                     origin: {
                       latitude: start?.latitude || null,
@@ -116,4 +115,14 @@ export function useToken() {
       refetchOnWindowFocus: false,
     }
   )
+}
+
+function mapUserComparison(defaultUseComparison, newValues) {
+  if (isEmpty(defaultUseComparison) || isEmpty(newValues) || defaultUseComparison.length !== newValues.length) {
+    return []
+  }
+  return defaultUseComparison.map((value, index) => ({
+    use: value.use,
+    percentage: newValues[index]
+  }))
 }
