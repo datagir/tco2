@@ -14,23 +14,23 @@ export default function SearchProvider(props) {
   const defaultSettings = selectTruckDefaultParameters(vehicleCategory, truckDefaults)
   const [totalAnnualDistance, setTotalAnnualDistance] = useQueryParam(
     'totalAnnualDistance',
-    withDefault(NumberParam, defaultSettings?.totalAnnualDistance ?? 100000)
+    withDefault(NumberParam, defaultSettings?.totalAnnualDistance)
   )
   const [payload, setPayload] = useQueryParam(
     'payload',
-    withDefault(NumberParam, defaultSettings?.payload ?? 10)
+    withDefault(NumberParam, defaultSettings?.payload)
   )
   const [possessionDuration, setPossessionDuration] = useQueryParam(
     'possessionDuration',
-    withDefault(NumberParam, defaultSettings?.possessionDuration ?? 5)
+    withDefault(NumberParam, defaultSettings?.possessionDuration)
   )
   const [usesRepartition, setUsesRepartition] = useQueryParam(
     'usesRepartition',
-    withDefault(DelimitedNumericArrayParam, defaultSettings?.usesRepartition ?? [20, 20, 60])
+    withDefault(DelimitedNumericArrayParam, defaultSettings?.usesRepartition)
   )
   const [fuelConsumption, setFuelConsumption] = useQueryParam(
     'fuelConsumption',
-    withDefault(NumberParam, defaultSettings?.fuelConsumption ?? 0)
+    withDefault(NumberParam, defaultSettings?.fuelConsumption)
   )
 
   const [start, setStart] = useState(null)
