@@ -5,7 +5,6 @@ import SearchContext from '../../../../utils/SearchContext';
 
 const UsageDescription = styled.div`
   margin: 2rem 0 0 1.5rem;
-  line-height: 2em;
 `
 const MainTextInput = styled(TextInput)`
   max-width: 10rem;
@@ -18,10 +17,7 @@ const Result = styled.span`
   background-color: ${(props) => props.theme.colors.footerLight};
   border-radius: .5rem;
   padding: 0.5rem;
-
-  ${(props) => props.theme.mq.small} {
-    padding: 1rem 1rem 0.5rem;
-  }
+  line-height: 2em;
 `
 
 export function FuelConsumption(props) {
