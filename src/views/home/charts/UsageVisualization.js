@@ -116,7 +116,7 @@ export default function UsageVisualization() {
                                          getSectionIndex={getSectionIndex}
                                          config={ chartConfig(themeContext) }/>
             </ChartWrapper>
-            <FuelConsumption/>
+            <FuelConsumption meanFuelConsumption={comparisonData?.output?.meanFuelConsumption}/>
           </Wrapper>
   )
 }

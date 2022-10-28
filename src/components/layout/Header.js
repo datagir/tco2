@@ -45,7 +45,7 @@ export default function Header(props) {
     <Wrapper className={props.className}>
       <Left>
         {props.children}
-        <SeparatorLabel>Un commun de</SeparatorLabel>
+        <SeparatorLabel>un commun de</SeparatorLabel>
         <MagicLink to='https://www.lafabriquedelalogistique.fr/' noIcon={true}>
           <Image src={fabriquedelalogistique} alt='Fabrique de la logistique' />
         </MagicLink>
