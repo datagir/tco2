@@ -54,6 +54,9 @@ export default function HorizontalStackedBarChart(props) {
         <ChartWrapper>
             <ResponsiveContainer width={width ?? '100%'} height={height ?? 130}>
                 <BarChart data={data} layout="vertical" stackOffset="expand" margin={margin ?? defaultConfig.margins} isAnimationActive={true}>
+                    {/* Use of interval={0} fixes an issue with some ticks not being displayed
+                        see: https://github.com/recharts/recharts/issues/1330
+                     */}
                     <XAxis type="number"
                            ticks={ticks}
                            unit={'%'}
