@@ -26,7 +26,7 @@ export function FuelConsumption(props) {
 
   return (
     <UsageDescription>
-      <strong>La consommation de référence calculée pour ce véhicule est de <Result>{meanFuelConsumption || 0}l/100km</Result></strong>
+      <strong>La consommation de référence calculée pour ce véhicule est de <Result>{meanFuelConsumption || 0} l/100km</Result></strong>
       <br/><br/>
       <p>Si vous connaissez votre consommation de référence d’un véhicule roulant au diesel B7 vous pouvez la modifier
         pour ajuster les consommations des autres énergies.</p>
