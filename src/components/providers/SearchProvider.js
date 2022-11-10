@@ -30,7 +30,7 @@ export default function SearchProvider(props) {
   )
   const [fuelConsumption, setFuelConsumption] = useQueryParam(
     'fuelConsumption',
-    withDefault(NumberParam, defaultSettings?.fuelConsumption)
+    withDefault(NumberParam, undefined)
   )
 
   const [start, setStart] = useState(null)

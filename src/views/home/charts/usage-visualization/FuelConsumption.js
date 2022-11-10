@@ -18,6 +18,18 @@ const MainTextInput = styled(TextInput)`
     text-align: right;
   }
 `
+const ResultContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+const InputContainer = styled.div`
+  padding-top: 10px;
+  p {
+    font-size: 0.875rem;
+    font-weight: 300;
+  }
+`
 const Result = styled.span`
   background-color: ${(props) => props.theme.colors.footerLight};
   border-radius: .5rem;
@@ -27,30 +39,33 @@ const Result = styled.span`
 `
 
 export function FuelConsumption(props) {
-  const { fuelConsumption, setFuelConsumption } = useContext(SearchContext)
   const { meanFuelConsumption } = props
+  const { fuelConsumption, setFuelConsumption } = useContext(SearchContext)
 
   const [open, setOpen] = useState(false)
 
   return (
     <UsageDescription>
-      <strong>La consommation de référence calculée pour ce véhicule est
-        de <Result>{ meanFuelConsumption || 0 }</Result>l/100km.</strong>
+      <ResultContainer>La consommation de référence calculée pour ce véhicule est de
+        <br/>
+        <div><Result>{ meanFuelConsumption || 0 }</Result>l/100km.</div>
+      </ResultContainer>
       <ToggleButton
         onToggle={ setOpen }
         open={ open }
         title={ 'Je connais ma consommation' }/>
       <br/><br/>
-      { open && (<div>
+      { open && (<InputContainer>
         <p>Si vous connaissez votre consommation de référence d’un véhicule roulant au diesel B7 vous pouvez la modifier
           pour ajuster les consommations des autres énergies.</p>
         <MainTextInput
           name='fuelConsumption'
           unit={ 'l/100km' }
-          value={ fuelConsumption || 0 }
+          placeholder={ meanFuelConsumption }
+          value={ fuelConsumption }
           onChange={ ({ value }) => setFuelConsumption(value) }
         />
-      </div>) }
+      </InputContainer>) }
     </UsageDescription>
   )
 }
