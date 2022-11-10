@@ -53,7 +53,7 @@ export function FuelConsumption(props) {
       <ToggleButton
         onToggle={ setOpen }
         open={ open }
-        title={ 'Je connais ma consommation' }/>
+        title={ 'Je renseigne ma consommation' }/>
       <br/><br/>
       { open && (<InputContainer>
         <p>Si vous connaissez votre consommation de référence d’un véhicule roulant au diesel B7 vous pouvez la modifier
