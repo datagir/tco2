@@ -10,17 +10,21 @@
 import { isNil } from './global';
 import { removeWhiteSpaces } from './strings';
 
-export const parseLocalNumber = (value, locales = 'fr-fr') => !value ? '0' : value.toLocaleString(locales)
+export const parseLocalNumber = (value, locales = 'fr-fr') => (typeof value !== 'string' || !value) ? '0' : value.toLocaleString(locales)
 
 export const parseString = (v, min, max) => {
   let numberValue = removeWhiteSpaces(v);
   numberValue = (!numberValue || Number.isNaN(numberValue)) ? 0 : +numberValue;
 
-  if (!isNil(min) && min !== '' && numberValue < min) {
-    numberValue = min
+  return safeChangeValue(numberValue, min, max)
+}
+
+export const safeChangeValue = (value, min, max) => {
+  if (!isNil(min) && min !== '' && value < min) {
+    value = min
   }
-  if (!isNil(max) && max !== '' && numberValue > max) {
-    numberValue = max
+  if (!isNil(max) && max !== '' && value > max) {
+    value = max
   }
-  return numberValue
+  return value
 }

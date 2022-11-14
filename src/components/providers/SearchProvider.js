@@ -1,9 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { DelimitedNumericArrayParam, NumberParam, StringParam, useQueryParam, withDefault, } from 'use-query-params'
+import { NumberParam, StringParam, useQueryParam, withDefault, } from 'use-query-params'
 
 import SearchContext from 'utils/SearchContext'
 import { usePosition } from 'hooks/useAddress'
 import useTruckDefaultSettings, { selectTruckDefaultParameters } from '../../hooks/useTruckDefaultSettings';
+import { updateUsage } from '../../utils/global';
+
+const UsageRepartitionParam = (fullUsage) => ({
+  encode: (v => v.map(r => r.percentage)),
+  decode: (v => (v && fullUsage && (v.length === fullUsage?.length)
+    ?  fullUsage.map((u, index) => ({ ...u, percentage: +v[index] }))
+    : undefined))
+})
 
 export default function SearchProvider(props) {
   const { data: truckDefaults } = useTruckDefaultSettings()
@@ -26,7 +34,7 @@ export default function SearchProvider(props) {
   )
   const [usesRepartition, setUsesRepartition] = useQueryParam(
     'usesRepartition',
-    withDefault(DelimitedNumericArrayParam, defaultSettings?.usesRepartition)
+    withDefault(UsageRepartitionParam(defaultSettings?.usesRepartition), defaultSettings?.usesRepartition)
   )
   const [fuelConsumption, setFuelConsumption] = useQueryParam(
     'fuelConsumption',
@@ -69,38 +77,7 @@ export default function SearchProvider(props) {
         setPossessionDuration,
         usesRepartition,
         setUsesRepartition: (e) => {
-          if (Array.isArray(e) && e.length === 3 && e.every(v => typeof v === 'number')) {
-            setUsesRepartition(e)
-            return
-          }
-          const index = { urbain: 0, extraurbain: 1, autoroute: 2 }[e.name]
-          const tempRepartition = [...usesRepartition]
-          tempRepartition[index] =
-            e.value > 100 ? 100 : e.value < 0 ? 0 : e.value
-
-          let total = tempRepartition.reduce(
-            (acc, cur) => Number(acc) + Number(cur),
-            0
-          )
-          let nextIndex = index > 1 ? 0 : index + 1
-          if (total !== 100) {
-            tempRepartition[nextIndex] =
-              tempRepartition[nextIndex] - (total - 100)
-            tempRepartition[nextIndex] =
-              tempRepartition[nextIndex] < 0 ? 0 : tempRepartition[nextIndex]
-          }
-          total = tempRepartition.reduce(
-            (acc, cur) => Number(acc) + Number(cur),
-            0
-          )
-          nextIndex = nextIndex > 1 ? 0 : nextIndex + 1
-          if (total !== 100) {
-            tempRepartition[nextIndex] =
-              tempRepartition[nextIndex] - (total - 100)
-            tempRepartition[nextIndex] =
-              tempRepartition[nextIndex] < 0 ? 0 : tempRepartition[nextIndex]
-          }
-          setUsesRepartition(tempRepartition)
+          setUsesRepartition(updateUsage(e, usesRepartition))
         },
         start,
         setStart,

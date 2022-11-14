@@ -1,4 +1,5 @@
 import { capitalizeFirstLetter } from './strings';
+import { parseString, safeChangeValue } from './numbers';
 
 /* Costs */
 /**
@@ -39,3 +40,49 @@ export const resolveDefaultPropertyName = (propertyName) => propertyName ? `defa
 /* General */
 export const isNil = value => value === undefined || value === null
 export const isEmpty = value => isNil(value) || Object.values(value).length === 0 || value.length === 0
+
+export const findUsageByName = (name, usages) => (usages ?? []).find(u => u.use === name)
+
+export const updateUsage = (nextValue, usages) => {
+    if (Array.isArray(nextValue)) {
+        return nextValue
+    }
+    if (!usages) {
+        return []
+    }
+    const { name, value } = nextValue
+    if (!name) {
+        return usages
+    }
+    // Récupération de l'usage correspondant au nom
+    const usageToUpdate = findUsageByName(name, usages)
+    if (!usageToUpdate) {
+        return usages
+    }
+    const cleanValue = parseString(value, 0, 100)
+    usageToUpdate.percentage = safeChangeValue(cleanValue, 0, 100)
+    return adjustUsageValues(usageToUpdate, usages)
+}
+
+export const getTotalUsage = (usages) => (usages ?? []).reduce((m, u) => (m + u.percentage), 0)
+
+const adjustUsageValues = (modifiedUsage, usages) => {
+    // If only one item, set its value to max and return
+    if (usages?.length === 1) {
+        usages[0].percentage = 100
+    }
+    let diffTo100 = getTotalUsage(usages) - 100
+    if (diffTo100 === 0 || diffTo100 === -100) {
+        return usages
+    }
+    const modifiedIndex = usages.indexOf(modifiedUsage)
+    let nextIndex = modifiedIndex === (usages.length - 1) ? 0 : (modifiedIndex + 1)
+    while (diffTo100 !== 0 && nextIndex !== modifiedIndex) {
+        const targetValue = usages[nextIndex].percentage - diffTo100
+        const resolvedValue = safeChangeValue(targetValue, 0, 100)
+        diffTo100 = resolvedValue - targetValue
+        usages[nextIndex].percentage = resolvedValue
+        nextIndex = nextIndex === (usages.length - 1) ? 0 : (nextIndex + 1)
+    }
+    return usages
+}

@@ -1,6 +1,5 @@
 import { useQuery } from 'react-query'
 import axios from 'axios'
-import { isEmpty } from '../utils/global';
 import { removeTrailingDot } from '../utils/strings';
 
 export default function useTruckDefaultSettings() {
@@ -50,15 +49,5 @@ export function selectTruckDefaultDescription(category, data) {
 }
 export function selectTruckDefaultParameters(category, data) {
   const categoryDefault = selectCategory(category, data)
-  const defaultParams = categoryDefault?.DefaultParameters
-  return {
-    ...defaultParams,
-    usesRepartition: (defaultParams?.usesRepartition ?? []).map(rep => rep.percentage)
-  }
-}
-
-export function selectTruckUseRepartition(category, data) {
-  const categoryDefault = selectCategory(category, data)
-  const defaultParams = categoryDefault?.DefaultParameters
-  return isEmpty(defaultParams?.usesRepartition) ? [] : defaultParams?.usesRepartition
+  return categoryDefault?.DefaultParameters
 }
