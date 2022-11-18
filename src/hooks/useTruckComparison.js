@@ -6,6 +6,7 @@ import SearchContext from 'utils/SearchContext'
 import useDebounce from './useDebounce';
 import { isEmpty, isNil } from '../utils/globalUtils';
 import useTruckDefaultSettings from './useTruckDefaultSettings';
+import { parseString } from '../utils/numberUtils';
 
 const areLocationsReady = (start, end) => {
   const locations = [start?.longitude, start?.latitude, end?.longitude, end?.latitude];
@@ -72,20 +73,20 @@ export default function useTruckComparison() {
                       longitude: end?.longitude || null,
                     },
                   },
-                  totalAnnualDistance: debouncedTotalAnnualDistance,
-                  payload: debouncedPayload,
+                  totalAnnualDistance: parseString(debouncedTotalAnnualDistance),
+                  payload: parseString(debouncedPayload),
                 },
                 tcoParameters: {
-                  possessionDuration: debouncedPossessionDuration,
-                  fuelConsumption: debouncedFuelConsumption,
+                  possessionDuration: parseString(debouncedPossessionDuration),
+                  fuelConsumption: parseString(debouncedFuelConsumption),
                   costs: Object.keys(debouncedCosts).map((vehicleTechnology) => ({
                     vehicleTechnology,
-                    purchaseCost: debouncedCosts[vehicleTechnology].purchaseCost,
-                    purchaseGrant: debouncedCosts[vehicleTechnology].purchaseGrant,
-                    maintenanceCost: debouncedCosts[vehicleTechnology].maintenanceCost,
-                    insuranceCost: debouncedCosts[vehicleTechnology].insuranceCost,
-                    resaleCost: debouncedCosts[vehicleTechnology].resaleCost,
-                    energyCost: debouncedCosts[vehicleTechnology].energyCost,
+                    purchaseCost: parseString(debouncedCosts[vehicleTechnology].purchaseCost),
+                    purchaseGrant: parseString(debouncedCosts[vehicleTechnology].purchaseGrant),
+                    maintenanceCost: parseString(debouncedCosts[vehicleTechnology].maintenanceCost),
+                    insuranceCost: parseString(debouncedCosts[vehicleTechnology].insuranceCost),
+                    resaleCost: parseString(debouncedCosts[vehicleTechnology].resaleCost),
+                    energyCost: parseString(debouncedCosts[vehicleTechnology].energyCost),
                   })),
                 },
                 chartsConfiguration: false,
