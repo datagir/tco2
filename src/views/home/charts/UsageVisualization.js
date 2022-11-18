@@ -86,7 +86,7 @@ export default function UsageVisualization() {
 
   useEffect(() => {
     setChartData(buildChartData(comparisonData?.output?.usesRepartition, vehicleCategory, defaultSettings))
-  }, [comparisonData])
+  }, [comparisonData, vehicleCategory, defaultSettings])
 
   return (chartData && isSuccess &&
     <Wrapper>
