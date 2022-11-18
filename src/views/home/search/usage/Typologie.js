@@ -53,7 +53,6 @@ export default function Typologie() {
     setStart(null)
     setEnd(null)
   }, [open, setStart, setEnd])
-  console.log('usesRepartition', usesRepartition);
 
   return (
     <Wrapper>

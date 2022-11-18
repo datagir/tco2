@@ -7,7 +7,7 @@ import Typologie from './usage/Typologie'
 import useTruckDefaultSettings, {
   selectTruckDefaultParameters,
 } from '../../../hooks/useTruckDefaultSettings';
-import { parseLocalNumber, parseString } from '../../../utils/numbers';
+import { parseLocalNumber, parseString } from '../../../utils/numberUtils';
 
 const Wrapper = styled.div`
   position: relative;

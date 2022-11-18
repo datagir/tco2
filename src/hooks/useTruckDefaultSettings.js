@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query'
 import axios from 'axios'
-import { removeTrailingDot } from '../utils/strings';
+import { removeTrailingDot } from '../utils/stringUtils';
 
 export default function useTruckDefaultSettings() {
   const { data: token } = useToken()
@@ -50,4 +50,12 @@ export function selectTruckDefaultDescription(category, data) {
 export function selectTruckDefaultParameters(category, data) {
   const categoryDefault = selectCategory(category, data)
   return categoryDefault?.DefaultParameters
+}
+export function selectTruckDefaultUsages(category, data) {
+  const defaultParams = selectTruckDefaultParameters(category, data)
+  return defaultParams?.usesRepartition
+}
+export function selectDefaultUsageName(category, data, use) {
+  const usageByName = (selectTruckDefaultUsages(category, data) ?? []).filter(u => u.use === use)
+  return usageByName?.length > 0 ? usageByName[0].name : use
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { isNil, resolveDefaultPropertyName } from '../../../../../utils/global';
+import { isNil, resolveDefaultPropertyName } from '../../../../../utils/globalUtils';
 
 const Wrapper = styled.nav`
   display: flex;

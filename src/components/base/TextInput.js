@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { isNil } from '../../utils/global';
+import { isNil } from '../../utils/globalUtils';
 
 const Wrapper = styled.div`
   margin-bottom: 1.5rem;
@@ -21,7 +21,7 @@ const Input = styled.input`
   border: 2px solid ${(props) => props.theme.colors.textLight};
   border-radius: 0.5rem;
   transition: box-shadow 300ms ease-out;
-
+  min-width: 3.5rem;
   &:focus {
     outline: none;
     box-shadow: 0 -0 0px 1px ${(props) => props.theme.colors.textLight};

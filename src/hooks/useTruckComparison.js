@@ -4,7 +4,7 @@ import axios from 'axios'
 
 import SearchContext from 'utils/SearchContext'
 import useDebounce from './useDebounce';
-import { isEmpty, isNil } from '../utils/global';
+import { isEmpty, isNil } from '../utils/globalUtils';
 import useTruckDefaultSettings from './useTruckDefaultSettings';
 
 const areLocationsReady = (start, end) => {

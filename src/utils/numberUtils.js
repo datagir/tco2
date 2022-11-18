@@ -7,19 +7,19 @@
  * @param locales the locales to use
  * @returns {string|string} the number to local string
  */
-import { isNil } from './global';
-import { removeWhiteSpaces } from './strings';
+import { isNil } from './globalUtils';
+import { removeWhiteSpaces } from './stringUtils';
 
-export const parseLocalNumber = (value, locales = 'fr-fr') => (typeof value !== 'string' || !value) ? '0' : value.toLocaleString(locales)
+export const parseLocalNumber = (value, locales = 'fr-fr') => !value ? '0' : value.toLocaleString(locales)
 
 export const parseString = (v, min, max) => {
   let numberValue = removeWhiteSpaces(v);
   numberValue = (!numberValue || Number.isNaN(numberValue)) ? 0 : +numberValue;
 
-  return safeChangeValue(numberValue, min, max)
+  return cleanNumber(numberValue, min, max)
 }
 
-export const safeChangeValue = (value, min, max) => {
+export const cleanNumber = (value, min, max) => {
   if (!isNil(min) && min !== '' && value < min) {
     value = min
   }

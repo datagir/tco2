@@ -5,7 +5,7 @@ import useTruckDefaultSettings from 'hooks/useTruckDefaultSettings'
 import SearchContext from 'utils/SearchContext'
 import TextInput from 'components/base/TextInput'
 import ModeSelector from './costs/ModeSelector'
-import { resolveEnergyCostUnit } from '../../../../utils/global';
+import { findAssociatedTechs, resolveEnergyCostUnit } from '../../../../utils/globalUtils';
 
 const Wrapper = styled.div`
   ${(props) => props.theme.mq.small} {
@@ -50,14 +50,15 @@ const Button = styled.button`
   cursor: pointer;
 `
 
-const updateEnergyCosts = (prevCosts, value, technology) => {
+const updateEnergyCosts = (prevCosts, value, technology, allTechnologies) => {
   // First update open technology with new value
   const openTechnology = technology.vehicleTechnology
   const updatedCosts = {
     [openTechnology]: { ...prevCosts[openTechnology], energyCost: value }
   };
+
   // Energy cost changes must be applied to all related technologies
-  (technology.otherVehicleTechnologyWithSameEnergy ?? [])
+  (findAssociatedTechs(technology, allTechnologies))
     .forEach(tech => {
       updatedCosts[tech] = { ...prevCosts[tech], energyCost: value }
     })
@@ -190,7 +191,7 @@ export default function Costs(props) {
               value={costs[open]?.energyCost}
               placeholder={openTechnology.defaultEnergyCost || 0}
               onChange={ ({ value }) => setCosts(
-                  (prevCosts) => updateEnergyCosts(prevCosts, value, openTechnology))
+                  (prevCosts) => updateEnergyCosts(prevCosts, value, openTechnology, technologies))
               }
             />
           </Types>

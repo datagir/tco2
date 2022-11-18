@@ -1,4 +1,5 @@
-import { findUsageByName, updateUsage } from '../global';
+import { findAssociatedTechs, findUsageByName, updateUsage } from '../globalUtils';
+import { TECH_MOCK, ALL_TECHS_MOCK } from './globalUtils.mocks'
 
 describe('Global Utils test', () => {
   let urban, interUrban, longHaul
@@ -111,5 +112,51 @@ describe('Global Utils test', () => {
       expect(result.length).toEqual(1)
       expect(result[0].percentage).toEqual(100)
     })
+  })
+})
+
+describe('findAssociatedTechs', () => {
+  let allTechs, currentTech
+
+  beforeEach(() => {
+    currentTech = TECH_MOCK()
+    allTechs = ALL_TECHS_MOCK()
+  })
+
+  it('Should return the associated techs', () => {
+    // Given that current is DIESEL-B7, which defines HEV as a linked techno
+    // And DIESEL-HVO also defines DIESEL-B7 as associated,
+    // And it's not in DIESEL-B7 otherVehicleTechnologyWithSameEnergy list
+
+    // When requiring the other vehicle techs
+    const otherTechs = findAssociatedTechs(currentTech, allTechs)
+
+    // Then otherTechs should include all associated techs
+    expect(otherTechs).toEqual(['HEV', 'DIESEL-HVO'])
+  })
+
+  it('should return the associated techs even if current tech has no otherTech defined', () => {
+    expect(findAssociatedTechs({ vehicleTechnology: 'HEV' }, allTechs)).toEqual(['DIESEL-B7'])
+    expect(findAssociatedTechs({
+      vehicleTechnology: 'HEV',
+      otherVehicleTechnologyWithSameEnergy: []
+    }, allTechs)).toEqual(['DIESEL-B7'])
+    expect(findAssociatedTechs({
+      vehicleTechnology: 'HEV',
+      otherVehicleTechnologyWithSameEnergy: null
+    }, allTechs)).toEqual(['DIESEL-B7'])
+    expect(findAssociatedTechs({
+      vehicleTechnology: 'BIO-GNC'
+    }, allTechs)).toEqual(['GNC', 'BEV'])
+  })
+  it('Should return an empty array if no tech associated', () => {
+    expect(findAssociatedTechs({ vehicleTechnology: 'DIESEL-B100'}, allTechs)).toEqual([])
+  })
+  it('Should return an empty array', () => {
+    expect(findAssociatedTechs({})).toEqual([])
+    expect(findAssociatedTechs(undefined)).toEqual([])
+    expect(findAssociatedTechs(null)).toEqual([])
+    expect(findAssociatedTechs(null)).toEqual([])
+    expect(findAssociatedTechs({}, allTechs)).toEqual([])
   })
 })

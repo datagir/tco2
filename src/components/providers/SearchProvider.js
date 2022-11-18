@@ -4,13 +4,31 @@ import { NumberParam, StringParam, useQueryParam, withDefault, } from 'use-query
 import SearchContext from 'utils/SearchContext'
 import { usePosition } from 'hooks/useAddress'
 import useTruckDefaultSettings, { selectTruckDefaultParameters } from '../../hooks/useTruckDefaultSettings';
-import { updateUsage } from '../../utils/global';
+import { updateUsage } from '../../utils/globalUtils';
 
+/**
+ * Encoding / decoding functions for the usage repartition query params
+ *
+ * Encoding: [{ use: 'X', percentage: 25 }, { use: 'Y', percentage: 75 }] => '25_75'
+ *              (final query param: usesRepartition=25_75)
+ *
+ * Decoding: '20_80' => [{ use: 'X', percentage: 20 }, { use: 'Y', percentage: 80 }]
+ *
+ * @param fullUsage the default usage for decoding from query params
+ * @returns {{encode: (function(*): *), decode: (function(*): *|undefined)}}
+ * @constructor
+ */
 const UsageRepartitionParam = (fullUsage) => ({
-  encode: (v => v.map(r => r.percentage)),
-  decode: (v => (v && fullUsage && (v.length === fullUsage?.length)
-    ?  fullUsage.map((u, index) => ({ ...u, percentage: +v[index] }))
-    : undefined))
+  encode: v => v.reduce((memo, current, index) => {
+    memo += index === 0 ? current.percentage : `_${current.percentage}`
+    return memo
+  }, ''),
+  decode: v => {
+    const usageValues = (v ?? '').split('_')
+    return (usageValues && fullUsage && (usageValues.length === fullUsage.length)) ?
+      fullUsage.map((u, index) => ({ ...u, percentage: +usageValues[index] }))
+      : undefined
+  }
 })
 
 export default function SearchProvider(props) {
