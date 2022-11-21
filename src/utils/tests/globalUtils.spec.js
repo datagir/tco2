@@ -1,4 +1,4 @@
-import { findAssociatedTechs, findUsageByName, updateUsage } from '../globalUtils';
+import { deleteEmptyFields, findAssociatedTechs, findUsageByName, isEmpty, updateUsage } from '../globalUtils';
 import { TECH_MOCK, ALL_TECHS_MOCK } from './globalUtils.mocks'
 
 describe('Global Utils test', () => {
@@ -158,5 +158,46 @@ describe('findAssociatedTechs', () => {
     expect(findAssociatedTechs(null)).toEqual([])
     expect(findAssociatedTechs(null)).toEqual([])
     expect(findAssociatedTechs({}, allTechs)).toEqual([])
+  })
+})
+
+describe('isEmpty', () => {
+  it('Should return true if value is null or undefined', () => {
+    expect(isEmpty()).toEqual(true)
+    expect(isEmpty(null)).toEqual(true)
+  })
+  it('Should return true if value is empty string', () => {
+    expect(isEmpty('')).toEqual(true)
+  })
+  it('Should return true if value is empty array', () => {
+    expect(isEmpty([])).toEqual(true)
+  })
+  it('Should return true if value is empty object', () => {
+    expect(isEmpty({})).toEqual(true)
+  })
+  it('Should return false if non empty string', () => {
+    expect(isEmpty('3')).toEqual(false)
+    expect(isEmpty(' ')).toEqual(false)
+  })
+  it('Should return false if non empty array', () => {
+    expect(isEmpty([4])).toEqual(false)
+    expect(isEmpty([null, undefined])).toEqual(false)
+  })
+  it('Should return false if non empty object', () => {
+    expect(isEmpty( { foo: 'bar' })).toEqual(false)
+    expect(isEmpty({ 5: undefined })).toEqual(false)
+  })
+})
+
+describe('Test deleteEmptyFields', () => {
+  it('Should remove empty strings and nil properties', () => {
+    expect(deleteEmptyFields({ a: '', b: 'b', c: ' ', d: -5, e: null, f: undefined, g: 0 })).toEqual({
+      b: 'b', c: ' ', d: -5, g: 0
+    })
+  })
+  it('Should remove empty arrays and object properties', () => {
+    expect(deleteEmptyFields({ a: [1], b: ['', ' abc'], c: {}, d: { y: null }, f: [] })).toEqual({
+      a: [1], b: ['', ' abc'], d: { y: null }
+    })
   })
 })

@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { isNil } from '../../utils/globalUtils';
+import { decodeLocalizedNumber, encodeLocalizedNumber } from '../../utils/numberUtils';
 
 const Wrapper = styled.div`
   margin-bottom: 1.5rem;
@@ -33,16 +33,6 @@ const Unit = styled.div`
   min-width: 55px;
 `
 
-const resolveValue = (value, defaultValue, type) => {
-  if (!isNil(value)) {
-    return value;
-  }
-  return defaultValue ?? (
-    typeof type === 'number' ? 0 : (
-      typeof type === 'boolean' ? false : '')
-  )
-};
-
 const handleFocus = event => event.currentTarget.select()
 
 export default function TextInput(props) {
@@ -55,14 +45,17 @@ export default function TextInput(props) {
       )}
       <InputWrapper>
         <Input
-          type={props.type || 'text'}
+          type={(!props.type || props.type === 'localizedNumber') ? 'text' : props.type}
           id={props.name}
           name={props.name}
-          value={resolveValue(props.value, props.defaultValue, props.type)}
+          value={props?.type === 'localizedNumber' ? encodeLocalizedNumber(props.value, props.min, props.max) : props.value}
           placeholder={props.placeholder}
           error={props.error}
           onChange={(e) => {
-            props.onChange({ value: e.currentTarget.value, name: props.name })
+            props.onChange({
+              value: props?.type === 'localizedNumber' ? decodeLocalizedNumber(e.currentTarget.value, props.min, props.max) : e.currentTarget.value,
+              name: props.name
+            })
           }}
           min={props.min}
           max={props.max}

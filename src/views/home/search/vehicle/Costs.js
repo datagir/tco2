@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import useTruckDefaultSettings from 'hooks/useTruckDefaultSettings'
@@ -114,7 +114,7 @@ export default function Costs(props) {
         <Details>
           <Types>
             <StyledTextInput
-              type='number'
+              type='localizedNumber'
               name='purchaseCost'
               label={`Prix d’achat du véhicule`}
               unit={'€'}
@@ -123,12 +123,12 @@ export default function Costs(props) {
               onChange={({ value }) =>
                 setCosts((prevCosts) => ({
                   ...prevCosts,
-                  [open]: { ...prevCosts[open], purchaseCost: value },
+                  [open]: { ...prevCosts[open], purchaseCost: value || undefined },
                 }))
               }
             />
             <StyledTextInput
-              type='number'
+              type='localizedNumber'
               name='purchaseGrant'
               label={`Aide à l’achat du véhicule`}
               unit={'€'}
@@ -137,12 +137,12 @@ export default function Costs(props) {
               onChange={({ value }) =>
                 setCosts((prevCosts) => ({
                   ...prevCosts,
-                  [open]: { ...prevCosts[open], purchaseGrant: value },
+                  [open]: { ...prevCosts[open], purchaseGrant: value || undefined },
                 }))
               }
             />
             <StyledTextInput
-              type='number'
+              type='localizedNumber'
               name='maintenanceCost'
               label={`Coût de maintenance annuel`}
               unit={'€'}
@@ -151,12 +151,12 @@ export default function Costs(props) {
               onChange={ ({ value }) =>
                   setCosts((prevCosts) => ({
                     ...prevCosts,
-                    [open]: { ...prevCosts[open], maintenanceCost: value },
+                    [open]: { ...prevCosts[open], maintenanceCost: value || undefined },
                   }))
               }
             />
             <StyledTextInput
-              type='number'
+              type='localizedNumber'
               name='insuranceCost'
               label={`Coût d’assurance annuel`}
               unit={'€'}
@@ -165,12 +165,12 @@ export default function Costs(props) {
               onChange={({ value }) =>
                 setCosts((prevCosts) => ({
                   ...prevCosts,
-                  [open]: { ...prevCosts[open], insuranceCost: value },
+                  [open]: { ...prevCosts[open], insuranceCost: value || undefined },
                 }))
               }
             />
             <StyledTextInput
-              type='number'
+              type='localizedNumber'
               name='resaleCost'
               label={`Valeur de revente du véhicule`}
               unit={'€'}
@@ -179,7 +179,7 @@ export default function Costs(props) {
               onChange={({ value }) =>
                 setCosts((prevCosts) => ({
                   ...prevCosts,
-                  [open]: { ...prevCosts[open], resaleCost: value },
+                  [open]: { ...prevCosts[open], resaleCost: value || undefined },
                 }))
               }
             />

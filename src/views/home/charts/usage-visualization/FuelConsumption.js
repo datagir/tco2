@@ -71,13 +71,13 @@ export function FuelConsumption(props) {
           pour ajuster les consommations des autres énergies:
           <span>
             <Input
-              type={'text'}
+              type={'number'}
               name="fuelConsumption"
               id="fuelConsumption"
               unit={'l/100km'}
               placeholder={meanFuelConsumption}
               value={fuelConsumption}
-              onChange={(e) => setFuelConsumption(+e.currentTarget.value)}
+              onChange={(e) => setFuelConsumption(e.currentTarget.value)}
             />l/100km.
           </span>
         </div>

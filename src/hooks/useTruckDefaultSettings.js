@@ -59,3 +59,7 @@ export function selectDefaultUsageName(category, data, use) {
   const usageByName = (selectTruckDefaultUsages(category, data) ?? []).filter(u => u.use === use)
   return usageByName?.length > 0 ? usageByName[0].name : use
 }
+export function selectDefaultAnnualDistance(category, data) {
+  const params = selectTruckDefaultParameters(category, data)
+  return params?.totalAnnualDistance
+}

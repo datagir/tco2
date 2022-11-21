@@ -4,7 +4,7 @@ import HorizontalBarChart from '../../../components/charts/HorizontalBarChart';
 import SearchContext from '../../../utils/SearchContext';
 import useTruckDefaultSettings, {
   selectDefaultUsageName,
-  selectTruckDefaultDescription,
+  selectTruckDefaultDescription, selectTruckDefaultParameters,
   selectTruckDefaultUsages
 } from '../../../hooks/useTruckDefaultSettings';
 import { parseLocalNumber } from '../../../utils/numberUtils';
@@ -60,8 +60,11 @@ const buildChartData = (usesRepartition, category, vehicleDefaults) => {
 
 const buildVehicleDescription = (vehicleCategory, defaultSettings, payload, totalAnnualDistance) => {
   const { truckDescription } = selectTruckDefaultDescription(vehicleCategory, defaultSettings)
+  const defaultValues = selectTruckDefaultParameters(vehicleCategory, defaultSettings)
+  const safePayload = payload ?? defaultValues?.payload ?? 0
+  const safeDistance = totalAnnualDistance ?? defaultValues?.totalAnnualDistance ?? 0
   return truckDescription ?
-    `${truckDescription} chargé à ${payload}% parcourant ${parseLocalNumber(totalAnnualDistance)}km par an selon cet usage:`
+    `${truckDescription} chargé à ${safePayload}% parcourant ${parseLocalNumber(safeDistance)}km par an selon cet usage:`
     : ''
 }
 

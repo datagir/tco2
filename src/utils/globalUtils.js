@@ -1,5 +1,5 @@
 import { capitalizeFirstLetter } from './stringUtils';
-import { parseString, cleanNumber } from './numberUtils';
+import { parseString, safeNumber } from './numberUtils';
 
 /* Costs */
 /**
@@ -39,8 +39,8 @@ export const resolveDefaultPropertyName = (propertyName) => propertyName ? `defa
 
 /* General */
 export const isNil = value => value === undefined || value === null
-export const isEmpty = value => isNil(value) || Object.values(value).length === 0 || value.length === 0
-
+export const isEmpty = value => isNil(value) || ((isObject(value) || typeof value === 'string') && (Object.values(value).length === 0 || value.length === 0))
+export const isObject = value => !isNil(value) && typeof value === 'object'
 export const findUsageByName = (name, usages) => (usages ?? []).find(u => u.use === name)
 
 export const updateUsage = (nextValue, usages) => {
@@ -61,7 +61,7 @@ export const updateUsage = (nextValue, usages) => {
   }
   // Make sure value is valid
   const cleanValue = parseString(value, 0, 100)
-  usageToUpdate.percentage = cleanNumber(cleanValue, 0, 100)
+  usageToUpdate.percentage = safeNumber(cleanValue, 0, 100)
   // Check if sum equals 100
   return adjustUsageValues(usageToUpdate, usages)
 }
@@ -81,7 +81,7 @@ const adjustUsageValues = (modifiedUsage, usages) => {
   let nextIndex = modifiedIndex === (usages.length - 1) ? 0 : (modifiedIndex + 1)
   while (diffTo100 !== 0 && nextIndex !== modifiedIndex) {
     const targetValue = usages[nextIndex].percentage - diffTo100
-    const resolvedValue = cleanNumber(targetValue, 0, 100)
+    const resolvedValue = safeNumber(targetValue, 0, 100)
     diffTo100 = resolvedValue - targetValue
     usages[nextIndex].percentage = resolvedValue
     nextIndex = nextIndex === (usages.length - 1) ? 0 : (nextIndex + 1)
@@ -93,7 +93,7 @@ const isArrayValidRGB = (color) => color?.length === 3 && color.every(v => v >= 
 
 const colorArrayToRGB = (color) => `rgb(${ color[0] }, ${ color[1] }, ${ color[2] })`
 
-const linearInterpolate = (a, b, dX) => cleanNumber((a + (b - a) * dX), 0 , 255)
+const linearInterpolate = (a, b, dX) => safeNumber((a + (b - a) * dX), 0 , 255)
 
 export const linearInterpolateColors = (startColor, endColor, dX) =>
   (isArrayValidRGB(startColor) && isArrayValidRGB(endColor)) ?
@@ -138,3 +138,13 @@ export const findAssociatedTechs = (openTech, allTechs) =>
     }
     return memo
   }, [...(openTech?.otherVehicleTechnologyWithSameEnergy ?? [])])
+
+export const deleteEmptyFields = (srcObj) => {
+  const objWithoutEmpties = { ...srcObj }
+  Object.entries(objWithoutEmpties).forEach(([key, value]) => {
+    if (isEmpty(value) && Object.prototype.hasOwnProperty.call(objWithoutEmpties, key)) {
+      delete objWithoutEmpties[key]
+    }
+  })
+  return objWithoutEmpties
+}
