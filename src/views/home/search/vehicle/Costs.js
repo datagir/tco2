@@ -6,6 +6,7 @@ import SearchContext from 'utils/SearchContext'
 import TextInput from 'components/base/TextInput'
 import ModeSelector from './costs/ModeSelector'
 import { findAssociatedTechs, resolveEnergyCostUnit } from '../../../../utils/globalUtils';
+import {parseLocalNumber} from '../../../../utils/numberUtils';
 
 const Wrapper = styled.div`
   ${(props) => props.theme.mq.small} {
@@ -119,7 +120,7 @@ export default function Costs(props) {
               label={`Prix d’achat du véhicule`}
               unit={'€'}
               value={costs[open]?.purchaseCost}
-              placeholder={openTechnology.defaultPurchaseCost || 0}
+              placeholder={parseLocalNumber(openTechnology.defaultPurchaseCost) || 0}
               onChange={({ value }) =>
                 setCosts((prevCosts) => ({
                   ...prevCosts,
@@ -133,7 +134,7 @@ export default function Costs(props) {
               label={`Aide à l’achat du véhicule`}
               unit={'€'}
               value={costs[open]?.purchaseGrant}
-              placeholder={openTechnology.defaultPurchaseGrant || 0}
+              placeholder={parseLocalNumber(openTechnology.defaultPurchaseGrant) || 0}
               onChange={({ value }) =>
                 setCosts((prevCosts) => ({
                   ...prevCosts,
@@ -147,7 +148,7 @@ export default function Costs(props) {
               label={`Coût de maintenance annuel`}
               unit={'€'}
               value={costs[open]?.maintenanceCost}
-              placeholder={openTechnology.defaultMaintenanceCost || 0}
+              placeholder={parseLocalNumber(openTechnology.defaultMaintenanceCost) || 0}
               onChange={ ({ value }) =>
                   setCosts((prevCosts) => ({
                     ...prevCosts,
@@ -161,7 +162,7 @@ export default function Costs(props) {
               label={`Coût d’assurance annuel`}
               unit={'€'}
               value={costs[open]?.insuranceCost}
-              placeholder={openTechnology.defaultInsuranceCost || 0}
+              placeholder={parseLocalNumber(openTechnology.defaultInsuranceCost) || 0}
               onChange={({ value }) =>
                 setCosts((prevCosts) => ({
                   ...prevCosts,
@@ -175,7 +176,7 @@ export default function Costs(props) {
               label={`Valeur de revente du véhicule`}
               unit={'€'}
               value={costs[open]?.resaleCost}
-              placeholder={openTechnology.defaultResaleCost || 0}
+              placeholder={parseLocalNumber(openTechnology.defaultResaleCost) || 0}
               onChange={({ value }) =>
                 setCosts((prevCosts) => ({
                   ...prevCosts,
