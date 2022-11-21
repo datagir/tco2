@@ -82,6 +82,11 @@ export default function SearchProvider(props) {
 
   const [costs, setCosts] = useState([])
 
+  useEffect(() => {
+    // Reinitialize costs after vehicle selection changed
+    setCosts([])
+  }, [vehicleCategory])
+
   return (
     <SearchContext.Provider
       value={{

@@ -189,7 +189,7 @@ export default function Costs(props) {
               name='energyCost'
               label={`Prix du carburant`}
               unit={resolveEnergyCostUnit(open)}
-              value={costs[open]?.energyCost}
+              value={costs[open]?.energyCost || ''}
               placeholder={openTechnology.defaultEnergyCost || 0}
               onChange={ ({ value }) => setCosts(
                   (prevCosts) => updateEnergyCosts(prevCosts, value, openTechnology, technologies))
