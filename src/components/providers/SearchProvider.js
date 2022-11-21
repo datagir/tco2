@@ -1,36 +1,62 @@
-import React, { useState, useEffect } from 'react'
-import {
-  useQueryParam,
-  withDefault,
-  StringParam,
-  NumberParam,
-  DelimitedNumericArrayParam,
-} from 'use-query-params'
+import React, { useEffect, useState } from 'react'
+import { NumberParam, StringParam, useQueryParam, withDefault, } from 'use-query-params'
 
 import SearchContext from 'utils/SearchContext'
 import { usePosition } from 'hooks/useAddress'
+import useTruckDefaultSettings, { selectTruckDefaultParameters } from '../../hooks/useTruckDefaultSettings';
+import { updateUsage } from '../../utils/globalUtils';
+
+/**
+ * Encoding / decoding functions for the usage repartition query params
+ *
+ * Encoding: [{ use: 'X', percentage: 25 }, { use: 'Y', percentage: 75 }] => '25_75'
+ *              (final query param: usesRepartition=25_75)
+ *
+ * Decoding: '20_80' => [{ use: 'X', percentage: 20 }, { use: 'Y', percentage: 80 }]
+ *
+ * @param fullUsage the default usage for decoding from query params
+ * @returns {{encode: (function(*): *), decode: (function(*): *|undefined)}}
+ * @constructor
+ */
+const UsageRepartitionParam = (fullUsage) => ({
+  encode: v => v.reduce((memo, current, index) => {
+    memo += index === 0 ? current.percentage : `_${current.percentage}`
+    return memo
+  }, ''),
+  decode: v => {
+    const usageValues = (v ?? '').split('_')
+    return (usageValues && fullUsage && (usageValues.length === fullUsage.length)) ?
+      fullUsage.map((u, index) => ({ ...u, percentage: +usageValues[index] }))
+      : undefined
+  }
+})
 
 export default function SearchProvider(props) {
+  const { data: truckDefaults } = useTruckDefaultSettings()
   const [vehicleCategory, setVehicleCategory] = useQueryParam(
     'vehicleCategory',
     withDefault(StringParam, 'RIGIDTRUCK-12T')
   )
+  const defaultSettings = selectTruckDefaultParameters(vehicleCategory, truckDefaults)
   const [totalAnnualDistance, setTotalAnnualDistance] = useQueryParam(
     'totalAnnualDistance',
-    withDefault(NumberParam, 100000)
+    withDefault(NumberParam, undefined)
   )
   const [payload, setPayload] = useQueryParam(
     'payload',
-    withDefault(NumberParam, 10)
+    withDefault(NumberParam, undefined)
   )
   const [possessionDuration, setPossessionDuration] = useQueryParam(
     'possessionDuration',
-    withDefault(NumberParam, 5)
+    withDefault(NumberParam, defaultSettings?.possessionDuration)
   )
-
   const [usesRepartition, setUsesRepartition] = useQueryParam(
     'usesRepartition',
-    withDefault(DelimitedNumericArrayParam, [20, 20, 60])
+    withDefault(UsageRepartitionParam(defaultSettings?.usesRepartition), defaultSettings?.usesRepartition)
+  )
+  const [fuelConsumption, setFuelConsumption] = useQueryParam(
+    'fuelConsumption',
+    withDefault(NumberParam, undefined)
   )
 
   const [start, setStart] = useState(null)
@@ -55,7 +81,6 @@ export default function SearchProvider(props) {
   }, [endPlaceData, setEnd])
 
   const [costs, setCosts] = useState([])
-  const [fuelConsumption, setFuelConsumption] = useState(0)
 
   return (
     <SearchContext.Provider
@@ -70,38 +95,7 @@ export default function SearchProvider(props) {
         setPossessionDuration,
         usesRepartition,
         setUsesRepartition: (e) => {
-          if (Array.isArray(e) && e.length === 3 && e.every(v => typeof v === 'number')) {
-            setUsesRepartition(e)
-            return
-          }
-          const index = { urbain: 0, extraurbain: 1, autoroute: 2 }[e.name]
-          const tempRepartition = [...usesRepartition]
-          tempRepartition[index] =
-            e.value > 100 ? 100 : e.value < 0 ? 0 : e.value
-
-          let total = tempRepartition.reduce(
-            (acc, cur) => Number(acc) + Number(cur),
-            0
-          )
-          let nextIndex = index > 1 ? 0 : index + 1
-          if (total !== 100) {
-            tempRepartition[nextIndex] =
-              tempRepartition[nextIndex] - (total - 100)
-            tempRepartition[nextIndex] =
-              tempRepartition[nextIndex] < 0 ? 0 : tempRepartition[nextIndex]
-          }
-          total = tempRepartition.reduce(
-            (acc, cur) => Number(acc) + Number(cur),
-            0
-          )
-          nextIndex = nextIndex > 1 ? 0 : nextIndex + 1
-          if (total !== 100) {
-            tempRepartition[nextIndex] =
-              tempRepartition[nextIndex] - (total - 100)
-            tempRepartition[nextIndex] =
-              tempRepartition[nextIndex] < 0 ? 0 : tempRepartition[nextIndex]
-          }
-          setUsesRepartition(tempRepartition)
+          setUsesRepartition(updateUsage(e, usesRepartition))
         },
         start,
         setStart,

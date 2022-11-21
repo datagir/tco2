@@ -4,10 +4,8 @@ import styled from 'styled-components'
 import SearchContext from 'utils/SearchContext'
 import TextInput from 'components/base/TextInput'
 import Typologie from './usage/Typologie'
-import useTruckDefaultSettings, {
-  selectTruckDefaultParameters,
-} from '../../../hooks/useTruckDefaultSettings';
-import { parseLocalNumber, parseString } from '../../../utils/numbers';
+import useTruckDefaultSettings, { selectTruckDefaultParameters, } from '../../../hooks/useTruckDefaultSettings';
+import { parseLocalNumber } from '../../../utils/numberUtils';
 
 const Wrapper = styled.div`
   position: relative;
@@ -18,6 +16,13 @@ const Wrapper = styled.div`
 
   ${(props) => props.theme.mq.small} {
     padding: 1rem;
+  }
+  .secondary-input {
+    max-width: 8rem;
+    margin: 0;
+      input {
+        text-align: right;
+      }
   }
 `
 const Title = styled.label`
@@ -31,39 +36,41 @@ const MainTextInput = styled(TextInput)`
     text-align: right;
   }
 `
-const SecondTextInput = styled(TextInput)`
-  max-width: 8rem;
-  margin: 0;
-  input {
-    text-align: right;
-  }
-`
+
 export default function Usage() {
   const { vehicleCategory, totalAnnualDistance, setTotalAnnualDistance, payload, setPayload } =
     useContext(SearchContext)
   const { data: defaultSettings } = useTruckDefaultSettings()
-  const { totalAnnualDistance: defaultTotalAnnualDistance, payload: defaultPayload } = selectTruckDefaultParameters(vehicleCategory, defaultSettings)
+  const {
+    totalAnnualDistance: defaultTotalAnnualDistance,
+    payload: defaultPayload
+  } = selectTruckDefaultParameters(vehicleCategory, defaultSettings)
 
   return (
     <Wrapper>
       <Title htmlFor='kilometrage'>Kilométrage annuel</Title>
       <MainTextInput
+        type={'localizedNumber'}
         name='kilometrage'
         unit={'km'}
-        defaultValue={parseLocalNumber(defaultTotalAnnualDistance)}
-        value={parseLocalNumber(totalAnnualDistance)}
-        onChange={({ value }) => setTotalAnnualDistance(parseString(value))}
+        placeholder={parseLocalNumber(defaultTotalAnnualDistance)}
+        value={totalAnnualDistance}
+        onChange={({ value }) => setTotalAnnualDistance(value)}
       />
       <Typologie />
       <Title htmlFor='payload'>
         Chargement du véhicule en pourcentage de charge utile
       </Title>
-      <SecondTextInput
+      <TextInput
+        type={'localizedNumber'}
+        className={'secondary-input'}
         name='payload'
         unit={'%'}
-        defaultValue={parseLocalNumber(defaultPayload)}
-        value={parseLocalNumber(payload)}
-        onChange={({ value }) => setPayload(parseString(value))}
+        placeholder={parseLocalNumber(defaultPayload)}
+        value={payload}
+        onChange={({ value }) => {
+          setPayload(value)
+        }}
         min={0}
         max={100}
       />

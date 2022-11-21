@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { isNil, resolveDefaultPropertyName } from '../../../../../utils/global';
+import { isNil, resolveDefaultPropertyName } from '../../../../../utils/globalUtils';
 
 const Wrapper = styled.nav`
   display: flex;
@@ -66,8 +66,8 @@ const isCostModified = (costs, technology, technologies) => {
     const defaultName = resolveDefaultPropertyName(key)
     // If no default value was found in initial technology, use 0
     const defaultValue = isNil(defaultTechnology[defaultName]) ? 0 : defaultTechnology[defaultName]
-    // comparison - modified values can be contained in string
-    return +lastModifiedCosts[key] !== defaultValue
+    // comparison - ignore empty values, and convert into number since modified values can be in string format
+    return !isNil(lastModifiedCosts[key]) && lastModifiedCosts[key] !== '' && +lastModifiedCosts[key] !== defaultValue
   })
 }
 

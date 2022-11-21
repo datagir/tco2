@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query'
 import axios from 'axios'
-import { removeTrailingDot } from '../utils/strings';
+import { removeTrailingDot } from '../utils/stringUtils';
 
 export default function useTruckDefaultSettings() {
   const { data: token } = useToken()
@@ -15,7 +15,7 @@ export default function useTruckDefaultSettings() {
       enabled: !!token,
       keepPreviousData: true,
       refetchOnWindowFocus: false,
-      staleTime: Infinity
+      staleTime: Infinity,
     }
   )
 }
@@ -38,6 +38,9 @@ export function useToken() {
 export function selectCategory(category, data) {
   return (data?.output?.vehicleCategoriesDescriptions ?? []).find(c => c.vehicleCategory === category)
 }
+export function selectTruckDescriptions(category, data) {
+  return data?.output?.vehicleCategoriesDescriptions ?? []
+}
 export function selectTruckDefaultDescription(category, data) {
   const categoryDefault = selectCategory(category, data)
   return {
@@ -46,9 +49,17 @@ export function selectTruckDefaultDescription(category, data) {
 }
 export function selectTruckDefaultParameters(category, data) {
   const categoryDefault = selectCategory(category, data)
-  const defaultParams = categoryDefault?.DefaultParameters
-  return {
-    ...defaultParams,
-    usesRepartition: (defaultParams?.usesRepartition ?? []).map(rep => rep.percentage)
-  }
+  return categoryDefault?.DefaultParameters
+}
+export function selectTruckDefaultUsages(category, data) {
+  const defaultParams = selectTruckDefaultParameters(category, data)
+  return defaultParams?.usesRepartition
+}
+export function selectDefaultUsageName(category, data, use) {
+  const usageByName = (selectTruckDefaultUsages(category, data) ?? []).filter(u => u.use === use)
+  return usageByName?.length > 0 ? usageByName[0].name : use
+}
+export function selectDefaultAnnualDistance(category, data) {
+  const params = selectTruckDefaultParameters(category, data)
+  return params?.totalAnnualDistance
 }

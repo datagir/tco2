@@ -15,7 +15,7 @@ import useTruckDefaultSettings from 'hooks/useTruckDefaultSettings'
 import useTruckComparison from 'hooks/useTruckComparison'
 import Button from 'components/base/Button'
 import DurationSelector from './summary/DurationSelector'
-import { parseLocalNumber } from '../../../utils/numbers'
+import { parseLocalNumber } from '../../../utils/numberUtils'
 
 const Wrapper = styled.div`
   margin-bottom: 3rem;

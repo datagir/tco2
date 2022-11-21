@@ -28,8 +28,7 @@ const Details = styled.div`
 `
 const Types = styled.div`
   display: flex;
-  justify-content: space-between;
-  max-width: 22rem;
+  justify-content: center;
   margin: 0 auto;
 
   ${(props) => props.theme.mq.small} {
@@ -66,36 +65,18 @@ export default function Typologie() {
       <Details>
         {open === 'manual' ? (
           <Types>
-            <StyledTextInput
-              type='number'
-              name='urbain'
-              label={`Urbain`}
-              unit={'%'}
-              value={usesRepartition[0]}
-              onChange={setUsesRepartition}
-              min={0}
-              max={100}
-            />
-            <StyledTextInput
-              type='number'
-              name='extraurbain'
-              label={`Extra urbain`}
-              unit={'%'}
-              value={usesRepartition[1]}
-              onChange={setUsesRepartition}
-              min={0}
-              max={100}
-            />
-            <StyledTextInput
-              type='number'
-              name='autoroute'
-              label={`Autoroute`}
-              unit={'%'}
-              value={usesRepartition[2]}
-              onChange={setUsesRepartition}
-              min={0}
-              max={100}
-            />
+            { (usesRepartition ?? []).map(r => <StyledTextInput
+                key={r.use}
+                type='number'
+                name={r.use}
+                label={r.name}
+                unit={'%'}
+                value={r.percentage}
+                onChange={setUsesRepartition}
+                min={0}
+                max={100}
+              />)
+            }
           </Types>
         ) : (
           <Itinerary />

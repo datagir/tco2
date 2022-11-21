@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import useTruckDefaultSettings from 'hooks/useTruckDefaultSettings'
 import SearchContext from 'utils/SearchContext'
 import TextInput from 'components/base/TextInput'
 import ModeSelector from './costs/ModeSelector'
-import { resolveEnergyCostUnit } from '../../../../utils/global';
+import { findAssociatedTechs, resolveEnergyCostUnit } from '../../../../utils/globalUtils';
 
 const Wrapper = styled.div`
   ${(props) => props.theme.mq.small} {
@@ -50,14 +50,15 @@ const Button = styled.button`
   cursor: pointer;
 `
 
-const updateEnergyCosts = (prevCosts, value, technology) => {
+const updateEnergyCosts = (prevCosts, value, technology, allTechnologies) => {
   // First update open technology with new value
   const openTechnology = technology.vehicleTechnology
   const updatedCosts = {
     [openTechnology]: { ...prevCosts[openTechnology], energyCost: value }
   };
+
   // Energy cost changes must be applied to all related technologies
-  (technology.otherVehicleTechnologyWithSameEnergy ?? [])
+  (findAssociatedTechs(technology, allTechnologies))
     .forEach(tech => {
       updatedCosts[tech] = { ...prevCosts[tech], energyCost: value }
     })
@@ -113,72 +114,72 @@ export default function Costs(props) {
         <Details>
           <Types>
             <StyledTextInput
-              type='number'
+              type='localizedNumber'
               name='purchaseCost'
               label={`Prix d’achat du véhicule`}
               unit={'€'}
               value={costs[open]?.purchaseCost}
-              defaultValue={openTechnology.defaultPurchaseCost || 0}
+              placeholder={openTechnology.defaultPurchaseCost || 0}
               onChange={({ value }) =>
                 setCosts((prevCosts) => ({
                   ...prevCosts,
-                  [open]: { ...prevCosts[open], purchaseCost: value },
+                  [open]: { ...prevCosts[open], purchaseCost: value || undefined },
                 }))
               }
             />
             <StyledTextInput
-              type='number'
+              type='localizedNumber'
               name='purchaseGrant'
               label={`Aide à l’achat du véhicule`}
               unit={'€'}
               value={costs[open]?.purchaseGrant}
-              defaultValue={openTechnology.defaultPurchaseCost || 0}
+              placeholder={openTechnology.defaultPurchaseGrant || 0}
               onChange={({ value }) =>
                 setCosts((prevCosts) => ({
                   ...prevCosts,
-                  [open]: { ...prevCosts[open], purchaseGrant: value },
+                  [open]: { ...prevCosts[open], purchaseGrant: value || undefined },
                 }))
               }
             />
             <StyledTextInput
-              type='number'
+              type='localizedNumber'
               name='maintenanceCost'
               label={`Coût de maintenance annuel`}
               unit={'€'}
               value={costs[open]?.maintenanceCost}
-              defaultValue={openTechnology.defaultMaintenanceCost || 0}
+              placeholder={openTechnology.defaultMaintenanceCost || 0}
               onChange={ ({ value }) =>
                   setCosts((prevCosts) => ({
                     ...prevCosts,
-                    [open]: { ...prevCosts[open], maintenanceCost: value },
+                    [open]: { ...prevCosts[open], maintenanceCost: value || undefined },
                   }))
               }
             />
             <StyledTextInput
-              type='number'
+              type='localizedNumber'
               name='insuranceCost'
               label={`Coût d’assurance annuel`}
               unit={'€'}
               value={costs[open]?.insuranceCost}
-              defaultValue={openTechnology.defaultInsuranceCost || 0}
+              placeholder={openTechnology.defaultInsuranceCost || 0}
               onChange={({ value }) =>
                 setCosts((prevCosts) => ({
                   ...prevCosts,
-                  [open]: { ...prevCosts[open], insuranceCost: value },
+                  [open]: { ...prevCosts[open], insuranceCost: value || undefined },
                 }))
               }
             />
             <StyledTextInput
-              type='number'
+              type='localizedNumber'
               name='resaleCost'
               label={`Valeur de revente du véhicule`}
               unit={'€'}
               value={costs[open]?.resaleCost}
-              defaultValue={openTechnology.defaultResaleCost || 0}
+              placeholder={openTechnology.defaultResaleCost || 0}
               onChange={({ value }) =>
                 setCosts((prevCosts) => ({
                   ...prevCosts,
-                  [open]: { ...prevCosts[open], resaleCost: value },
+                  [open]: { ...prevCosts[open], resaleCost: value || undefined },
                 }))
               }
             />
@@ -188,9 +189,9 @@ export default function Costs(props) {
               label={`Prix du carburant`}
               unit={resolveEnergyCostUnit(open)}
               value={costs[open]?.energyCost}
-              defaultValue={openTechnology.defaultEnergyCost || 0}
+              placeholder={openTechnology.defaultEnergyCost || 0}
               onChange={ ({ value }) => setCosts(
-                  (prevCosts) => updateEnergyCosts(prevCosts, value, openTechnology))
+                  (prevCosts) => updateEnergyCosts(prevCosts, value, openTechnology, technologies))
               }
             />
           </Types>

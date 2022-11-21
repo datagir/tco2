@@ -4,7 +4,8 @@ import axios from 'axios'
 
 import SearchContext from 'utils/SearchContext'
 import useDebounce from './useDebounce';
-import { isNil } from '../utils/global';
+import { deleteEmptyFields, isEmpty, isNil } from '../utils/globalUtils';
+import useTruckDefaultSettings, { selectDefaultAnnualDistance } from './useTruckDefaultSettings';
 
 const areLocationsReady = (start, end) => {
   const locations = [start?.longitude, start?.latitude, end?.longitude, end?.latitude];
@@ -26,25 +27,28 @@ export default function useTruckComparison() {
     fuelConsumption
   } = useContext(SearchContext)
 
-  // Disable query while locations are partially filled
-  const enabled = areLocationsReady(start, end)
-
   const debouncedCosts = useDebounce(costs)
-  const debouncedPossessionDuration = useDebounce(possessionDuration, 100)
+  const debouncedPossessionDuration = useDebounce(possessionDuration)
   const debouncedFuelConsumption = useDebounce(fuelConsumption)
+  const debouncedPayload = useDebounce(payload)
+  const debouncedUsesRepartition = useDebounce(usesRepartition)
+  const debouncedTotalAnnualDistance = useDebounce(totalAnnualDistance)
 
   const { data: token } = useToken()
+  const { data: defaultSettings } = useTruckDefaultSettings()
+  // Disable query while locations are partially filled or default settings are not ready yet
+  const enabled = areLocationsReady(start, end) && !isEmpty(debouncedUsesRepartition) && !!defaultSettings
   return useQuery(
     [
       'truckComparison',
       token,
       vehicleCategory,
-      totalAnnualDistance,
+      debouncedTotalAnnualDistance,
       debouncedPossessionDuration,
-      usesRepartition,
+      debouncedUsesRepartition,
       start,
       end,
-      payload,
+      debouncedPayload,
       debouncedCosts,
       debouncedFuelConsumption,
     ],
@@ -57,7 +61,7 @@ export default function useTruckComparison() {
                 vehicle: { vehicleCategory },
                 use: {
                   operatingRange: 'URBAN',
-                  usesRepartition,
+                  usesRepartitionNew: debouncedUsesRepartition,
                   OriginDestination: {
                     origin: {
                       latitude: start?.latitude || null,
@@ -68,13 +72,13 @@ export default function useTruckComparison() {
                       longitude: end?.longitude || null,
                     },
                   },
-                  totalAnnualDistance,
-                  payload,
+                  totalAnnualDistance: debouncedTotalAnnualDistance ?? selectDefaultAnnualDistance(vehicleCategory, defaultSettings) ?? 100000,
+                  payload: debouncedPayload,
                 },
                 tcoParameters: {
                   possessionDuration: debouncedPossessionDuration,
                   fuelConsumption: debouncedFuelConsumption,
-                  costs: Object.keys(debouncedCosts).map((vehicleTechnology) => ({
+                  costs: Object.keys(debouncedCosts).map((vehicleTechnology) => deleteEmptyFields(({
                     vehicleTechnology,
                     purchaseCost: debouncedCosts[vehicleTechnology].purchaseCost,
                     purchaseGrant: debouncedCosts[vehicleTechnology].purchaseGrant,
@@ -82,7 +86,7 @@ export default function useTruckComparison() {
                     insuranceCost: debouncedCosts[vehicleTechnology].insuranceCost,
                     resaleCost: debouncedCosts[vehicleTechnology].resaleCost,
                     energyCost: debouncedCosts[vehicleTechnology].energyCost,
-                  })),
+                  }))),
                 },
                 chartsConfiguration: false,
               }
