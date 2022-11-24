@@ -19,7 +19,7 @@ const Details = styled.div`
   margin-bottom: 0.5rem;
   padding: 1.5rem 2rem;
   background-color: ${(props) => props.theme.colors.secondLight};
-  border-radius: 1rem;
+  border-radius: 0 0 1rem 1rem;
 
   ${(props) => props.theme.mq.small} {
     padding: 1rem;

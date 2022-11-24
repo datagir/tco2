@@ -10,9 +10,9 @@ const Tab = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 3rem;
-  margin-bottom: -1rem;
-  padding: 0.25rem 0 1rem;
+  height: 2rem;
+  padding: 0;
+  position: relative;
   color: ${(props) =>
     props.modified
       ? props.theme.colors.background
@@ -40,6 +40,21 @@ const Tab = styled.button`
         : props.current
         ? props.theme.colors.secondLight
         : props.theme.colors.footer};
+  }
+  &.active {
+   font-weight: ${(props) => props.current ? 700 : 500};
+  }
+  &.active, &:hover {
+     :after {
+      position: absolute;
+      content: '';
+      margin: 0 0.75rem;
+      height: 3px;
+      background: ${(props) => props.modified ? props.theme.colors.textLight : props.theme.colors.main};
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
   }
 `
 /**
@@ -80,6 +95,7 @@ export default function ModeSelector(props) {
           current={props.open === technology.vehicleTechnology}
           modified={isCostModified(props.costs, technology, props.technologies)}
           onClick={() => props.setOpen(technology.vehicleTechnology)}
+          className={props.open === technology.vehicleTechnology ? 'active' : ''}
         >
           {technology.shortName}
         </Tab>
