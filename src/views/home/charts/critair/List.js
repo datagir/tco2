@@ -14,7 +14,7 @@ export default function List(props) {
         .filter((technologie) => technologie.critAir === props.level)
         .map((technologie) => (
           <Item key={technologie.vehicleTechnology}>
-            {technologie.shortName}
+            {technologie.shortName} {technologie.shortName === 'B100' && '*'}
           </Item>
         ))}
     </Wrapper>
