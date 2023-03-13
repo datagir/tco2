@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import styled, { useTheme } from 'styled-components'
 import {
   BarChart,
@@ -16,6 +16,7 @@ import useTruckComparison from 'hooks/useTruckComparison'
 import Button from 'components/base/Button'
 import DurationSelector from './summary/DurationSelector'
 import { parseLocalNumber } from '../../../utils/numberUtils'
+import SearchContext from "../../../utils/SearchContext";
 
 const Wrapper = styled.div`
   margin-bottom: 3rem;
@@ -40,13 +41,17 @@ const Blue = styled.span`
 const Green = styled.span`
   color: ${(props) => props.theme.colors.co2};
 `
+const Warn = styled.span`
+  color: ${(props) => props.theme.colors.warn};
+`
 const Disclaimer = styled.p`
   margin-top: 1.5rem; //erk
   text-align: center;
 `
+const VE_BATTERIE_WARN = 'Le TCO du véhicule électrique pour une durée de possession ne prends pas en compte de coût de renouvellement de la batterie.'
 export default function Summary() {
   const { data: descriptions } = useTruckDefaultSettings()
-
+  const { possessionDuration } = useContext(SearchContext)
   const { data, isFetching, isError } = useTruckComparison()
   const [chart, setChart] = useState(null)
   useEffect(() => {
@@ -96,6 +101,13 @@ export default function Summary() {
         chaque technologie
       </Text>
       <DurationSelector />
+        {
+            (possessionDuration > 6) && (
+                <Text>
+                    <Warn>{VE_BATTERIE_WARN}</Warn>
+                </Text>
+            )
+        }
       <ChartWrapper isFetching={isFetching}>
         <ResponsiveContainer width='100%' height={250}>
           <BarChart

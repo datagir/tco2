@@ -20,6 +20,7 @@ export const themes = {
       purchaseCost: '#6a4c93',
       tco: '#0466c8',
       co2: '#008760',
+      warn: '#ffc107',
     },
     fonts: {
       body: '"Marianne", Arial, sans-serif',
@@ -52,6 +53,7 @@ export const themes = {
       purchaseCost: '#6a4c93',
       tco: '#64B0FC',
       co2: '#00FAB2',
+      warn: '#ffc107',
     },
     fonts: {
       body: '"Marianne", Arial, sans-serif',
