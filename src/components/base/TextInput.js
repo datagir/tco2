@@ -8,7 +8,7 @@ const Wrapper = styled.div`
 const Label = styled.label`
   display: block;
   margin-bottom: 0.5rem;
-  color: ${(props) => props.theme.colors[props.error ? 'error' : 'text']};
+  color: ${(props) => props.theme.colors[props.error ? 'error' : props.disabled ? 'textLight' : 'text']};
 `
 const InputWrapper = styled.div`
   display: flex;
@@ -31,15 +31,16 @@ const Unit = styled.div`
   padding: 0.5rem;
   text-align: start;
   min-width: 55px;
+  color: ${(props) => props.theme.colors[props.disabled ? 'textLight' : 'text']};
 `
 
 const handleFocus = event => event.currentTarget.select()
 
 export default function TextInput(props) {
-  return (
+    return (
     <Wrapper className={props.className}>
       {props.label && (
-        <Label htmlFor={props.name} error={props.error}>
+        <Label htmlFor={props.name} error={props.error} disabled={props.disabled}>
           {props.label}
         </Label>
       )}
@@ -62,7 +63,7 @@ export default function TextInput(props) {
           disabled={props.disabled}
           onFocus={handleFocus}
         />
-        {props.unit && <Unit>{props.unit}</Unit>}
+        {props.unit && <Unit disabled={props.disabled}>{props.unit}</Unit>}
       </InputWrapper>
     </Wrapper>
   )

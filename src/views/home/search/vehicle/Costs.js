@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, {useCallback, useContext, useEffect, useState} from 'react'
 import styled from 'styled-components'
 
 import useTruckDefaultSettings from 'hooks/useTruckDefaultSettings'
@@ -51,6 +51,12 @@ const Button = styled.button`
   cursor: pointer;
 `
 
+const Info = styled.p`
+  margin: 0 auto 1rem;
+  font-size: 0.75rem;
+  text-align: center;
+  color: ${(props) => props.theme.colors.textLight};
+`
 const updateEnergyCosts = (prevCosts, value, technology, allTechnologies) => {
   // First update open technology with new value
   const openTechnology = technology.vehicleTechnology
@@ -103,6 +109,8 @@ export default function Costs(props) {
 
   const openTechnology = (technologies ?? []).find(t => t.vehicleTechnology === open)
 
+  const getPlaceHolder = useCallback(field => (parseLocalNumber(openTechnology[field]) || 0), [openTechnology])
+
   return (props.open && openTechnology) ? (
     <Wrapper>
       <ModeSelector
@@ -114,13 +122,15 @@ export default function Costs(props) {
       {open && (
         <Details>
           <Types>
+            {openTechnology.fake && (<Info>Energie bientôt ajoutée</Info>)}
             <StyledTextInput
               type='localizedNumber'
               name='purchaseCost'
               label={`Prix d’achat du véhicule`}
+              disabled={openTechnology.fake}
               unit={'€'}
               value={costs[open]?.purchaseCost}
-              placeholder={parseLocalNumber(openTechnology.defaultPurchaseCost) || 0}
+              placeholder={getPlaceHolder('defaultPurchaseCost')}
               onChange={({ value }) =>
                 setCosts((prevCosts) => ({
                   ...prevCosts,
@@ -132,9 +142,10 @@ export default function Costs(props) {
               type='localizedNumber'
               name='purchaseGrant'
               label={`Aide à l’achat du véhicule`}
+              disabled={openTechnology.fake}
               unit={'€'}
               value={costs[open]?.purchaseGrant}
-              placeholder={parseLocalNumber(openTechnology.defaultPurchaseGrant) || 0}
+              placeholder={getPlaceHolder('defaultPurchaseGrant')}
               onChange={({ value }) =>
                 setCosts((prevCosts) => ({
                   ...prevCosts,
@@ -146,9 +157,10 @@ export default function Costs(props) {
               type='localizedNumber'
               name='maintenanceCost'
               label={`Coût de maintenance annuel`}
+              disabled={openTechnology.fake}
               unit={'€'}
               value={costs[open]?.maintenanceCost}
-              placeholder={parseLocalNumber(openTechnology.defaultMaintenanceCost) || 0}
+              placeholder={getPlaceHolder('defaultMaintenanceCost')}
               onChange={ ({ value }) =>
                   setCosts((prevCosts) => ({
                     ...prevCosts,
@@ -160,9 +172,10 @@ export default function Costs(props) {
               type='localizedNumber'
               name='insuranceCost'
               label={`Coût d’assurance annuel`}
+              disabled={openTechnology.fake}
               unit={'€'}
               value={costs[open]?.insuranceCost}
-              placeholder={parseLocalNumber(openTechnology.defaultInsuranceCost) || 0}
+              placeholder={getPlaceHolder('defaultInsuranceCost')}
               onChange={({ value }) =>
                 setCosts((prevCosts) => ({
                   ...prevCosts,
@@ -174,9 +187,10 @@ export default function Costs(props) {
               type='localizedNumber'
               name='resaleCost'
               label={`Valeur de revente du véhicule`}
+              disabled={openTechnology.fake}
               unit={'€'}
               value={costs[open]?.resaleCost}
-              placeholder={parseLocalNumber(openTechnology.defaultResaleCost) || 0}
+              placeholder={getPlaceHolder('defaultResaleCost')}
               onChange={({ value }) =>
                 setCosts((prevCosts) => ({
                   ...prevCosts,
@@ -188,6 +202,7 @@ export default function Costs(props) {
               type='number'
               name='energyCost'
               label={`Prix du carburant`}
+              disabled={openTechnology.fake}
               unit={resolveEnergyCostUnit(open)}
               value={costs[open]?.energyCost || ''}
               placeholder={openTechnology.defaultEnergyCost || 0}
