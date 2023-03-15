@@ -19,6 +19,7 @@ const EnergyCostUnitMap = new Map([
   ['PHEV-DIESEL-B7', 'l'],
   ['PHEV-ESSENCE-E10', 'l'],
   ['ESSENCE-E10', 'l'],
+  ['HYDROGÈNE', 'l'],
 ])
 /**
  * Returns the formatted text for the energy cost unit

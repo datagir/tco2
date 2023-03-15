@@ -141,6 +141,10 @@ export default function Footer(props) {
               wiki
             </MagicLink>{' '}
             dédiée.
+            Vous avez une question? Pensez à consulter la{' '}
+            <MagicLink to='https://wiki.lafabriquedelalogistique.fr/FAQ_verdir_ma_flotte'>
+             FAQ
+          </MagicLink>.
           </p>
         </Section>
         <Section>
