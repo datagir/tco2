@@ -122,7 +122,7 @@ export default function Costs(props) {
       {open && (
         <Details>
           <Types>
-            {openTechnology.fake && (<Info>Energie bientôt ajoutée</Info>)}
+            {openTechnology.fake && (<Info>Energie bientôt renseignée</Info>)}
             <StyledTextInput
               type='localizedNumber'
               name='purchaseCost'

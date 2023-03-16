@@ -47,15 +47,15 @@ const Green = styled.span`
   color: ${(props) => props.theme.colors.co2};
 `
 const Warn = styled.span`
-  color: ${(props) => props.theme.colors.warn};
+  color: ${(props) => props.theme.colors.textLight};
 `
 const Disclaimer = styled.p`
   margin-top: 1.5rem; //erk
   text-align: center;
 `
 
-const TEXT_VE_BATTERY_WARN = 'Le TCO du véhicule électrique pour une durée de possession ne prends pas en compte de coût de renouvellement de la batterie.'
-const TEXT_COMING_SOON = 'Energie bientôt ajoutée.'
+const TEXT_VE_BATTERY_WARN = 'Le TCO du véhicule électrique pour une durée de possession supérieure à 7 ans ne prends pas en compte le coût de renouvellement de la batterie.'
+const TEXT_COMING_SOON = 'Energie bientôt renseignée.'
 
 const getBarColor = (theme, color, fake = false) => {
     let colorKey = color
@@ -175,16 +175,6 @@ export default function Summary() {
                         if (vehicleTechnology.fake) {
                             // fill fake data
                             d.fake = true
-                            d.TCO = Math.max(...data.output.tco.map(tco => Math.round(
-                                tco.energyCost + tco.insuranceCost + tco.maintenanceCost + tco.purchaseCost
-                            ))) * 1.1
-                            d.CO2 = Math.min(...data.output.ghg.map(emission => -Math.round(
-                                emission.landUse + emission.tankToWheel + emission.weelToTank
-                            ))) * 1.1
-                            d.Énergie = Math.max(...data.output.tco.map(tco => tco.energyCost))
-                            d.Assurance = Math.max(...data.output.tco.map(tco => tco.insuranceCost))
-                            d.Maintenance = Math.max(...data.output.tco.map(tco => tco.maintenanceCost))
-                            d.Achat = Math.max(...data.output.tco.map(tco => tco.purchaseCost))
                         }
                         return d
                     })

@@ -30,7 +30,7 @@ export default function useTruckDefaultSettings() {
                         vehicleTechnology: "HYDROGÈNE",
                         name: "Hydrogène",
                         shortName: "H2",
-                        description: "Energie bientôt ajoutée.",
+                        description: "Energie bientôt renseignée.",
                         fake: true
                     })
                 }
