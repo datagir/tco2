@@ -1,11 +1,11 @@
-import React, {useCallback, useContext, useEffect, useState} from 'react'
+import React, {useCallback, useContext, useEffect, useMemo, useState} from 'react'
 import styled from 'styled-components'
 
 import useTruckDefaultSettings from 'hooks/useTruckDefaultSettings'
 import SearchContext from 'utils/SearchContext'
 import TextInput from 'components/base/TextInput'
 import ModeSelector from './costs/ModeSelector'
-import { findAssociatedTechs, resolveEnergyCostUnit } from '../../../../utils/globalUtils';
+import {findAssociatedTechs, isTechnologyAvailable, resolveEnergyCostUnit} from '../../../../utils/globalUtils';
 import {parseLocalNumber} from '../../../../utils/numberUtils';
 
 const Wrapper = styled.div`
@@ -109,6 +109,9 @@ export default function Costs(props) {
 
   const openTechnology = (technologies ?? []).find(t => t.vehicleTechnology === open)
 
+  console.log(openTechnology)
+  const unavailable = useMemo(() => isTechnologyAvailable(openTechnology),[openTechnology])
+
   const getPlaceHolder = useCallback(field => (parseLocalNumber(openTechnology[field]) || 0), [openTechnology])
 
   return (props.open && openTechnology) ? (
@@ -122,12 +125,12 @@ export default function Costs(props) {
       {open && (
         <Details>
           <Types>
-            {openTechnology.fake && (<Info>Energie bientôt renseignée</Info>)}
+            {unavailable && (<Info>Energie bientôt renseignée</Info>)}
             <StyledTextInput
               type='localizedNumber'
               name='purchaseCost'
               label={`Prix d’achat du véhicule`}
-              disabled={openTechnology.fake}
+              disabled={unavailable}
               unit={'€'}
               value={costs[open]?.purchaseCost}
               placeholder={getPlaceHolder('defaultPurchaseCost')}
@@ -142,7 +145,7 @@ export default function Costs(props) {
               type='localizedNumber'
               name='purchaseGrant'
               label={`Aide à l’achat du véhicule`}
-              disabled={openTechnology.fake}
+              disabled={unavailable}
               unit={'€'}
               value={costs[open]?.purchaseGrant}
               placeholder={getPlaceHolder('defaultPurchaseGrant')}
@@ -157,7 +160,7 @@ export default function Costs(props) {
               type='localizedNumber'
               name='maintenanceCost'
               label={`Coût de maintenance annuel`}
-              disabled={openTechnology.fake}
+              disabled={unavailable}
               unit={'€'}
               value={costs[open]?.maintenanceCost}
               placeholder={getPlaceHolder('defaultMaintenanceCost')}
@@ -172,7 +175,7 @@ export default function Costs(props) {
               type='localizedNumber'
               name='insuranceCost'
               label={`Coût d’assurance annuel`}
-              disabled={openTechnology.fake}
+              disabled={unavailable}
               unit={'€'}
               value={costs[open]?.insuranceCost}
               placeholder={getPlaceHolder('defaultInsuranceCost')}
@@ -187,7 +190,7 @@ export default function Costs(props) {
               type='localizedNumber'
               name='resaleCost'
               label={`Valeur de revente du véhicule`}
-              disabled={openTechnology.fake}
+              disabled={unavailable}
               unit={'€'}
               value={costs[open]?.resaleCost}
               placeholder={getPlaceHolder('defaultResaleCost')}
@@ -202,7 +205,7 @@ export default function Costs(props) {
               type='number'
               name='energyCost'
               label={`Prix du carburant`}
-              disabled={openTechnology.fake}
+              disabled={unavailable}
               unit={resolveEnergyCostUnit(open)}
               value={costs[open]?.energyCost || ''}
               placeholder={openTechnology.defaultEnergyCost || 0}

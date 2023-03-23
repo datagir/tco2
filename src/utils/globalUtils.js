@@ -149,3 +149,7 @@ export const deleteEmptyFields = (srcObj) => {
   })
   return objWithoutEmpties
 }
+
+export const isTechnologyAvailable = technology => technology && Object.entries(technology)
+    .filter(([k]) => ['defaultPurchaseCost','defaultMaintenanceCost', 'defaultInsuranceCost', 'defaultEnergyCost'].includes(k))
+    .some(([_,v]) => v === null)

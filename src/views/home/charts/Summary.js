@@ -17,6 +17,7 @@ import Button from 'components/base/Button'
 import DurationSelector from './summary/DurationSelector'
 import {parseLocalNumber} from '../../../utils/numberUtils'
 import SearchContext from "../../../utils/SearchContext";
+import {isTechnologyAvailable} from "../../../utils/globalUtils";
 
 const Wrapper = styled.div`
   margin-bottom: 3rem;
@@ -36,7 +37,7 @@ const Text = styled.p`
   text-align: center;
 `
 const Small = styled.p`
-  margin: 0 auto 1rem;
+  margin: 0 6rem 1rem;
   font-size: 0.75rem;
   text-align: center;
 `
@@ -57,7 +58,7 @@ const Disclaimer = styled.p`
 const TEXT_VE_BATTERY_WARN = 'Le TCO du véhicule électrique pour une durée de possession supérieure à 7 ans ne prends pas en compte le coût de renouvellement de la batterie.'
 const TEXT_COMING_SOON = 'Energie bientôt renseignée.'
 
-const getBarColor = (theme, color, fake = false) => {
+const getBarColor = (theme, color, unavailable = false) => {
     let colorKey = color
     switch (color){
         case 'Achat':
@@ -80,7 +81,7 @@ const getBarColor = (theme, color, fake = false) => {
             break;
         default:
     }
-    return fake ? theme.colors.textLight : theme.colors[colorKey]
+    return unavailable ? theme.colors.textLight : theme.colors[colorKey]
 }
 
 const CustomTooltip = ({active, contentStyle, labelStyle, label, formatter, itemStyle, payload}) => {
@@ -105,8 +106,8 @@ const CustomTooltip = ({active, contentStyle, labelStyle, label, formatter, item
             ...itemStyle,
         }
         const listStyle = {padding: 0, margin: 0};
-        const items = payload[0]?.payload.fake ? [(
-            <li className="recharts-tooltip-item" key={`tooltip-item-fake`} style={{...finalItemStyle, color: theme.colors.textLight,}}>
+        const items = payload[0]?.payload.unavailable ? [(
+            <li className="recharts-tooltip-item" key={`tooltip-item-unavailable`} style={{...finalItemStyle, color: theme.colors.textLight,}}>
                 <span className="recharts-tooltip-item-name">{TEXT_COMING_SOON}</span>
             </li>
         )] : payload.map((entry, i) => {
@@ -122,7 +123,7 @@ const CustomTooltip = ({active, contentStyle, labelStyle, label, formatter, item
         })
         if(payload[0]?.payload.warn){
             items.unshift(
-                <li className="recharts-tooltip-item" key={`tooltip-item-fake`} style={{...finalItemStyle, color: theme.colors.textLight,}}>
+                <li className="recharts-tooltip-item" key={`tooltip-item-unavailable`} style={{...finalItemStyle, color: theme.colors.textLight,}}>
                     <span className="recharts-tooltip-item-name">{payload[0]?.payload.warn}</span>
                 </li>
             )
@@ -169,12 +170,10 @@ export default function Summary() {
                                 data.output.tco[index].purchaseCost
                             ),
                         }
-                        if (vehicleTechnology.vehicleTechnology === 'BEV' && possessionDuration > 6) {
-                            d.warn = TEXT_VE_BATTERY_WARN
-                        }
-                        if (vehicleTechnology.fake) {
-                            // fill fake data
-                            d.fake = true
+                        if (descriptions.output.vehicleCategoriesDescriptions
+                            .some(desc => isTechnologyAvailable(desc.vehicleTechnologiesAvailability.find(tech => tech.vehicleTechnology === emission.vehicleTechnology)))) {
+                            // set unavailable flag
+                            d.unavailable = true
                         }
                         return d
                     })
@@ -190,8 +189,8 @@ export default function Summary() {
     const buildBars = useCallback((dataKeys, yAxisId, withLegend = false) => {
         const items = dataKeys.map(key => (
             <Bar key={key} stackId='a' yAxisId={yAxisId} dataKey={key} fill={getBarColor(theme, key)}>
-                {chart?.map(({vehicleTechnology, fake}, index) => (
-                    <Cell key={`cell-${index}`} fill={getBarColor(theme, key, fake)}/>))}
+                {chart?.map(({vehicleTechnology, unavailable}, index) => (
+                    <Cell key={`cell-${index}`} fill={getBarColor(theme, key, unavailable)}/>))}
             </Bar>
         ))
         return (
@@ -288,8 +287,8 @@ export default function Summary() {
                             content={<CustomTooltip/>}
                         />
                         <Bar yAxisId='right' dataKey='CO2' fill={getBarColor(theme, 'co2')}>
-                            {chart?.map(({vehicleTechnology, fake}, index) => (
-                                <Cell key={`cell-${index}`} fill={getBarColor(theme, 'co2', fake)}/>))}
+                            {chart?.map(({vehicleTechnology, unavailable}, index) => (
+                                <Cell key={`cell-${index}`} fill={getBarColor(theme, 'co2', unavailable)}/>))}
                         </Bar>
                     </BarChart>
                 </ResponsiveContainer>

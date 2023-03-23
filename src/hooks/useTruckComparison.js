@@ -91,27 +91,7 @@ export default function useTruckComparison() {
                 chartsConfiguration: false,
               }
             )
-            .then((res) => {
-                const { data } = res
-                // TODO remove this bloc once service with h2 available
-                if(!data.output.ghg.some(tech => tech.vehicleTechnology === 'HYDROGÈNE')){
-                    // mock fake data
-                    data.output.ghg.push({
-                        vehicleTechnology: "HYDROGÈNE",
-                        weelToTank: null,
-                        tankToWheel: null,
-                        landUse: null
-                    })
-                    data.output.tco.push({
-                        vehicleTechnology: "HYDROGÈNE",
-                        purchaseCost: null,
-                        energyCost: null,
-                        maintenanceCost: null,
-                        insuranceCost: null
-                    })
-                }
-                return data
-            })
+            .then((res) => res.data)
         : Promise.resolve([]),
     {
       keepPreviousData: true,

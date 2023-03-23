@@ -10,32 +10,7 @@ export default function useTruckDefaultSettings() {
             .get(
               `https://staging--tco2.netlify.app/.netlify/functions/getTruckDefaultSettings?token=${token}`
             )
-            .then((res) => {
-                const { data } =  res
-                // TODO remove this bloc once service with h2 available
-                if(!data.output.vehicleTechnologiesDescriptions.some(tech => tech.vehicleTechnology === 'HYDROGÈNE')){
-                    // mock fake data
-                    data.output.vehicleCategoriesDescriptions.forEach(cat => {
-                        cat.vehicleTechnologiesAvailability.push({
-                            vehicleTechnology: "HYDROGÈNE",
-                            defaultPurchaseCost: null,
-                            defaultMaintenanceCost: null,
-                            defaultInsuranceCost: null,
-                            defaultEnergyCost: null,
-                            critAir: null,
-                            fake: true
-                        })
-                    })
-                    data.output.vehicleTechnologiesDescriptions.push({
-                        vehicleTechnology: "HYDROGÈNE",
-                        name: "Hydrogène",
-                        shortName: "H2",
-                        description: "Energie bientôt renseignée.",
-                        fake: true
-                    })
-                }
-                return data
-            }),
+            .then((res) => res.data),
     {
       enabled: !!token,
       keepPreviousData: true,
