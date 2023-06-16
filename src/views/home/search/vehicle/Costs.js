@@ -211,9 +211,9 @@ export default function Costs(props) {
               onChange={ ({ value }) => setCosts(
                   (prevCosts) => updateEnergyCosts(prevCosts, value, openTechnology, technologies))
               }
+              hint={'Prix moyen sur les 12 derniers mois, mis à jour en mai 2023.'}
             />
           </Types>
-          <Info>Prix moyen sur les 12 derniers mois, mis à jour en mai 2023.</Info>
         </Details>
       )}
       <Button onClick={() => setCosts([])} disabled={costs.length < 1}>

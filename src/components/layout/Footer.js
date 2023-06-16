@@ -155,7 +155,7 @@ export default function Footer(props) {
             Nous vous invitons également à rejoindre le canal slack{' '}
             <MagicLink to='https://join.slack.com/t/fablogcommuna-2f52010/shared_invite/zt-1tmmq5ml2-MXZ7OQU8OlAcA9LlZmzaGA'>
               #verdir-ma-flotte
-            </MagicLink>{' '}pour poser vos questions et être informé des dernières nouveautés..
+            </MagicLink>{' '}pour poser vos questions et être informé des dernières nouveautés.
           </p>
         </Section>
       </Content>
