@@ -109,7 +109,6 @@ export default function Costs(props) {
 
   const openTechnology = (technologies ?? []).find(t => t.vehicleTechnology === open)
 
-  console.log(openTechnology)
   const unavailable = useMemo(() => isTechnologyAvailable(openTechnology),[openTechnology])
 
   const getPlaceHolder = useCallback(field => (parseLocalNumber(openTechnology[field]) || 0), [openTechnology])
@@ -214,6 +213,7 @@ export default function Costs(props) {
               }
             />
           </Types>
+          <Info>Prix moyen sur les 12 derniers mois, mis à jour en mai 2023.</Info>
         </Details>
       )}
       <Button onClick={() => setCosts([])} disabled={costs.length < 1}>

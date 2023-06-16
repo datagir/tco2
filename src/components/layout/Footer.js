@@ -18,9 +18,8 @@ const Wrapper = styled.footer`
     props.theme.colors[props.iframe ? 'background' : 'footer']};
 `
 const Content = styled.div`
-  max-width: ${(props) => props.width || '37rem'};
-  margin: 0 auto;
-  padding: ${(props) => (props.iframe ? 1 : 2)}rem 1rem 1rem;
+  margin: 0 1%;
+  padding: ${(props) => (props.iframe ? 1 : 2)}rem 1rem;
 `
 const Section = styled.div`
   display: flex;
@@ -120,7 +119,7 @@ export default function Footer(props) {
           <h2>D'où viennent ces données ?</h2>
           <p>
             Les facteurs d’émissions proviennent de la{' '}
-            <MagicLink to='https://bilans-ges.ademe.fr/fr/accueil/contenu/index/page/presentation/siGras/0'>
+            <MagicLink to='https://base-empreinte.ademe.fr/'>
               Base Carbone de l’ADEME
             </MagicLink>
             et les consommations s’appuient sur des simulations réalisées par l’
@@ -141,14 +140,23 @@ export default function Footer(props) {
               wiki
             </MagicLink>{' '}
             dédiée.
-            Vous avez une question? Pensez à consulter la{' '}
-            <MagicLink to='https://wiki.lafabriquedelalogistique.fr/FAQ_verdir_ma_flotte'>
-             FAQ
-          </MagicLink>.
           </p>
         </Section>
         <Section>
           <ContactPrompt />
+        </Section>
+        <Section>
+          <h2>Vous avez une question ou vous désirez contribuer?</h2>
+          <p>
+            Pensez à consulter la{' '}
+            <MagicLink to='https://wiki.lafabriquedelalogistique.fr/FAQ_verdir_ma_flotte'>
+              FAQ
+            </MagicLink>{' '}qui regroupe  les questions régulièrement posées.
+            Nous vous invitons également à rejoindre le canal slack{' '}
+            <MagicLink to='https://join.slack.com/t/fablogcommuna-2f52010/shared_invite/zt-1tmmq5ml2-MXZ7OQU8OlAcA9LlZmzaGA'>
+              #verdir-ma-flotte
+            </MagicLink>{' '}pour poser vos questions et être informé des dernières nouveautés..
+          </p>
         </Section>
       </Content>
       <LogosWrapper iframe={iframe}>
