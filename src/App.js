@@ -2,6 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { QueryParamProvider } from 'use-query-params'
 import { QueryClient, QueryClientProvider } from 'react-query'
+import { ReactRouter5Adapter } from 'use-query-params/adapters/react-router-5';
 
 import 'fonts/fonts.css'
 import { GlobalStyle } from 'utils/styles'
@@ -18,7 +19,7 @@ const queryClient = new QueryClient()
 function App() {
   return (
     <Router>
-      <QueryParamProvider ReactRouterRoute={Route}>
+      <QueryParamProvider adapter={ReactRouter5Adapter}>
         <QueryClientProvider client={queryClient}>
           <StyleProvider>
             <SearchProvider>
