@@ -1,4 +1,4 @@
-# Verdir ma flotte
+# Projet de la page web de Verdir ma flotte
 
 ## Développement
 
