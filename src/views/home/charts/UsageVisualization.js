@@ -13,7 +13,8 @@ import { FuelConsumption } from './usage-visualization/FuelConsumption';
 import { linearInterpolateColors } from '../../../utils/globalUtils';
 
 const Wrapper = styled.div`
-  margin-bottom: 1rem;
+  max-width: 44rem;
+  margin: 0 auto 1rem auto;
   padding: 1.5rem 1.5rem 0.5rem;
   background-color: ${(props) => props.theme.colors.secondLight};
   border-radius: 1rem;

@@ -4,16 +4,20 @@ import styled from 'styled-components'
 import useTruckDefaultSettings from 'hooks/useTruckDefaultSettings'
 import Vehicle from './search/Vehicle'
 import Usage from './search/Usage'
+import {devices} from "../../utils/Constants";
 
 const Wrapper = styled.div`
   position: relative;
-  margin-bottom: 2rem;
+  max-width: 44rem;
+  margin: 0 auto 2rem auto;
   padding: 1.5rem 1.5rem 1rem;
   background-color: ${(props) => props.theme.colors.secondLight};
   border-radius: 1rem;
-
   ${(props) => props.theme.mq.small} {
     padding: 1rem;
+  }
+  @media screen and ${devices.sm} {
+    margin: 0 1rem 2rem 1rem;
   }
 `
 const Introduction = styled.p`

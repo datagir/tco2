@@ -20,7 +20,8 @@ import SearchContext from "../../../utils/SearchContext";
 import {isTechnologyAvailable} from "../../../utils/globalUtils";
 
 const Wrapper = styled.div`
-  margin-bottom: 3rem;
+  max-width: 44rem;
+  margin: 0 auto 3rem auto;
 `
 const ChartWrapper = styled.div`
   width: 100%;

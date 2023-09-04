@@ -7,7 +7,8 @@ import List from './critair/List'
 
 const Wrapper = styled.div`
   position: relative;
-  margin-bottom: 4rem;
+  max-width: 44rem;
+  margin: 0 auto 4rem auto;
   padding: 1.5rem 1.5rem 0.5rem;
   background-color: ${(props) => props.theme.colors.secondLight};
   border-radius: 1rem;

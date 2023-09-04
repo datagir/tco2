@@ -6,6 +6,15 @@ import { usePosition } from 'hooks/useAddress'
 import useTruckDefaultSettings, { selectTruckDefaultParameters } from '../../hooks/useTruckDefaultSettings';
 import { updateUsage } from '../../utils/globalUtils';
 
+export const SearchKeys = {
+    VehicleCategory: 'vehicleCategory',
+    TotalAnnualDistance: 'totalAnnualDistance',
+    Payload: 'payload',
+    PossessionDuration: 'possessionDuration',
+    UsesRepartition: 'usesRepartition',
+    FuelConsumption: 'fuelConsumption'
+}
+Object.freeze(SearchKeys)
 /**
  * Encoding / decoding functions for the usage repartition query params
  *
@@ -18,7 +27,7 @@ import { updateUsage } from '../../utils/globalUtils';
  * @returns {{encode: (function(*): *), decode: (function(*): *|undefined)}}
  * @constructor
  */
-const UsageRepartitionParam = (fullUsage) => ({
+const usageRepartitionParam = (fullUsage) => ({
   encode: v => v.reduce((memo, current, index) => {
     memo += index === 0 ? current.percentage : `_${current.percentage}`
     return memo
@@ -34,28 +43,28 @@ const UsageRepartitionParam = (fullUsage) => ({
 export default function SearchProvider(props) {
   const { data: truckDefaults } = useTruckDefaultSettings()
   const [vehicleCategory, setVehicleCategory] = useQueryParam(
-    'vehicleCategory',
+    SearchKeys.VehicleCategory,
     withDefault(StringParam, 'RIGIDTRUCK-12T')
   )
   const defaultSettings = selectTruckDefaultParameters(vehicleCategory, truckDefaults)
   const [totalAnnualDistance, setTotalAnnualDistance] = useQueryParam(
-    'totalAnnualDistance',
+    SearchKeys.TotalAnnualDistance,
     withDefault(NumberParam, undefined)
   )
   const [payload, setPayload] = useQueryParam(
-    'payload',
+    SearchKeys.Payload,
     withDefault(NumberParam, undefined)
   )
   const [possessionDuration, setPossessionDuration] = useQueryParam(
-    'possessionDuration',
+    SearchKeys.PossessionDuration,
     withDefault(NumberParam, defaultSettings?.possessionDuration)
   )
   const [usesRepartition, setUsesRepartition] = useQueryParam(
-    'usesRepartition',
-    withDefault(UsageRepartitionParam(defaultSettings?.usesRepartition), defaultSettings?.usesRepartition)
+    SearchKeys.UsesRepartition,
+    withDefault(usageRepartitionParam(defaultSettings?.usesRepartition), defaultSettings?.usesRepartition)
   )
   const [fuelConsumption, setFuelConsumption] = useQueryParam(
-    'fuelConsumption',
+    SearchKeys.FuelConsumption,
     withDefault(NumberParam, undefined)
   )
 

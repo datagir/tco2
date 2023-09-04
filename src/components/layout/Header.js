@@ -9,8 +9,8 @@ const Wrapper = styled.header`
   position: relative;
   display: flex;
   justify-content: space-between;
-  margin: 1.5rem 0;
-
+  margin: 1.5rem auto;
+  width: 44rem;
   ${(props) => props.theme.mq.small} {
     margin-bottom: 0.5rem;
     font-size: 0.75rem;

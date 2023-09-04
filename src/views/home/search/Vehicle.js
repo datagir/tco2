@@ -5,7 +5,7 @@ import useTruckDefaultSettings, { selectTruckDescriptions } from 'hooks/useTruck
 import SearchContext from 'utils/SearchContext'
 import Select from 'components/base/Select'
 import Costs from './vehicle/Costs'
-import { useHistory } from 'react-router-dom';
+import {useHistory, useLocation} from 'react-router-dom';
 import StyleContext from '../../../utils/StyleContext';
 import ToggleButton from '../../../components/base/ToggleButton';
 
@@ -38,6 +38,7 @@ const StyledSelect = styled(Select)`
 `
 export default function Vehicle() {
   const history = useHistory();
+  const location = useLocation();
   const { theme } = useContext(StyleContext)
   const { vehicleCategory } = useContext(SearchContext)
   const { data: truckDefaults } = useTruckDefaultSettings()
@@ -51,7 +52,7 @@ export default function Vehicle() {
         <StyledSelect
           name={'vehicleCategory'}
           value={vehicleCategory}
-          onChange={({ value }) => history.push({ pathname: '/', search: `?vehicleCategory=${value}${theme ? '&theme=' + theme : ''}` })}
+          onChange={({ value }) => {history.push({ pathname: location.pathname, search: `?vehicleCategory=${value}${theme ? '&theme=' + theme : ''}` })}}
         >
           {selectTruckDescriptions(vehicleCategory, truckDefaults).map((vehicleCategory) => (
             <option
