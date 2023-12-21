@@ -1,11 +1,8 @@
 import React, { useState } from 'react'
 
 import UXContext from 'utils/UXContext'
-import usePageView from 'hooks/usePageView'
 
 export default function UXProvider(props) {
-  usePageView('Verdir ma Flotte')
-
   const [embedOpen, setEmbedOpen] = useState(false)
   const [shareOpen, setShareOpen] = useState(false)
   const [contactOpen, setContactOpen] = useState(false)
