@@ -6,25 +6,19 @@ import fabriquedelalogistique from 'components/misc/fabriquedelalogistique.jpg'
 import MagicLink from 'components/base/MagicLink'
 
 const Wrapper = styled.header`
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  margin: 1.5rem auto;
-  width: 44rem;
-  ${(props) => props.theme.mq.small} {
-    margin-bottom: 0.5rem;
-    font-size: 0.75rem;
-  }
+  
 `
 const Left = styled.div`
   position: relative;
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+  //justify-content: flex-start;
+  //align-items: center;
 `
 const Image = styled.img`
   display: block;
-  width: 8rem;
+  width: 6.5rem;
   height: auto;
   margin-right: 0.75rem;
   &:hover {
@@ -33,24 +27,60 @@ const Image = styled.img`
   }
 `
 const SeparatorLabel = styled.div`
-  max-width: 8rem;
-  margin: 0 1rem 0 .25rem;
-  padding: .75rem;
-  font-size: 12px;
-  border-radius: .75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .8rem;
+  font-weight: 700;
+  gap: 8px;
+  color: #BF3F90;
 `;
+
+const Brand = styled.div`
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin: 1.5rem auto;
+    width: 44rem;
+    ${(props) => props.theme.mq.small} {
+        margin-bottom: 0.5rem;
+        font-size: 0.75rem;
+    }
+`
+
+const Description = styled.div`
+    display: flex;
+    flex-direction: column;
+    padding: 4rem 0;
+    span {
+        text-align: center;
+        line-height: 1.8rem;
+        &:first-child {
+            color: #00875F;
+            font-weight: 700;
+        }
+    }
+`
 
 export default function Header(props) {
   return (
     <Wrapper className={props.className}>
-      <Left>
-        {props.children}
-        <SeparatorLabel>un commun de</SeparatorLabel>
-        <MagicLink to='https://www.lafabriquedelalogistique.fr/' noIcon={true}>
-          <Image src={fabriquedelalogistique} alt='Fabrique de la logistique' />
-        </MagicLink>
-      </Left>
-      <ThemeToggle />
+        <Brand>
+            <Left>
+                {props.children}
+                <SeparatorLabel>
+                  Créé par
+                  <MagicLink to='https://www.lafabriquedelalogistique.fr/' noIcon={true}>
+                    <Image src={fabriquedelalogistique} alt='Fabrique de la logistique' />
+                  </MagicLink>
+                </SeparatorLabel>
+            </Left>
+            <ThemeToggle />
+        </Brand>
+        <Description>
+            <span>L’outil d'aide à la décision pour renouveler son véhicule de transport de marchandises.</span>
+            <span>Comparez le coût et les émissions des énergies alternatives en fonction de vos besoins et de vos usages.</span>
+        </Description>
     </Wrapper>
   )
 }

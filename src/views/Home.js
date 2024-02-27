@@ -1,11 +1,10 @@
-import React, {useEffect, useMemo} from 'react'
-
+import React, {useContext, useMemo} from 'react'
 import Search from './home/Search'
 import Charts from './home/Charts'
-import {useHistory, useLocation} from "react-router-dom";
 import {Categories, CatSelection} from "./home/CatSelection";
 import styled from "styled-components";
 import {devices} from "../utils/Constants";
+import SearchContext from "../utils/SearchContext";
 
 const Wrapper = styled.div`
   display: block;
@@ -15,19 +14,11 @@ const Wrapper = styled.div`
   }
 `
 export default function Home() {
-    const location = useLocation();
-    const history = useHistory();
+    const { category } = useContext(SearchContext)
 
     const needCatSelection = useMemo(() => {
-        const currentCat = location.pathname.split('/')[1].trim()
-        return currentCat==='' || !Categories.map(({key}) => key).includes(currentCat)
-    }, [location.pathname])
-
-    useEffect(() => {
-        if(location.pathname.split('/').length > 2) {
-            history.push({pathname: '/', search: location.search})
-        }
-    }, [location.pathname, location.search, history])
+        return category==='' || !Categories.map(({key}) => key).includes(category)
+    }, [category])
     return (
         <Wrapper>
             {

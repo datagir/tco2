@@ -7,16 +7,14 @@ const Wrapper = styled(MagicLink)`
   display: flex;
   align-items: center;
   text-decoration: none;
-  margin: 0 0.75em;
   &:hover {
     transform: scale(1.1);
     transition: transform 0.2s ease-in-out;
   }
 `
 const Svg = styled.svg`
-  width: 8rem;
+  width: 13rem;
   height: 100%;
-
   path {
     fill: ${(props) => props.theme.colors.co2};
   }

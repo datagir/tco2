@@ -7,6 +7,7 @@ import useTruckDefaultSettings, { selectTruckDefaultParameters } from '../../hoo
 import { updateUsage } from '../../utils/globalUtils';
 
 export const SearchKeys = {
+    Category: 'category',
     VehicleCategory: 'vehicleCategory',
     TotalAnnualDistance: 'totalAnnualDistance',
     Payload: 'payload',
@@ -42,6 +43,10 @@ const usageRepartitionParam = (fullUsage) => ({
 
 export default function SearchProvider(props) {
   const { data: truckDefaults } = useTruckDefaultSettings()
+  const [category, setCategory] = useQueryParam(
+    SearchKeys.Category,
+    withDefault(StringParam, '')
+  )
   const [vehicleCategory, setVehicleCategory] = useQueryParam(
     SearchKeys.VehicleCategory,
     withDefault(StringParam, 'RIGIDTRUCK-12T')
@@ -99,6 +104,8 @@ export default function SearchProvider(props) {
   return (
     <SearchContext.Provider
       value={{
+        category,
+        setCategory,
         vehicleCategory,
         setVehicleCategory,
         totalAnnualDistance,

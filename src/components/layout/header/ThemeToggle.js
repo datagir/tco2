@@ -7,7 +7,8 @@ import StyleContext from 'utils/StyleContext'
 
 const Wrapper = styled.label`
   position: absolute;
-  top: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
   right: 0;
   display: flex;
 `
