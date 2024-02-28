@@ -13,7 +13,7 @@ const Wrapper = styled(MagicLink)`
   }
 `
 const Svg = styled.svg`
-  width: 13rem;
+  width: 9rem;
   height: 100%;
   path {
     fill: ${(props) => props.theme.colors.co2};
