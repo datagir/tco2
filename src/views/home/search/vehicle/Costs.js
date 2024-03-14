@@ -211,7 +211,7 @@ export default function Costs(props) {
               onChange={ ({ value }) => setCosts(
                   (prevCosts) => updateEnergyCosts(prevCosts, value, openTechnology, technologies))
               }
-              hint={'Prix moyen sur les 12 derniers mois, mis à jour en mai 2023.'}
+              hint={'Prix moyen sur les 12 derniers mois, mis à jour en mars 2024.'}
             />
           </Types>
         </Details>
