@@ -1,0 +1,30 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model ApiKey {
+  id    String @id @default(cuid())
+  key   String @unique @db.Uuid
+  owner String
+
+  @@map("api_keys")
+}
+
+model GMapsCache {
+  id    String   @id
+  car   Float
+  foot  Float
+  rail  Float
+  plane Float
+  date  DateTime
+
+  @@map("gmaps_cache")
+}

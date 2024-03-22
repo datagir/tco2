@@ -5,25 +5,24 @@ const Wrapper = styled.div`
   margin-bottom: 1.5rem;
 `
 const Label = styled.label`
+  color: ${(props) => (props.error ? 'var(--critical-50)' : 'var(--neutral-70)')};
   display: block;
+  font-weight: bold;
   margin-bottom: 0.5rem;
-  font-weight: normal;
-  color: ${(props) => props.theme.colors[props.error ? 'error' : 'text']};
 `
 const Input = styled.textarea`
-  width: 100%;
-  padding: 0.5rem 1rem;
-
-  color: ${(props) => props.theme.colors.text};
   background-color: transparent;
-  border: 2px solid ${(props) => props.theme.colors.textLight};
+  border: 2px solid var(--primary-50);
+
   border-radius: 1rem;
+  color: var(--neutral-70);
+  padding: 0.5rem 1rem;
   resize: vertical;
-  transition: box-shadow 300ms ease-out;
+  width: 100%;
 
   &:focus {
+    box-shadow: 0 -0 0px 1px var(--primary-50);
     outline: none;
-    box-shadow: 0 -0 0px 1px ${(props) => props.theme.colors.textLight};
   }
 `
 export default function TextArea(props) {

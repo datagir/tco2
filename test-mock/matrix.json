@@ -1,0 +1,27 @@
+{
+  "destination_addresses": ["5 Rue Casimir Périer, 75007 Paris, France"],
+  "origin_addresses": ["56 Rue Auvry, 93300 Aubervilliers, France"],
+  "rows": [
+    {
+      "elements": [
+        {
+          "distance": {
+            "text": "11.0 km",
+            "value": 10963
+          },
+          "duration": {
+            "text": "42 mins",
+            "value": 2547
+          },
+          "fare": {
+            "currency": "EUR",
+            "text": "€2.10",
+            "value": 2.1
+          },
+          "status": "OK"
+        }
+      ]
+    }
+  ],
+  "status": "OK"
+}

@@ -8,21 +8,65 @@
 # testing
 /coverage
 
+# next.js
+/.next/
+/out/
+
 # production
 /build
 
 # misc
 .DS_Store
-.env*
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+*.pem
 
+# debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.pnpm-debug.log*
 
-#IDEs
-.idea/
-*.iml
+# local env files
+.env*.local
+.env
+
+# vercel
+.vercel
+
+/public/iframe.js
+/public/iframelivraison.js
+
+/public/sitemap*
+
+# tests
+/test-results/
+/playwright-report/
+/playwright
+cypress/screenshots/
+cypress/videos/
+cypress/results/
+
+# Local Netlify folder
+.netlify
+
+
+# Sentry Config File
+.sentryclirc
+
+storybook-static/
+
+public/shopify.js
+shopify/.env.impact-co2
+shopify/extensions/equivalent-carbone/assets/shopify.js
+
+public/scripts/detection.js
+public/scripts/detection-darkmode.js
+public/scripts/detection-async.js
+public/scripts/detection-darkmode-async.js
+detection/chrome-extension.zip
+detection/chrome-extension/scripts/detection.js
+
+npm/react/dist/index.js
+
+npm/react/dist/index.js.LICENSE.txt
+
+dist/
