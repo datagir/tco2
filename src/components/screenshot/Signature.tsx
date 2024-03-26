@@ -1,17 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
-import { buildCurrentUrlFor } from 'utils/urls'
 import Ademe from 'components/base/Ademe'
-import Logo from 'components/base/Logo'
 import Marianne from 'components/base/Marianne'
-import Link from 'components/base/buttons/Link'
+import fabriquedelalogistique from 'components/misc/fabriquedelalogistique.jpg'
+import ifpen from 'components/misc/ifpen.jpg'
+import tlf from 'components/misc/tlf.png'
 
 // divs are necessary for better screenshot
 export default function Signature({
   noMargin,
-  noLink,
   center,
-  color,
   small,
 }: {
   noMargin?: boolean
@@ -28,16 +26,9 @@ export default function Signature({
       <div>
         <Ademe />
       </div>
-      <div>
-        {!noLink && (
-          <Link href={buildCurrentUrlFor('/')} noIcon>
-            impactco2.fr
-          </Link>
-        )}
-      </div>
-      <div>
-        <Logo viewBox={'10 10 313 313'} color={color} />
-      </div>
+      <Image src={fabriquedelalogistique.src} alt='Fabrique de la logistique' />
+      <Image src={ifpen.src} alt='IFPEN' />
+      <Image src={tlf.src} alt='TLF' />
     </OutsideGrid>
   )
 }
@@ -67,4 +58,11 @@ const OutsideGrid = styled.div<{ $noMargin?: boolean; $center?: boolean; $small?
         height: 30px;
       }
     `}
+`
+const Image = styled.img`
+  display: block;
+  height: auto;
+  max-height: 4rem;
+  max-width: 7rem;
+  width: auto;
 `

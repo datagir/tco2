@@ -4,9 +4,11 @@ import { MEDIA } from 'utils/styles'
 import { buildCurrentUrlFor } from 'utils/urls'
 import useWindow from 'hooks/useWindow'
 import Ademe from 'components/base/Ademe'
-import Logo from 'components/base/Logo'
 import Marianne from 'components/base/Marianne'
 import Link from 'components/base/buttons/Link'
+import fabriquedelalogistique from 'components/misc/fabriquedelalogistique.jpg'
+import ifpen from 'components/misc/ifpen.jpg'
+import tlf from 'components/misc/tlf.png'
 
 const Wrapper = styled.footer`
   align-items: center;
@@ -35,7 +37,13 @@ const Logos = styled.div`
     padding: 0 0.25rem;
   }
 `
-
+const Image = styled.img`
+  display: block;
+  height: auto;
+  max-height: 4rem;
+  max-width: 7rem;
+  width: auto;
+`
 export default function IframeFooter() {
   const window = useWindow()
   // @ts-expect-error: TODO
@@ -54,7 +62,9 @@ export default function IframeFooter() {
       <Logos>
         <Marianne />
         <Ademe />
-        <Logo />
+        <Image src={fabriquedelalogistique.src} alt='Fabrique de la logistique' />
+        <Image src={ifpen.src} alt='IFPEN' />
+        <Image src={tlf.src} alt='TLF' />
       </Logos>
     </Wrapper>
   )

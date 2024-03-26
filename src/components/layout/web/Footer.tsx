@@ -11,9 +11,7 @@ export default function Footer() {
         <div className={styles.internalContainer}>
           <Signature noMargin noLink />
           <div className={styles.footerExplain}>
-            <strong>
-              Impact CO<sub>2</sub>
-            </strong>
+            <strong>Verdirmaflotte</strong>
             <p className={styles.neutral50}>
               Le site de ressources qui vulgarise et valorise les données environnementales de l'ADEME.
             </p>
@@ -40,7 +38,7 @@ export default function Footer() {
               <div className={styles.linkContainer}>
                 <Link href='/guide-utilisation'>Guide d’utilisation</Link>
                 <Link href='/questions-frequentes'>Questions fréquentes</Link>
-                <Link href='/api-doc'>API Impact CO2</Link>
+                {/*<Link href='/api-doc'>API Verdirmaflotte</Link>*/}
               </div>
             </div>
           </div>
@@ -60,7 +58,7 @@ export default function Footer() {
           </Link>
           <Link
             className={styles.bottomLink}
-            href='https://github.com/incubateur-ademe/impactco2'
+            href='https://github.com/incubateur-ademe/verdirmaflotte'
             target='_blank'
             rel='noreferrer noopener'>
             Code source

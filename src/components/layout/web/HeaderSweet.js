@@ -3,10 +3,12 @@ import { useState } from 'react'
 import styled from 'styled-components'
 import { MEDIA } from 'utils/styles'
 import Ademe from 'components/base/Ademe'
-import Logo from 'components/base/Logo'
 import Marianne from 'components/base/Marianne'
 import { Section, SectionWideContent } from 'components/base/Section'
+import fabriquedelalogistique from 'components/misc/fabriquedelalogistique.jpg'
+import ifpen from 'components/misc/ifpen.jpg'
 import NavSearchBar from 'components/misc/search/NavSearchBar'
+import tlf from 'components/misc/tlf.png'
 import Hamburger from './Hamburger'
 import SkipLinks from './SkipLinks'
 import MenuSweet from './nav/MenuSweet'
@@ -37,9 +39,22 @@ export default function HeaderSweet() {
                       <Ademe />
                     </Link>
                   </Hideable>
-                  <NonHideable>
-                    <Logo />
-                  </NonHideable>
+                  <Hideable>
+                    <Link href='https://www.lafabriquedelalogistique.fr/' aria-label='lafabriquedelalogistique.fr'>
+                      <Image src={fabriquedelalogistique.src} alt='Fabrique de la logistique' />
+                    </Link>
+                  </Hideable>
+                  <Hideable>
+                    <Link href='https://www.ifpenergiesnouvelles.fr/' aria-label='https://www.ifpenergiesnouvelles.fr/'>
+                      <Image src={ifpen.src} alt='IFPEN' />
+                    </Link>
+                  </Hideable>
+                  <Hideable>
+                    <Link href='https://e-tlf.com' aria-label='https://e-tlf.com'>
+                      <Image src={tlf.src} alt='TLF' />
+                    </Link>
+                  </Hideable>
+                  <NonHideable />
                 </Logos>
                 <Actions>
                   <ActionSearch>
@@ -64,10 +79,10 @@ export default function HeaderSweet() {
                 </SmallActionSearch>
               </NavLink>
               <NavLink>
-                <MenuSweet />
+                <Link href='/comparateur'>Comparateur d'énergies</Link>
               </NavLink>
               <NavLink>
-                <Link href='/comparateur'>Comparateur carbone</Link>
+                <MenuSweet />
               </NavLink>
               <NavLink>
                 <Link href='/guide-utilisation'>Comment ça marche ?</Link>
@@ -78,10 +93,10 @@ export default function HeaderSweet() {
             </NavLinksMobile>
             <NavLinksDesktop>
               <NavLink>
-                <MenuSweet />
+                <Link href='/comparateur'>Comparateur d'énergies</Link>
               </NavLink>
               <NavLink>
-                <Link href='/comparateur'>Comparateur carbone</Link>
+                <MenuSweet />
               </NavLink>
               <NavLink>
                 <Link href='/guide-utilisation'>Comment ça marche ?</Link>
@@ -226,4 +241,12 @@ const HamburgerContainer = styled.div`
     align-items: center;
     display: flex;
   }
+`
+
+const Image = styled.img`
+  display: block;
+  height: auto;
+  max-height: 4rem;
+  max-width: 7rem;
+  width: auto;
 `

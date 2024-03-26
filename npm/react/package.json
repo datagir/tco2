@@ -1,15 +1,15 @@
 {
-  "name": "@incubateur-ademe/impactco2-react",
-  "version": "0.1.4",
-  "description": "Integrer les ressources d'Impact CO₂",
+  "name": "@incubateur-ademe/verdirmaflotte-react",
+  "version": "0.0.1",
+  "description": "Integrer les ressources de verdirmaflotte",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/incubateur-ademe/impactco2.git"
+    "url": "git+https://github.com/incubateur-ademe/verdirmaflotte.git"
   },
   "keywords": [
-    "Impact CO2",
+    "Verdirmaflotte",
     "Carbone",
     "Impact carbone",
     "CO2 équivalent",
@@ -18,9 +18,9 @@
   "author": "desoindx",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/incubateur-ademe/impactco2/issues"
+    "url": "https://github.com/incubateur-ademe/verdirmaflotte/issues"
   },
-  "homepage": "https://impactco2.fr",
+  "homepage": "https://verdirmaflotte.fr",
   "peerDependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
